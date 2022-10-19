@@ -1,0 +1,11 @@
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\bin\Debug\Chess NEA Project.exe.config
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\bin\Debug\Chess NEA Project.exe
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\bin\Debug\Chess NEA Project.pdb
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\bin\Debug\Chess NEA Project.xml
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\obj\Debug\Chess_NEA_Project.Resources.resources
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.vbproj.GenerateResource.Cache
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.exe
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.xml
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.pdb
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\obj\Debug\Chess_NEA_Project.ChessBoard.resources
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\documents\visual studio 2013\Projects\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.vbprojResolveAssemblyReference.cache
