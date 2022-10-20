@@ -1,7 +1,7 @@
 ﻿Public Class Check_Checkmate
     Inherits ChessBoard
     Public resultID As Integer
-    Public WPawn(7), Bpawn(7), WRook(1), Brook(1), WBishop(1), BBishop(1), PawnSelectedPieces(7), RookSelectedPieces(1), BishopSelectedPieces(1), CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
+    Public WPawn(7), Bpawn(7), WRook(1), Brook(1), WBishop(1), BBishop(1), PawnSelectedPieces(7), RookSelectedPieces(1), BishopSelectedPieces(1), QueensSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
     Public checking As Boolean
     Public Sub New()
         For i = 0 To 7
@@ -24,10 +24,11 @@
         ChessBoard.CheckMode = True
 
         'check1 = CheckPawnsAgainstKing()
-        check2 = CheckRooksAgainstKing()
+        'check2 = CheckRooksAgainstKing()
         'check3 = CheckBishopsAgainstKing()
+        check4 = CheckQueenAgainstKing()
         'ChessBoard.clearbuttons()
-        If check1 = True Or check2 = True Or check3 = True Then
+        If check1 = True Or check2 = True Or check3 = True Or check4 = True Then
             result = True
         Else
             result = False
@@ -83,12 +84,11 @@
                 check_Buttons = MoveSelector(buttoncheck, Rooks)
                 If check_Buttons.Length - 1 <> 0 Then
                     For Each PieceMove In check_Buttons
-                        Try
-                            If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
-                                result = True
-                            End If
-                        Catch
-                        End Try
+
+                        If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
+                            result = True
+                        End If
+
                     Next
                 End If
             Next
@@ -126,10 +126,39 @@
         Next
         Return result
     End Function
+    Public Function CheckQueenAgainstKing()
+        Dim chesscolour As ChessPiece.Chesscolour
+        Dim result As Boolean = False
+        If ChessBoard.colourOfPieces = "white" Then
+            CheckingKing = ChessBoard.WKing
+            QueensSelectedPieces = ChessBoard.BQueen
+            chesscolour = ChessPiece.Chesscolour.black
+        Else
+            CheckingKing = ChessBoard.BKing
+            QueensSelectedPieces = ChessBoard.WQueen
+            chesscolour = ChessPiece.Chesscolour.white
+        End If
+
+        Dim Queens As New Rook_Bishop_Queen(QueensSelectedPieces.Left, QueensSelectedPieces.Top, chesscolour, QueensSelectedPieces)
+        Queens.SetColour()
+        Queens.CheckMoves()
+        chess_piece = QueensSelectedPieces
+        For buttoncheck = 0 To 7
+            check_Buttons = MoveSelector(buttoncheck, Queens)
+            If check_Buttons.Length - 1 <> 0 Then
+                For Each PieceMove In check_Buttons
+                    If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
+                        result = True
+                    End If
+                Next
+            End If
+        Next
+
+        Return result
+    End Function
     Public Function MoveSelector(ByRef buttoncheck As Integer, ByVal rooks As Rook_Bishop_Queen)
         Dim result(resultID) As Button
         If rooks.piece Is ChessBoard.WRook1 Or rooks.piece Is WRook2 Or rooks.piece Is ChessBoard.BRook1 Or rooks.piece Is ChessBoard.BRook2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen Then
-
 
             If buttoncheck = 0 Then
                 UpMoveButton = rooks.UpMoveButtonsCheck.ToArray()
