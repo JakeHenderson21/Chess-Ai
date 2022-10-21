@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "39704ec6-1fdb-4ae0-8284-46583111e36e": {
+      "ProjectGuid": "39704ec6-1fdb-4ae0-8284-46583111e36e",
+      "DisplayName": "Chess NEA Project",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

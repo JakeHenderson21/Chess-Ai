@@ -24,10 +24,8 @@
     End Sub
     Public Function Check_King()
         Dim check1, check2, check3, check4, check5, check6 As Boolean
-
         Dim result As Boolean = False
         ChessBoard.CheckMode = True
-
         'check1 = CheckPawnsAgainstKing()
         'check2 = CheckRooksAgainstKing()
         'check3 = CheckBishopsAgainstKing()
@@ -43,7 +41,6 @@
         ChessBoard.CheckMode = False
         Return result
     End Function
-    
     Public Function CheckPawnsAgainstKing()
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
