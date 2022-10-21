@@ -3,7 +3,7 @@ Public Class ChessBoard
     Public colourOfPieces As String
     Private xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken As Integer
-    Public FirstCheck(15), CheckMode As Boolean
+    Public FirstCheck(15), CheckMode, complete As Boolean
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse As Button
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
@@ -140,6 +140,7 @@ Public Class ChessBoard
     End Sub
     Public Sub clearbuttons()
         For Each Button In buttonmoves
+           
             Button.Hide()
             Button.Location = New Point(1000, 1000)
         Next
@@ -484,10 +485,13 @@ Public Class ChessBoard
     End Sub
     Public Sub buttons_click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click, Button3.Click, Button4.Click, Button5.Click, Button6.Click, Button7.Click, Button8.Click, Button9.Click, Button10.Click, Button11.Click, Button12.Click, Button13.Click, Button14.Click, Button15.Click, Button16.Click, Button17.Click, Button18.Click, Button19.Click, Button20.Click, Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click, Button27.Click, Button28.Click, Button29.Click, Button30.Click, Button31.Click, Button32.Click, Button33.Click, Button34.Click, Button35.Click, Button36.Click, Button37.Click, Button38.Click, Button39.Click, Button40.Click, Button41.Click, Button42.Click, Button43.Click, Button44.Click, Button45.Click, Button46.Click, Button47.Click, Button48.Click, Button49.Click, Button50.Click, Button51.Click, Button52.Click, Button53.Click, Button54.Click, Button55.Click, Button56.Click, Button57.Click, Button58.Click, Button59.Click, Button60.Click, Button61.Click, Button62.Click, Button63.Click, Button64.Click, Button65.Click, Button66.Click, Button67.Click, Button67.Click, Button68.Click, Button69.Click, Button70.Click, Button71.Click, Button72.Click
         Dim buttons = DirectCast(sender, Button)
+
         xcoords = buttons.Left
         ycoords = buttons.Top
         clearbuttons()
         setNewLocation()
+
+
     End Sub
     Public Sub setNewLocation()
         chess_piece.Left = xcoords
@@ -520,6 +524,9 @@ Public Class ChessBoard
             End If
         Next
         
+    End Sub
+    Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
+        MsgBox(WKing.Left & "," & WKing.Top)
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)
