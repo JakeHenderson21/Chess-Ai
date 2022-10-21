@@ -9,16 +9,7 @@
         Dim temppostionscore As Integer
         Dim checktheking As New Check_Checkmate
         Dim checkplaceholder(7) As Boolean
-        If ChessBoard.CheckMode = False Then
-            ChessBoard.Button65.Location = New Point(X - 77, Y)
-            ChessBoard.Button66.Location = New Point(X - 77, Y + 77)
-            ChessBoard.Button67.Location = New Point(X, Y + 77)
-            ChessBoard.Button68.Location = New Point(X + 77, Y + 77)
-            ChessBoard.Button69.Location = New Point(X + 77, Y)
-            ChessBoard.Button70.Location = New Point(X + 77, Y - 77)
-            ChessBoard.Button71.Location = New Point(X, Y - 77)
-            ChessBoard.Button72.Location = New Point(X - 77, Y - 77)
-        Else
+        If ChessBoard.CheckMode = True Then
             ChessBoard.Button1.Location = New Point(X - 77, Y)
             ChessBoard.Button2.Location = New Point(X - 77, Y + 77)
             ChessBoard.Button3.Location = New Point(X, Y + 77)
@@ -27,6 +18,15 @@
             ChessBoard.Button6.Location = New Point(X + 77, Y - 77)
             ChessBoard.Button7.Location = New Point(X, Y - 77)
             ChessBoard.Button8.Location = New Point(X - 77, Y - 77)
+        Else
+            ChessBoard.Button65.Location = New Point(X - 77, Y)
+            ChessBoard.Button66.Location = New Point(X - 77, Y + 77)
+            ChessBoard.Button67.Location = New Point(X, Y + 77)
+            ChessBoard.Button68.Location = New Point(X + 77, Y + 77)
+            ChessBoard.Button69.Location = New Point(X + 77, Y)
+            ChessBoard.Button70.Location = New Point(X + 77, Y - 77)
+            ChessBoard.Button71.Location = New Point(X, Y - 77)
+            ChessBoard.Button72.Location = New Point(X - 77, Y - 77)
         End If
         If colour = ChessPiece.Chesscolour.white Then
             pieces1 = wpieces
