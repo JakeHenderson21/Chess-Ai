@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Chess NEA Project"
+    "\\Chess NEA Project",
+    "\\Chess NEA Project\\Chess NEA Project"
   ],
-  "SelectedNode": "\\Chess NEA Project\\Chess NEA Project.sln",
+  "SelectedNode": "\\Chess NEA Project\\Chess NEA Project\\Check_Checkmate.vb",
   "PreviewInSolutionExplorer": false
 }
