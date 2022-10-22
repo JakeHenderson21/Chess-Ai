@@ -3,8 +3,8 @@ Public Class ChessBoard
     Public colourOfPieces As String
     Private xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken As Integer
-    Public FirstCheck(15), CheckMode, complete As Boolean
-    Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse As Button
+    Public FirstCheck(15), CheckMode, complete, checkingForCheck As Boolean
+    Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece As Button
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.SetStyle(ControlStyles.UserPaint, True)
@@ -487,9 +487,34 @@ Public Class ChessBoard
         Dim buttons = DirectCast(sender, Button)
         xcoords = buttons.Left
         ycoords = buttons.Top
+        CheckforCheck()
         clearbuttons()
         setNewLocation()
     End Sub
+    Public Sub CheckforCheck()
+
+        Dim checkTheKing As New Check_Checkmate
+        Dim CheckingCheck(7) As Boolean
+        If WhiteTime.Enabled = True Then
+            KingPiece = BKing
+            colourOfPieces = "white"
+        Else
+            colourOfPieces = "black"
+            KingPiece = WKing
+        End If
+        Button1.Location = New Point(KingPiece.Left - 77, KingPiece.Top)
+        Button2.Location = New Point(KingPiece.Left - 77, KingPiece.Top + 77)
+        Button3.Location = New Point(KingPiece.Left, KingPiece.Top + 77)
+        Button4.Location = New Point(KingPiece.Left + 77, KingPiece.Top + 77)
+        Button5.Location = New Point(KingPiece.Left + 77, KingPiece.Top)
+        Button6.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
+        Button7.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
+        Button8.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
+        If checkingForCheck = True Then
+            MsgBox("check")
+        End If
+    End Sub
+
     Public Sub setNewLocation()
         chess_piece.Left = xcoords
         chess_piece.Top = ycoords

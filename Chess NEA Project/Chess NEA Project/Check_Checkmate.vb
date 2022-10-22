@@ -24,13 +24,13 @@
     End Sub
     Public Function Check_King()
         Dim check1, check2, check3, check4, check5, check6 As Boolean
-        Dim result As Boolean = False
+        Dim result As Boolean
         ChessBoard.CheckMode = True
-        'check1 = CheckPawnsAgainstKing()
-        'check2 = CheckRooksAgainstKing()
-        'check3 = CheckBishopsAgainstKing()
-        'check4 = CheckQueenAgainstKing()
-        'check5 = CheckKnightsAgainstKing()
+        check1 = CheckPawnsAgainstKing()
+        check2 = CheckRooksAgainstKing()
+        check3 = CheckBishopsAgainstKing()
+        check4 = CheckQueenAgainstKing()
+        check5 = CheckKnightsAgainstKing()
         check6 = CheckKingsAgainstKing()
         'ChessBoard.clearbuttons()
         If check1 = True Or check2 = True Or check3 = True Or check4 = True Or check5 = True Or check6 = True Then
@@ -64,6 +64,9 @@
             If (ChessBoard.buttonsToUse.Left = ChessBoard.Button3.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button3.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button4.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button4.Top) Then
                 result = True
             End If
+            If ChessBoard.Button3.Location = ChessBoard.KingPiece.Location Then
+                ChessBoard.checkingForCheck = True
+            End If
         Next
         Return result
     End Function
@@ -92,7 +95,9 @@
                         If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
                             result = True
                         End If
-
+                        If PieceMove.Location = ChessBoard.KingPiece.Location Then
+                            ChessBoard.checkingForCheck = True
+                        End If
                     Next
                 End If
             Next
