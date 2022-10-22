@@ -510,6 +510,9 @@ Public Class ChessBoard
         Button6.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
         Button7.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
         Button8.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
+        For i = 0 To 6
+            CheckingCheck = checkTheKing.Check_King
+        Next
         If checkingForCheck = True Then
             MsgBox("check")
         End If
