@@ -3,12 +3,13 @@ Public Class ChessBoard
     Public colourOfPieces As String
     Private xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken As Integer
-    Public FirstCheck(15), CheckMode, complete, checkingForCheck As Boolean
+    Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound As Boolean
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece As Button
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.SetStyle(ControlStyles.UserPaint, True)
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+        firstRound = True
         colourOfPieces = "white"
         WhiteTextBox.Text = 0
         BlackTextBox.Text = 0
@@ -489,8 +490,11 @@ Public Class ChessBoard
         ycoords = buttons.Top
         clearbuttons()
         setNewLocation()
-        CheckforCheck()
-
+        If firstRound = True Then
+            firstRound = False
+        Else
+            CheckforCheck()
+        End If
     End Sub
     Public Sub CheckforCheck()
         Dim checkTheKing As New Check_Checkmate
