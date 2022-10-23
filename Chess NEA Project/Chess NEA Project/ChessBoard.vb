@@ -487,34 +487,36 @@ Public Class ChessBoard
         Dim buttons = DirectCast(sender, Button)
         xcoords = buttons.Left
         ycoords = buttons.Top
-        CheckforCheck()
         clearbuttons()
         setNewLocation()
+        CheckforCheck()
+
     End Sub
     Public Sub CheckforCheck()
-
         Dim checkTheKing As New Check_Checkmate
         Dim CheckingCheck(7) As Boolean
         If WhiteTime.Enabled = True Then
-            KingPiece = BKing
+            KingPiece = WKing
             colourOfPieces = "white"
         Else
             colourOfPieces = "black"
-            KingPiece = WKing
+            KingPiece = BKing
         End If
-        Button1.Location = New Point(KingPiece.Left - 77, KingPiece.Top)
-        Button2.Location = New Point(KingPiece.Left - 77, KingPiece.Top + 77)
-        Button3.Location = New Point(KingPiece.Left, KingPiece.Top + 77)
-        Button4.Location = New Point(KingPiece.Left + 77, KingPiece.Top + 77)
-        Button5.Location = New Point(KingPiece.Left + 77, KingPiece.Top)
-        Button6.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
-        Button7.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
-        Button8.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
+        Button65.Location = New Point(KingPiece.Left - 77, KingPiece.Top)
+        Button66.Location = New Point(KingPiece.Left - 77, KingPiece.Top + 77)
+        Button67.Location = New Point(KingPiece.Left, KingPiece.Top + 77)
+        Button68.Location = New Point(KingPiece.Left + 77, KingPiece.Top + 77)
+        Button69.Location = New Point(KingPiece.Left + 77, KingPiece.Top)
+        Button70.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
+        Button71.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
+        Button72.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
         For i = 0 To 6
-            CheckingCheck = checkTheKing.Check_King
+            buttonsToUse = KingButtons(i)
+            CheckingCheck(i) = checkTheKing.Check_King
         Next
         If checkingForCheck = True Then
             MsgBox("check")
+            checkingForCheck = False
         End If
     End Sub
 
@@ -551,7 +553,7 @@ Public Class ChessBoard
         
     End Sub
     Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
-        MsgBox(WKing.Left & "," & WKing.Top)
+        whitepiecedisabler()
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)

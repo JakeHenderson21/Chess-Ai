@@ -47,36 +47,38 @@
                     newScoreMove = 1
                     PawnMoveChecker()
                 End If
-            End If     
-        Next
-        For Each pieces In bpieces
-            ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top - 77)
-            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top - 77)
-            If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
-                If ChessBoard.CheckMode = False Then
-                    ChessBoard.Button3.Show()
-                End If
-            ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
-                If ChessBoard.CheckMode = False Then
-                    ChessBoard.Button4.Show()
-                End If
             End If
         Next
-        For Each pieces In wpieces
-            ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top + 77)
-            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top + 77)
-
-            If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
-                If ChessBoard.CheckMode = False Then
-                    ChessBoard.Button3.Show()
+        If colour = Chesscolour.white Then
+            For Each pieces In bpieces
+                ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top - 77)
+                ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top - 77)
+                If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
+                    If ChessBoard.CheckMode = False Then
+                        ChessBoard.Button3.Show()
+                    End If
+                ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
+                    If ChessBoard.CheckMode = False Then
+                        ChessBoard.Button4.Show()
+                    End If
                 End If
-            ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
-                If ChessBoard.CheckMode = False Then
-                    ChessBoard.Button4.Show()
-                End If
-            End If
-        Next
+            Next
+        Else
+            For Each pieces In wpieces
+                ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top + 77)
+                ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top + 77)
 
+                If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
+                    If ChessBoard.CheckMode = False Then
+                        ChessBoard.Button3.Show()
+                    End If
+                ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
+                    If ChessBoard.CheckMode = False Then
+                        ChessBoard.Button4.Show()
+                    End If
+                End If
+            Next
+        End If
         If OldScoremove = 0 Then
         ElseIf OldScoremove = 1 Then
             If ChessBoard.CheckMode = False Then

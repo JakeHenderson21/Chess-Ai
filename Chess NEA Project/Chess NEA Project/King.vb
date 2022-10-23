@@ -9,6 +9,7 @@
         Dim temppostionscore As Integer
         Dim checktheking As New Check_Checkmate
         Dim checkplaceholder(7) As Boolean
+        ChessBoard.KingPiece = piece
         If ChessBoard.CheckMode = True Then
             ChessBoard.Button1.Location = New Point(X - 77, Y)
             ChessBoard.Button2.Location = New Point(X - 77, Y + 77)
