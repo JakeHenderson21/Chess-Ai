@@ -258,7 +258,7 @@
                     End If
                 Next
 
-                'MsgBox(temppostionscore & " : " & change)
+
                 piecemove += 1
                 xcoordinate = xcoordinate + tx
                 ycoordinate = ycoordinate + ty
@@ -312,6 +312,7 @@
                             upmovecount = scoremove
                         End If
                         UpMoveButtonsCheck = StoreButtons(scoremove)
+
                     ElseIf count = 1 Then
                         If scoremove = 0 And change = True Then
                             rightmovecount = scoremove

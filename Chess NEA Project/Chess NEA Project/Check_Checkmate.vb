@@ -88,9 +88,14 @@
             chesscolour = ChessPiece.Chesscolour.white
         End If
         For Each piece In RookSelectedPieces
+
             Dim Rooks As New Rook_Bishop_Queen(piece.Left, piece.Top, chesscolour, piece)
+
             Rooks.SetColour()
             Rooks.CheckMoves()
+            If Rooks.piece Is ChessBoard.WRook2 Then
+                counter = counter
+            End If
             chess_piece = piece
             For buttoncheck = 0 To 3
                 check_Buttons = MoveSelector(buttoncheck, Rooks)
@@ -106,6 +111,7 @@
                     Next
                 End If
             Next
+
         Next
         Return result
     End Function
@@ -218,18 +224,15 @@
     End Function
     Public Function MoveSelector(ByRef buttoncheck As Integer, ByVal rooks As Rook_Bishop_Queen)
         Dim result(resultID) As Button
-        If rooks.piece Is ChessBoard.WRook1 Or rooks.piece Is WRook2 Or rooks.piece Is ChessBoard.BRook1 Or rooks.piece Is ChessBoard.BRook2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen Then
+        If rooks.piece Is ChessBoard.WRook1 Or rooks.piece Is ChessBoard.WRook2 Or rooks.piece Is ChessBoard.BRook1 Or rooks.piece Is ChessBoard.BRook2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen Then
 
             If buttoncheck = 0 Then
+
                 UpMoveButton = rooks.UpMoveButtonsCheck.ToArray()
                 resultID = UpMoveButton.Length
                 result = UpMoveButton
                 rooks.UpMoveButtonsCheck.Clear()
-                If rooks.piece Is ChessBoard.WRook2 Then
-                    For Each gh In UpMoveButton
-                        MsgBox(gh.Name)
-                    Next
-                End If
+
             ElseIf buttoncheck = 1 Then
                 RightMoveButton = rooks.RightMoveButtonsCheck.ToArray()
                 resultID = RightMoveButton.Length
