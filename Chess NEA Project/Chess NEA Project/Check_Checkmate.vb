@@ -34,8 +34,9 @@
         check5 = CheckKnightsAgainstKing()
         check6 = CheckKingsAgainstKing()
         check7 = CheckBorderAgainstKing()
+        check8 = CheckKingAgainstOtherPieces()
         'ChessBoard.clearbuttons()
-        If check1 = True Or check2 = True Or check3 = True Or check4 = True Or check5 = True Or check6 = True Or check7 = True Then
+        If check1 = True Or check2 = True Or check3 = True Or check4 = True Or check5 = True Or check6 = True Or check7 = True Or check8 = True Then
             result = True
         Else
             result = False
