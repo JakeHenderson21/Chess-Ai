@@ -553,7 +553,7 @@ Public Class ChessBoard
         
     End Sub
     Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
-        whitepiecedisabler()
+        MsgBox(Button4.Left & "," & Button4.Top)
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)
