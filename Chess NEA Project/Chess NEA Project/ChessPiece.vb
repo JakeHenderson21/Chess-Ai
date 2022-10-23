@@ -309,7 +309,8 @@
                             scoremove = 7
                             upmovecount = 7
                         Else
-                            upmovecount = scoremove
+                            upmovecount = scoremove + 1
+                            scoremove += 1
                         End If
                         UpMoveButtonsCheck = StoreButtons(scoremove)
 
@@ -320,7 +321,8 @@
                             scoremove = 7
                             rightmovecount = 7
                         Else
-                            rightmovecount = scoremove
+                            rightmovecount = scoremove + 1
+                            scoremove += 1
                         End If
                         RightMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 2 Then
@@ -330,19 +332,27 @@
                             scoremove = 7
                             downmovecount = 7
                         Else
-                            downmovecount = scoremove
+                            downmovecount = scoremove + 1
+                            scoremove += 1
                         End If
                         DownMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 3 Then
+
+
                         If scoremove = 0 And change = True Then
                             leftmovecount = scoremove
                         ElseIf scoremove = 0 And change = False Then
                             scoremove = 7
                             leftmovecount = 7
                         Else
-                            leftmovecount = scoremove
+                            leftmovecount = scoremove + 1
+                            If (checkbuttons(scoremove).Left = ChessBoard.KingPiece.Left And checkbuttons(scoremove).Top = ChessBoard.KingPiece.Top) Then
+                            Else
+                                scoremove += 1
+                            End If
+
                         End If
-                        LeftMoveButtonsCheck = StoreButtons(scoremove)
+                            LeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If
                 End If
                 If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count >= 4 Then
@@ -353,7 +363,8 @@
                             scoremove = 7
                             uprightmovecount = 7
                         Else
-                            uprightmovecount = scoremove
+                            uprightmovecount = scoremove + 1
+                            scoremove += 1
                         End If
                         UpRightMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 5 Then
@@ -363,7 +374,8 @@
                             scoremove = 7
                             downrightmovecount = 7
                         Else
-                            downrightmovecount = scoremove
+                            downrightmovecount = scoremove + 1
+                            scoremove += 1
                         End If
                         DownRightMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 6 Then
@@ -373,7 +385,8 @@
                             scoremove = 7
                             downleftmovecount = 7
                         Else
-                            downleftmovecount = scoremove
+                            downleftmovecount = scoremove + 1
+                            scoremove += 1
                         End If
                         DownLeftMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 7 Then
@@ -383,7 +396,8 @@
                             scoremove = 7
                             upleftmovecount = 7
                         Else
-                            upleftmovecount = scoremove
+                            upleftmovecount = scoremove + 1
+                            scoremove += 1
                         End If
                         UpLeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If

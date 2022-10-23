@@ -23,17 +23,19 @@
 
     End Sub
     Public Function Check_King()
-        Dim check1, check2, check3, check4, check5, check6 As Boolean
+        Dim check1, check2, check3, check4, check5, check6, check7, check8 As Boolean
         Dim result As Boolean
+        ChessBoard.checkingForCheck = False
         ChessBoard.CheckMode = True
-        'check1 = CheckPawnsAgainstKing()
-        'check2 = CheckRooksAgainstKing()
-        'check3 = CheckBishopsAgainstKing()
-        'check4 = CheckQueenAgainstKing()
-        'check5 = CheckKnightsAgainstKing()
+        check1 = CheckPawnsAgainstKing()
+        check2 = CheckRooksAgainstKing()
+        check3 = CheckBishopsAgainstKing()
+        check4 = CheckQueenAgainstKing()
+        check5 = CheckKnightsAgainstKing()
         check6 = CheckKingsAgainstKing()
+        check7 = CheckBorderAgainstKing()
         'ChessBoard.clearbuttons()
-        If check1 = True Or check2 = True Or check3 = True Or check4 = True Or check5 = True Or check6 = True Then
+        If check1 = True Or check2 = True Or check3 = True Or check4 = True Or check5 = True Or check6 = True Or check7 = True Then
             result = True
         Else
             result = False
@@ -41,16 +43,35 @@
         ChessBoard.CheckMode = False
         Return result
     End Function
+    Public Function CheckKingAgainstOtherPieces()
+        Dim result As Integer
+        For Each piece In ChessBoard.Allpieces
+            If piece.Left = ChessBoard.buttonsToUse.Left And piece.Top = ChessBoard.buttonsToUse.Top Then
+                result = True
+            End If
+        Next
+        Return result
+    End Function
+
+    Public Function CheckBorderAgainstKing()
+        Dim result As Boolean
+        If ChessBoard.buttonsToUse.Left > 539 Or ChessBoard.buttonsToUse.Left < 0 Or ChessBoard.buttonsToUse.Top > 539 Or ChessBoard.buttonsToUse.Top < 0 Then
+            result = True
+        Else
+            result = False
+        End If
+        Return result
+    End Function
     Public Function CheckPawnsAgainstKing()
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
         If ChessBoard.colourOfPieces = "white" Then
-            CheckingKing = ChessBoard.WKing
+            ChessBoard.KingPiece = ChessBoard.WKing
             PawnSelectedPieces = Bpawn
             FirstCheckNumber = 0
             chesscolour = ChessPiece.Chesscolour.black
         Else
-            CheckingKing = ChessBoard.BKing
+            ChessBoard.KingPiece = ChessBoard.BKing
             PawnSelectedPieces = WPawn
             FirstCheckNumber = 8
             chesscolour = ChessPiece.Chesscolour.white
@@ -73,27 +94,26 @@
         Next
         Return result
     End Function
+
     Public Function CheckRooksAgainstKing()
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
         If ChessBoard.colourOfPieces = "white" Then
-            CheckingKing = ChessBoard.WKing
+            ChessBoard.KingPiece = ChessBoard.WKing
             RookSelectedPieces = Brook
             chesscolour = ChessPiece.Chesscolour.black
         Else
-            CheckingKing = ChessBoard.BKing
+            ChessBoard.KingPiece = ChessBoard.BKing
             RookSelectedPieces = WRook
             chesscolour = ChessPiece.Chesscolour.white
         End If
+
         For Each piece In RookSelectedPieces
 
             Dim Rooks As New Rook_Bishop_Queen(piece.Left, piece.Top, chesscolour, piece)
 
             Rooks.SetColour()
             Rooks.CheckMoves()
-            If Rooks.piece Is ChessBoard.WRook2 Then
-                counter = counter
-            End If
             chess_piece = piece
             For buttoncheck = 0 To 3
                 check_Buttons = MoveSelector(buttoncheck, Rooks)
@@ -103,9 +123,11 @@
                         If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
                             result = True
                         End If
+
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
                             ChessBoard.checkingForCheck = True
                         End If
+
                     Next
                 End If
             Next
@@ -117,11 +139,11 @@
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
         If ChessBoard.colourOfPieces = "white" Then
-            CheckingKing = ChessBoard.WKing
+            ChessBoard.KingPiece = ChessBoard.WKing
             BishopSelectedPieces = BBishop
             chesscolour = ChessPiece.Chesscolour.black
         Else
-            CheckingKing = ChessBoard.BKing
+            ChessBoard.KingPiece = ChessBoard.BKing
             BishopSelectedPieces = WBishop
             chesscolour = ChessPiece.Chesscolour.white
         End If
@@ -151,11 +173,11 @@
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
         If ChessBoard.colourOfPieces = "white" Then
-            CheckingKing = ChessBoard.WKing
+            ChessBoard.KingPiece = ChessBoard.WKing
             QueensSelectedPieces = ChessBoard.BQueen
             chesscolour = ChessPiece.Chesscolour.black
         Else
-            CheckingKing = ChessBoard.BKing
+            ChessBoard.KingPiece = ChessBoard.BKing
             QueensSelectedPieces = ChessBoard.WQueen
             chesscolour = ChessPiece.Chesscolour.white
         End If
@@ -184,11 +206,11 @@
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
         If ChessBoard.colourOfPieces = "white" Then
-            CheckingKing = ChessBoard.WKing
+            ChessBoard.KingPiece = ChessBoard.WKing
             KnightSelectedPieces = BKnight
             chesscolour = ChessPiece.Chesscolour.black
         Else
-            CheckingKing = ChessBoard.BKing
+            ChessBoard.KingPiece = ChessBoard.BKing
             KnightSelectedPieces = WKnight
             chesscolour = ChessPiece.Chesscolour.white
         End If
@@ -211,11 +233,11 @@
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
         If ChessBoard.colourOfPieces = "white" Then
-            CheckingKing = ChessBoard.WKing
+            ChessBoard.KingPiece = ChessBoard.WKing
             KingSelectedPieces = ChessBoard.BKing
             chesscolour = ChessPiece.Chesscolour.black
         Else
-            CheckingKing = ChessBoard.BKing
+            ChessBoard.KingPiece = ChessBoard.BKing
             KingSelectedPieces = ChessBoard.WKing
             chesscolour = ChessPiece.Chesscolour.white
         End If

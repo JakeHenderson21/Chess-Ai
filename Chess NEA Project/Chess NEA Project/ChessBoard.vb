@@ -136,7 +136,7 @@ Public Class ChessBoard
             KingButtons(i) = buttonmoves(i + 64)
 
         Next
-        WKing.Location = New Point(308, 231)
+
     End Sub
     Public Sub clearbuttons()
         For Each Button In buttonmoves
@@ -514,8 +514,13 @@ Public Class ChessBoard
             buttonsToUse = KingButtons(i)
             CheckingCheck(i) = checkTheKing.Check_King
         Next
-        If checkingForCheck = True Then
-            MsgBox("check")
+        If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True Then
+            MsgBox("Checkmate!")
+        ElseIf CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True Then
+            MsgBox("Stalmate!")
+
+        ElseIf checkingForCheck = True Then
+            MsgBox("Check!")
             checkingForCheck = False
         End If
     End Sub
