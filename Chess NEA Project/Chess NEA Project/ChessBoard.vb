@@ -3,13 +3,15 @@ Public Class ChessBoard
     Public colourOfPieces As String
     Private xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken As Integer
-    Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound As Boolean
+    Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition As Boolean
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece As Button
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.SetStyle(ControlStyles.UserPaint, True)
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         firstRound = True
+        WkingInStationaryPositon = True
+        BkingInStationaryPosition = True
         colourOfPieces = "white"
         WhiteTextBox.Text = 0
         BlackTextBox.Text = 0
@@ -499,6 +501,7 @@ Public Class ChessBoard
     Public Sub CheckforCheck()
         Dim checkTheKing As New Check_Checkmate
         Dim CheckingCheck(7) As Boolean
+
         If WhiteTime.Enabled = True Then
             KingPiece = WKing
             colourOfPieces = "white"
@@ -514,19 +517,18 @@ Public Class ChessBoard
         Button70.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
         Button71.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
         Button72.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
+
         For i = 0 To 6
             buttonsToUse = KingButtons(i)
             CheckingCheck(i) = checkTheKing.Check_King
         Next
         If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True Then
             MsgBox("Checkmate!")
-        ElseIf CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True Then
-            MsgBox("Stalmate!")
-
         ElseIf checkingForCheck = True Then
             MsgBox("Check!")
             checkingForCheck = False
         End If
+
     End Sub
 
     Public Sub setNewLocation()
