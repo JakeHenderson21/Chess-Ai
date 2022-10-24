@@ -32,7 +32,7 @@ Namespace My
         
         <Global.System.Diagnostics.DebuggerStepThroughAttribute()>  _
         Protected Overrides Sub OnCreateMainForm()
-            Me.MainForm = Global.Chess_NEA_Project.ChessBoard
+            Me.MainForm = Global.Chess_NEA_Project.MainMenu
         End Sub
     End Class
 End Namespace
