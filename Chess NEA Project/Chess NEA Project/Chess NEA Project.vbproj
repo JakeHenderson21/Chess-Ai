@@ -97,6 +97,7 @@
       <DependentUpon>ChessBoard.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Chess_Ai.vb" />
     <Compile Include="King.vb" />
     <Compile Include="Knight.vb" />
     <Compile Include="MainMenu.Designer.vb">
