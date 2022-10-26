@@ -3,7 +3,7 @@ Public Class ChessBoard
     Public colourOfPieces As String
     Private xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken As Integer
-    Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition As Boolean
+    Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn As Boolean
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece As Button
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
@@ -137,9 +137,7 @@ Public Class ChessBoard
         minutes1 = 5
         For i = 0 To 7
             KingButtons(i) = buttonmoves(i + 64)
-
         Next
-
     End Sub
     Public Sub clearbuttons()
         For Each Button In buttonmoves
@@ -201,7 +199,6 @@ Public Class ChessBoard
             piece.Size = New Size(80, 80)
             If count <= 7 Then
                 piece.Location = New Point(xsetup, 0)
-
             Else
                 piece.Location = New Point(xsetup, 77)
             End If
@@ -324,7 +321,7 @@ Public Class ChessBoard
         knights.CheckMoves()
         chess_piece = BKnight2
         colourOfPieces = "black"
-        MsgBox("h")
+
     End Sub
     Private Sub Wking_Click(sender As Object, e As EventArgs) Handles WKing.Click
         Dim kings As New King(WKing.Left, WKing.Top, ChessPiece.Chesscolour.white, WKing)
@@ -517,7 +514,6 @@ Public Class ChessBoard
         Button70.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
         Button71.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
         Button72.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
-
         For i = 0 To 6
             buttonsToUse = KingButtons(i)
             CheckingCheck(i) = checkTheKing.Check_King
@@ -528,9 +524,7 @@ Public Class ChessBoard
             MsgBox("Check!")
             checkingForCheck = False
         End If
-
     End Sub
-
     Public Sub setNewLocation()
         chess_piece.Left = xcoords
         chess_piece.Top = ycoords
@@ -561,7 +555,6 @@ Public Class ChessBoard
                 Exit For
             End If
         Next
-        
     End Sub
     Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
         MsgBox(Button4.Left & "," & Button4.Top)
@@ -641,9 +634,9 @@ Public Class ChessBoard
         ElseIf piece Is BKing Then
             BKing.Location = New Point(807, 520)
         End If
-
     End Sub
     Private Sub blackpiecedisabler()
+        AiTurn = False
         colourOfPieces = "white"
         For Each p In Blackpieces
             p.Enabled = False
@@ -660,6 +653,7 @@ Public Class ChessBoard
         Next
     End Sub
     Private Sub whitepiecedisabler()
+        AiTurn = True
         colourOfPieces = "black"
         For Each p In Whitepieces
             p.Enabled = False
@@ -675,6 +669,4 @@ Public Class ChessBoard
             Next
         Next
     End Sub
-
-    
 End Class
