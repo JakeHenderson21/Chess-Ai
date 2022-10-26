@@ -8,5 +8,4 @@
         endofloop = 7
         count = 4
     End Sub
-
 End Class

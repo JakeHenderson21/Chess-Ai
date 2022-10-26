@@ -25,6 +25,12 @@ Public Class Chess_Ai
         CheckBishops()
         CheckQueen()
         CheckKing()
+        LegalMoveNames.ToArray()
+        For Each button In LegalMoveNames
+            FileOpen(1, "testfile.txt", OpenMode.Append)
+            PrintLine(1, button.Name)
+            FileClose(1)
+        Next
     End Sub
     Public Sub CheckButtonsEnabled(Piece)
         Dim Ai_X_Coord, Ai_Y_Coord As Integer

@@ -1,4 +1,5 @@
 BPawn1
+BPawn1
 BPawn2
 BPawn2
 BPawn3
@@ -13,15 +14,7 @@ BPawn7
 BPawn7
 BPawn8
 BPawn8
-BRook1
-BRook1
 BKnight1
 BKnight1
 BKnight2
 BKnight2
-BKnight2
-BBishop2
-BBishop2
-BBishop2
-BBishop2
-BBishop2

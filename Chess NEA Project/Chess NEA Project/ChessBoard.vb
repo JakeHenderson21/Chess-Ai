@@ -331,7 +331,6 @@ Public Class ChessBoard
         knights.CheckMoves()
         chess_piece = BKnight2
         colourOfPieces = "black"
-
     End Sub
     Private Sub Wking_Click(sender As Object, e As EventArgs) Handles WKing.Click
         Dim kings As New King(WKing.Left, WKing.Top, ChessPiece.Chesscolour.white, WKing)
