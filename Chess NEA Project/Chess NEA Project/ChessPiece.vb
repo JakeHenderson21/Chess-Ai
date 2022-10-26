@@ -3,7 +3,7 @@
         white
         black
     End Enum
-    Public X, Y, tx, ty, count, scoremove, upmovecount, rightmovecount, downmovecount, leftmovecount, buttonID, buttonsPastBorder, uprightmovecount, downrightmovecount, downleftmovecount, upleftmovecount As Integer
+    Public X, Y, tx, ty, count, scoremove, upmovecount, rightmovecount, downmovecount, leftmovecount, buttonID, buttonsPastBorder, uprightmovecount, downrightmovecount, downleftmovecount, upleftmovecount, endofloop, startofloop As Integer
     Public colour As Chesscolour
     Public UpMoveButtonsCheck, RightMoveButtonsCheck, DownMoveButtonsCheck, LeftMoveButtonsCheck, UpRightMoveButtonsCheck, DownRightMoveButtonsCheck, DownLeftMoveButtonsCheck, UpLeftMoveButtonsCheck As New List(Of Button)
     Public change, sameColourChange, OppositeColourChange, movebuttonchecker As Boolean
@@ -187,23 +187,8 @@
         End If
     End Sub
     Public Overridable Sub CheckMoves()
-        Dim xcoordinate, ycoordinate, piecemove, l, tempscoremove, temppostionscore, endofloop, startofloop As Integer
+        Dim xcoordinate, ycoordinate, piecemove, l, tempscoremove, temppostionscore As Integer
         temppostionscore = 0
-
-        If ChessBoard.WRook1 Is piece Or ChessBoard.WRook2 Is piece Or ChessBoard.BRook1 Is piece Or ChessBoard.BRook2 Is piece Then
-            startofloop = 0
-            endofloop = 3
-            count = 0
-        ElseIf ChessBoard.WBishop1 Is piece Or ChessBoard.WBishop2 Is piece Or ChessBoard.BBishop1 Is piece Or ChessBoard.BBishop2 Is piece Then
-            startofloop = 4
-            endofloop = 7
-            count = 4
-            temppostionscore = 4
-        ElseIf ChessBoard.WQueen Is piece Or ChessBoard.BQueen Is piece Then
-            startofloop = 0
-            endofloop = 7
-            count = 0
-        End If
         For t = startofloop To endofloop
             change = False
             piecemove = 0
@@ -251,14 +236,12 @@
                                 tempscoremove = piecemove
                             End If
                         Else
-                                change = True
-                                tempscoremove = piecemove + 1
-                                l = 1
+                            change = True
+                            tempscoremove = piecemove + 1
+                            l = 1
                         End If
                     End If
                 Next
-
-
                 piecemove += 1
                 xcoordinate = xcoordinate + tx
                 ycoordinate = ycoordinate + ty
@@ -276,7 +259,6 @@
                 scoremove = tempscoremove - 1
                 movebuttonchecker = True
             End If
-
             For Each Button In checkbuttons
                 Button.Hide()
             Next
@@ -298,10 +280,7 @@
                     scoremove = 0
                 End If
                 buttonsPastBorder = 0
-
-
                 If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen Then
-
                     If count = 0 Then
                         If scoremove = 0 And change = True Then
                             upmovecount = scoremove
@@ -313,7 +292,6 @@
                             scoremove += 1
                         End If
                         UpMoveButtonsCheck = StoreButtons(scoremove)
-
                     ElseIf count = 1 Then
                         If scoremove = 0 And change = True Then
                             rightmovecount = scoremove
@@ -337,8 +315,6 @@
                         End If
                         DownMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 3 Then
-
-
                         If scoremove = 0 And change = True Then
                             leftmovecount = scoremove
                         ElseIf scoremove = 0 And change = False Then
@@ -350,9 +326,8 @@
                             Else
                                 scoremove += 1
                             End If
-
                         End If
-                            LeftMoveButtonsCheck = StoreButtons(scoremove)
+                        LeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If
                 End If
                 If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count >= 4 Then
@@ -401,7 +376,6 @@
                         End If
                         UpLeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If
-
                 End If
                 count += 1
                 change = False

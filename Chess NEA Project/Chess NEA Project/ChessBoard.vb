@@ -3,7 +3,7 @@ Public Class ChessBoard
     Public colourOfPieces As String
     Private xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken As Integer
-    Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn As Boolean
+    Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece As Button
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
@@ -210,7 +210,7 @@ Public Class ChessBoard
         Next
     End Sub
     Private Sub WRook1_Click(sender As Object, e As EventArgs) Handles WRook1.Click
-        Dim rooks As New Rook_Bishop_Queen(WRook1.Left, WRook1.Top, ChessPiece.Chesscolour.white, WRook1)
+        Dim rooks As New Rook(WRook1.Left, WRook1.Top, ChessPiece.Chesscolour.white, WRook1)
         clearbuttons()
         rooks.SetColour()
         rooks.CheckMoves()
@@ -218,7 +218,7 @@ Public Class ChessBoard
         colourOfPieces = "white"
     End Sub
     Private Sub WRook2_Click(sender As Object, e As EventArgs) Handles WRook2.Click
-        Dim rooks As New Rook_Bishop_Queen(WRook2.Left, WRook2.Top, ChessPiece.Chesscolour.white, WRook2)
+        Dim rooks As New Rook(WRook2.Left, WRook2.Top, ChessPiece.Chesscolour.white, WRook2)
         clearbuttons()
         rooks.SetColour()
         rooks.CheckMoves()
@@ -226,7 +226,7 @@ Public Class ChessBoard
         colourOfPieces = "white"
     End Sub
     Private Sub BRook1_Click(sender As Object, e As EventArgs) Handles BRook1.Click
-        Dim rooks As New Rook_Bishop_Queen(BRook1.Left, BRook1.Top, ChessPiece.Chesscolour.black, BRook1)
+        Dim rooks As New Rook(BRook1.Left, BRook1.Top, ChessPiece.Chesscolour.black, BRook1)
         clearbuttons()
         rooks.SetColour()
         rooks.CheckMoves()
@@ -234,7 +234,7 @@ Public Class ChessBoard
         colourOfPieces = "black"
     End Sub
     Private Sub BRook2_Click(sender As Object, e As EventArgs) Handles BRook2.Click
-        Dim rooks As New Rook_Bishop_Queen(BRook2.Left, BRook2.Top, ChessPiece.Chesscolour.black, BRook2)
+        Dim rooks As New Rook(BRook2.Left, BRook2.Top, ChessPiece.Chesscolour.black, BRook2)
         clearbuttons()
         rooks.SetColour()
         rooks.CheckMoves()
@@ -242,7 +242,7 @@ Public Class ChessBoard
         colourOfPieces = "black"
     End Sub
     Private Sub WBishop1_Click(sender As Object, e As EventArgs) Handles WBishop1.Click
-        Dim Bishops As New Rook_Bishop_Queen(WBishop1.Left, WBishop1.Top, ChessPiece.Chesscolour.white, WBishop1)
+        Dim Bishops As New Bishop(WBishop1.Left, WBishop1.Top, ChessPiece.Chesscolour.white, WBishop1)
         clearbuttons()
         Bishops.SetColour()
         Bishops.CheckMoves()
@@ -250,7 +250,7 @@ Public Class ChessBoard
         colourOfPieces = "white"
     End Sub
     Private Sub WBishop2_Click(sender As Object, e As EventArgs) Handles WBishop2.Click
-        Dim Bishops As New Rook_Bishop_Queen(WBishop2.Left, WBishop2.Top, ChessPiece.Chesscolour.white, WBishop2)
+        Dim Bishops As New Bishop(WBishop2.Left, WBishop2.Top, ChessPiece.Chesscolour.white, WBishop2)
         clearbuttons()
         Bishops.SetColour()
         Bishops.CheckMoves()
@@ -258,7 +258,7 @@ Public Class ChessBoard
         colourOfPieces = "white"
     End Sub
     Private Sub BBishop1_Click(sender As Object, e As EventArgs) Handles BBishop1.Click
-        Dim Bishops As New Rook_Bishop_Queen(BBishop1.Left, BBishop1.Top, ChessPiece.Chesscolour.black, BBishop1)
+        Dim Bishops As New Bishop(BBishop1.Left, BBishop1.Top, ChessPiece.Chesscolour.black, BBishop1)
         clearbuttons()
         Bishops.SetColour()
         Bishops.CheckMoves()
@@ -267,7 +267,7 @@ Public Class ChessBoard
 
     End Sub
     Private Sub BBishop2_Click(sender As Object, e As EventArgs) Handles BBishop2.Click
-        Dim Bishops As New Rook_Bishop_Queen(BBishop2.Left, BBishop2.Top, ChessPiece.Chesscolour.black, BBishop2)
+        Dim Bishops As New Bishop(BBishop2.Left, BBishop2.Top, ChessPiece.Chesscolour.black, BBishop2)
         clearbuttons()
         Bishops.SetColour()
         Bishops.CheckMoves()
@@ -275,7 +275,7 @@ Public Class ChessBoard
         colourOfPieces = "black"
     End Sub
     Private Sub WQueen_Click(sender As Object, e As EventArgs) Handles WQueen.Click
-        Dim queen As New Rook_Bishop_Queen(WQueen.Left, WQueen.Top, ChessPiece.Chesscolour.white, WQueen)
+        Dim queen As New Queen(WQueen.Left, WQueen.Top, ChessPiece.Chesscolour.white, WQueen)
         clearbuttons()
         queen.SetColour()
         queen.CheckMoves()
@@ -283,7 +283,7 @@ Public Class ChessBoard
         colourOfPieces = "white"
     End Sub
     Private Sub BQueen_Click(sender As Object, e As EventArgs) Handles BQueen.Click
-        Dim queen As New Rook_Bishop_Queen(BQueen.Left, BQueen.Top, ChessPiece.Chesscolour.black, BQueen)
+        Dim queen As New Queen(BQueen.Left, BQueen.Top, ChessPiece.Chesscolour.black, BQueen)
         clearbuttons()
         queen.SetColour()
         queen.CheckMoves()

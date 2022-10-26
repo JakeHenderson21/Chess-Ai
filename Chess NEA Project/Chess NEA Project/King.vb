@@ -1,7 +1,6 @@
 ﻿Public Class King
     Inherits ChessPiece
     Public kingmoves(7) As Boolean
-
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button)
         MyBase.New(X, Y, chess_colour, piece)
     End Sub
@@ -50,17 +49,15 @@
         Next
         If ChessBoard.CheckMode = False Then
             For i = 0 To 7
+                ChessBoard.checkKing = True
                 ChessBoard.buttonsToUse = ChessBoard.KingButtons(i)
                 checkplaceholder(i) = checktheking.Check_King()
                 resetkingbuttonlocations()
             Next
-
             If kingmoves(0) = True And checkplaceholder(0) = False Then
-
                 ChessBoard.Button65.Show()
             End If
             If kingmoves(1) = True And checkplaceholder(1) = False Then
-
                 ChessBoard.Button66.Show()
             End If
             If kingmoves(2) = True And checkplaceholder(2) = False Then
@@ -91,8 +88,6 @@
         For Each p In kingmoves
             p = False
         Next
-
-
     End Sub
     Public Overrides Sub rearrangechecks(ByRef temppostionscore As Integer)
         If temppostionscore = 0 Then
@@ -117,7 +112,6 @@
             ty = -77
         End If
     End Sub
-
     Sub resetkingbuttonlocations()
          ChessBoard.Button65.Location = New Point(X - 77, Y)
         ChessBoard.Button66.Location = New Point(X - 77, Y + 77)

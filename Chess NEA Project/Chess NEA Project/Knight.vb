@@ -1,7 +1,6 @@
 ﻿Public Class Knight
     Inherits ChessPiece
     Public knightmoves(7) As Boolean
-
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button)
         MyBase.New(X, Y, chess_colour, piece)
     End Sub
@@ -22,7 +21,6 @@
         End If
         For counter = 0 To 7
             For Each pieces In pieces1
-
                 temppostionscore = counter
                 rearrangechecks(temppostionscore)
                 If pieces.Left = piece.Left + tx And pieces.Top = piece.Top + ty Then

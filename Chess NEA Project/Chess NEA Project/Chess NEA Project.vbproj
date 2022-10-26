@@ -86,6 +86,7 @@
     <Import Include="System.Threading.Tasks" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bishop.vb" />
     <Compile Include="Check_Checkmate.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -123,6 +124,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Pawn.vb" />
+    <Compile Include="Queen.vb" />
     <Compile Include="Rook.vb" />
   </ItemGroup>
   <ItemGroup>
