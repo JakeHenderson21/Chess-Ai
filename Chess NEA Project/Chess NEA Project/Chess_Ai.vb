@@ -1,4 +1,5 @@
 ﻿Public Class Chess_Ai
+    Private LegalMoveNames As String
     Private NumberlegalMoves As Integer
     Private inputLayers(NumberlegalMoves) As Double
     Private hiddenLayer(3, NumberlegalMoves) As Double
