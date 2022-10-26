@@ -188,7 +188,7 @@
     End Sub
     Public Overridable Sub CheckMoves()
         Dim xcoordinate, ycoordinate, piecemove, l, tempscoremove, temppostionscore As Integer
-        temppostionscore = 0
+        temppostionscore = count
         For t = startofloop To endofloop
             change = False
             piecemove = 0

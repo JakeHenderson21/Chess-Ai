@@ -114,6 +114,7 @@
         For Each piece In RookSelectedPieces
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
             Rooks.SetColour()
+            Rooks.SetLoopBoundaries()
             Rooks.CheckMoves()
             chess_piece = piece
             For buttoncheck = 0 To 3
@@ -147,6 +148,7 @@
         For Each piece In BishopSelectedPieces
             Dim Bishops As New Bishop(piece.Left, piece.Top, chesscolour, piece)
             Bishops.SetColour()
+            Bishops.SetLoopBoundaries()
             Bishops.CheckMoves()
             chess_piece = piece
             For buttoncheck = 4 To 7
@@ -179,6 +181,7 @@
         End If
         Dim Queens As New Queen(QueensSelectedPieces.Left, QueensSelectedPieces.Top, chesscolour, QueensSelectedPieces)
         Queens.SetColour()
+        Queens.SetLoopBoundaries()
         Queens.CheckMoves()
         chess_piece = QueensSelectedPieces
         For buttoncheck = 0 To 7
@@ -243,7 +246,7 @@
         End If
         Return result
     End Function
-    Public Function MoveSelector(ByRef buttoncheck As Integer, ByVal rooks As Rook_Bishop_Queen)
+    Public Function MoveSelector(buttoncheck, rooks)
         Dim result(resultID) As Button
         If rooks.piece Is ChessBoard.WRook1 Or rooks.piece Is ChessBoard.WRook2 Or rooks.piece Is ChessBoard.BRook1 Or rooks.piece Is ChessBoard.BRook2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen Then
             If buttoncheck = 0 Then

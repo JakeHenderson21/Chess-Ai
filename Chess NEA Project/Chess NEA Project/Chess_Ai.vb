@@ -1,4 +1,5 @@
-﻿Public Class Chess_Ai
+﻿Imports System.IO
+Public Class Chess_Ai
     Private LegalMoveNames As New List(Of Button)
     Private LegalMoveXCoordinates(LegalMoveNames.Count, 7) As Integer
     Private LegalMoveYCoordinates(LegalMoveNames.Count, 7) As Integer
@@ -12,19 +13,48 @@
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
     Public Sub New()
-
+        If My.Computer.FileSystem.FileExists("testfile.txt") Then
+        Else
+            File.Create("testfile.txt")
+        End If
     End Sub
     Public Sub CheckingForLegalMoves()
         CheckPawns()
-
+        CheckRooks()
+        CheckKnights()
+        CheckBishops()
+        CheckQueen()
+        CheckKing()
+        LegalMoveNames.ToArray()
+        For Each button In LegalMoveNames
+            File.Open(1, "testfile.txt", OpenMode.Append)
+            PrintLine(1, button.Name)
+            FileClose(1)
+        Next
     End Sub
     Public Sub CheckButtonsEnabled(Piece)
+        Dim Ai_X_Coord, Ai_Y_Coord As Integer
         For i = StartOfLoop To EndofLoop
             If ChessBoard.buttonmoves(i).Enabled = True Then
                 LegalMoveNames.Add(Piece)
-                LegalMoveXCoordinates(LegalMoveNames.Count, Piece.Left / 77) = Piece.Left
-                LegalMoveYCoordinates(LegalMoveNames.Count, Piece.Top / 77) = Piece.Top
                 NumberlegalMoves += 1
+                If Piece.left = 0 Then
+                    Ai_X_Coord = 0
+                Else
+                    Ai_X_Coord = Piece.left / 77
+                End If
+                If Piece.top = 0 Then
+                    Ai_Y_Coord = 0
+                Else
+                    Ai_Y_Coord = Piece.top / 77
+                End If
+                If NumberlegalMoves = 0 Then
+                Else
+                    NumberlegalMoves -= 1
+                End If
+                LegalMoveXCoordinates(NumberlegalMoves, Ai_X_Coord) = Piece.Left
+                LegalMoveYCoordinates(NumberlegalMoves, Ai_Y_Coord) = Piece.Top
+
             End If
         Next
     End Sub
@@ -47,6 +77,7 @@
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
             FirstCheckNumber += 1
             Rooks.SetColour()
+            Rooks.SetLoopBoundaries()
             Rooks.CheckMoves()
             ChessBoard.chess_piece = piece
             StartOfLoop = 0
@@ -55,15 +86,57 @@
         Next
     End Sub
     Public Sub CheckBishops()
-
+        Dim chesscolour As ChessPiece.Chesscolour
+        For Each piece In Check_Checkmate.Bpawn
+            Dim Bishops As New Bishop(piece.Left, piece.Top, chesscolour, piece)
+            FirstCheckNumber += 1
+            Bishops.SetColour()
+            Bishops.SetLoopBoundaries()
+            Bishops.CheckMoves()
+            ChessBoard.chess_piece = piece
+            StartOfLoop = 32
+            EndofLoop = 63
+            CheckButtonsEnabled(Bishops.piece)
+        Next
     End Sub
     Public Sub CheckKnights()
-
+        Dim chesscolour As ChessPiece.Chesscolour
+        For Each piece In Check_Checkmate.Bpawn
+            Dim Knights As New Knight(piece.Left, piece.Top, chesscolour, piece)
+            FirstCheckNumber += 1
+            Knights.SetColour()
+            Knights.CheckMoves()
+            ChessBoard.chess_piece = piece
+            StartOfLoop = 0
+            EndofLoop = 7
+            CheckButtonsEnabled(Knights.piece)
+        Next
     End Sub
     Public Sub CheckQueen()
-
+        Dim chesscolour As ChessPiece.Chesscolour
+        For Each piece In Check_Checkmate.Bpawn
+            Dim Queens As New Queen(piece.Left, piece.Top, chesscolour, piece)
+            FirstCheckNumber += 1
+            Queens.SetColour()
+            Queens.SetLoopBoundaries()
+            Queens.CheckMoves()
+            ChessBoard.chess_piece = piece
+            StartOfLoop = 0
+            EndofLoop = 7
+            CheckButtonsEnabled(Queens.piece)
+        Next
     End Sub
     Public Sub CheckKing()
-
+        Dim chesscolour As ChessPiece.Chesscolour
+        For Each piece In Check_Checkmate.Bpawn
+            Dim Kings As New King(piece.Left, piece.Top, chesscolour, piece)
+            FirstCheckNumber += 1
+            Kings.SetColour()
+            Kings.CheckMoves()
+            ChessBoard.chess_piece = piece
+            StartOfLoop = 0
+            EndofLoop = 7
+            CheckButtonsEnabled(Kings.piece)
+        Next
     End Sub
 End Class

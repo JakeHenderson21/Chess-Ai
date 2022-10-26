@@ -213,6 +213,7 @@ Public Class ChessBoard
         Dim rooks As New Rook(WRook1.Left, WRook1.Top, ChessPiece.Chesscolour.white, WRook1)
         clearbuttons()
         rooks.SetColour()
+        rooks.SetLoopBoundaries()
         rooks.CheckMoves()
         chess_piece = WRook1
         colourOfPieces = "white"
@@ -221,6 +222,7 @@ Public Class ChessBoard
         Dim rooks As New Rook(WRook2.Left, WRook2.Top, ChessPiece.Chesscolour.white, WRook2)
         clearbuttons()
         rooks.SetColour()
+        rooks.SetLoopBoundaries()
         rooks.CheckMoves()
         chess_piece = WRook2
         colourOfPieces = "white"
@@ -229,6 +231,7 @@ Public Class ChessBoard
         Dim rooks As New Rook(BRook1.Left, BRook1.Top, ChessPiece.Chesscolour.black, BRook1)
         clearbuttons()
         rooks.SetColour()
+        rooks.SetLoopBoundaries()
         rooks.CheckMoves()
         chess_piece = BRook1
         colourOfPieces = "black"
@@ -237,6 +240,7 @@ Public Class ChessBoard
         Dim rooks As New Rook(BRook2.Left, BRook2.Top, ChessPiece.Chesscolour.black, BRook2)
         clearbuttons()
         rooks.SetColour()
+        rooks.SetLoopBoundaries()
         rooks.CheckMoves()
         chess_piece = BRook2
         colourOfPieces = "black"
@@ -245,6 +249,7 @@ Public Class ChessBoard
         Dim Bishops As New Bishop(WBishop1.Left, WBishop1.Top, ChessPiece.Chesscolour.white, WBishop1)
         clearbuttons()
         Bishops.SetColour()
+        Bishops.SetLoopBoundaries()
         Bishops.CheckMoves()
         chess_piece = WBishop1
         colourOfPieces = "white"
@@ -253,6 +258,7 @@ Public Class ChessBoard
         Dim Bishops As New Bishop(WBishop2.Left, WBishop2.Top, ChessPiece.Chesscolour.white, WBishop2)
         clearbuttons()
         Bishops.SetColour()
+        Bishops.SetLoopBoundaries()
         Bishops.CheckMoves()
         chess_piece = WBishop2
         colourOfPieces = "white"
@@ -261,6 +267,7 @@ Public Class ChessBoard
         Dim Bishops As New Bishop(BBishop1.Left, BBishop1.Top, ChessPiece.Chesscolour.black, BBishop1)
         clearbuttons()
         Bishops.SetColour()
+        Bishops.SetLoopBoundaries()
         Bishops.CheckMoves()
         chess_piece = BBishop1
         colourOfPieces = "black"
@@ -270,6 +277,7 @@ Public Class ChessBoard
         Dim Bishops As New Bishop(BBishop2.Left, BBishop2.Top, ChessPiece.Chesscolour.black, BBishop2)
         clearbuttons()
         Bishops.SetColour()
+        Bishops.SetLoopBoundaries()
         Bishops.CheckMoves()
         chess_piece = BBishop2
         colourOfPieces = "black"
@@ -278,6 +286,7 @@ Public Class ChessBoard
         Dim queen As New Queen(WQueen.Left, WQueen.Top, ChessPiece.Chesscolour.white, WQueen)
         clearbuttons()
         queen.SetColour()
+        queen.SetLoopBoundaries()
         queen.CheckMoves()
         chess_piece = WQueen
         colourOfPieces = "white"
@@ -286,6 +295,7 @@ Public Class ChessBoard
         Dim queen As New Queen(BQueen.Left, BQueen.Top, ChessPiece.Chesscolour.black, BQueen)
         clearbuttons()
         queen.SetColour()
+        queen.SetLoopBoundaries()
         queen.CheckMoves()
         chess_piece = BQueen
         colourOfPieces = "black"
@@ -557,7 +567,8 @@ Public Class ChessBoard
         Next
     End Sub
     Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
-        MsgBox(Button4.Left & "," & Button4.Top)
+        Dim Ai As New Chess_Ai
+        Ai.CheckingForLegalMoves()
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)
