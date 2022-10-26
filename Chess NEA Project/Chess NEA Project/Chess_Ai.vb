@@ -25,17 +25,11 @@ Public Class Chess_Ai
         CheckBishops()
         CheckQueen()
         CheckKing()
-        LegalMoveNames.ToArray()
-        For Each button In LegalMoveNames
-            File.Open(1, "testfile.txt", OpenMode.Append)
-            PrintLine(1, button.Name)
-            FileClose(1)
-        Next
     End Sub
     Public Sub CheckButtonsEnabled(Piece)
         Dim Ai_X_Coord, Ai_Y_Coord As Integer
         For i = StartOfLoop To EndofLoop
-            If ChessBoard.buttonmoves(i).Enabled = True Then
+            If ChessBoard.buttonmoves(i).Visible = True Then
                 LegalMoveNames.Add(Piece)
                 NumberlegalMoves += 1
                 If Piece.left = 0 Then
@@ -54,12 +48,11 @@ Public Class Chess_Ai
                 End If
                 LegalMoveXCoordinates(NumberlegalMoves, Ai_X_Coord) = Piece.Left
                 LegalMoveYCoordinates(NumberlegalMoves, Ai_Y_Coord) = Piece.Top
-
             End If
         Next
     End Sub
     Public Sub CheckPawns()
-        Dim chesscolour As ChessPiece.Chesscolour
+        Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         For Each piece In Check_Checkmate.Bpawn
             Dim Pawns As New Pawn(piece.Left, piece.Top, chesscolour, piece, ChessBoard.FirstCheck(FirstCheckNumber))
             FirstCheckNumber += 1
@@ -72,8 +65,8 @@ Public Class Chess_Ai
         Next
     End Sub
     Public Sub CheckRooks()
-        Dim chesscolour As ChessPiece.Chesscolour
-        For Each piece In Check_Checkmate.Bpawn
+        Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
+        For Each piece In Check_Checkmate.Brook
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
             FirstCheckNumber += 1
             Rooks.SetColour()
@@ -86,8 +79,8 @@ Public Class Chess_Ai
         Next
     End Sub
     Public Sub CheckBishops()
-        Dim chesscolour As ChessPiece.Chesscolour
-        For Each piece In Check_Checkmate.Bpawn
+        Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
+        For Each piece In Check_Checkmate.BBishop
             Dim Bishops As New Bishop(piece.Left, piece.Top, chesscolour, piece)
             FirstCheckNumber += 1
             Bishops.SetColour()
@@ -100,8 +93,8 @@ Public Class Chess_Ai
         Next
     End Sub
     Public Sub CheckKnights()
-        Dim chesscolour As ChessPiece.Chesscolour
-        For Each piece In Check_Checkmate.Bpawn
+        Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
+        For Each piece In Check_Checkmate.BKnight
             Dim Knights As New Knight(piece.Left, piece.Top, chesscolour, piece)
             FirstCheckNumber += 1
             Knights.SetColour()
@@ -113,9 +106,10 @@ Public Class Chess_Ai
         Next
     End Sub
     Public Sub CheckQueen()
-        Dim chesscolour As ChessPiece.Chesscolour
-        For Each piece In Check_Checkmate.Bpawn
-            Dim Queens As New Queen(piece.Left, piece.Top, chesscolour, piece)
+        Dim piece As Button
+        piece = ChessBoard.BQueen
+        Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
+        Dim Queens As New Queen(piece.Left, piece.Top, chesscolour, piece)
             FirstCheckNumber += 1
             Queens.SetColour()
             Queens.SetLoopBoundaries()
@@ -123,20 +117,19 @@ Public Class Chess_Ai
             ChessBoard.chess_piece = piece
             StartOfLoop = 0
             EndofLoop = 7
-            CheckButtonsEnabled(Queens.piece)
-        Next
+        CheckButtonsEnabled(Queens.piece)
     End Sub
     Public Sub CheckKing()
-        Dim chesscolour As ChessPiece.Chesscolour
-        For Each piece In Check_Checkmate.Bpawn
-            Dim Kings As New King(piece.Left, piece.Top, chesscolour, piece)
+        Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
+        Dim piece As Button
+        piece = ChessBoard.BKing
+        Dim Kings As New King(piece.Left, piece.Top, chesscolour, piece)
             FirstCheckNumber += 1
             Kings.SetColour()
             Kings.CheckMoves()
             ChessBoard.chess_piece = piece
             StartOfLoop = 0
             EndofLoop = 7
-            CheckButtonsEnabled(Kings.piece)
-        Next
+        CheckButtonsEnabled(Kings.piece)
     End Sub
 End Class
