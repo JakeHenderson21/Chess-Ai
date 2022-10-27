@@ -154,6 +154,7 @@ Public Class ChessBoard
             minutes -= 1
         End If
         WhiteTextBox.Text = Format(minutes, "00") & ":" & Format(seconds, "00")
+        WhiteTimeRunOut()
     End Sub
     Private Sub BlackTime_Tick(sender As Object, e As EventArgs) Handles BlackTime.Tick
         If seconds1 > 0 Then
@@ -163,6 +164,19 @@ Public Class ChessBoard
             minutes1 -= 1
         End If
         BlackTextBox.Text = Format(minutes1, "00") & ":" & Format(seconds1, "00")
+        BlackTimeRunOut()
+    End Sub
+    Private Sub WhiteTimeRunOut()
+        If minutes = 0 And seconds = 0 Then
+            WhiteTime.Enabled = False
+            MsgBox("White ran out of time, black wins!")
+        End If
+    End Sub
+    Private Sub BlackTimeRunOut()
+        If minutes1 = 0 And seconds1 = 0 Then
+            BlackTime.Enabled = False
+            MsgBox("Black ran out of time, White wins!")
+        End If
     End Sub
     Private Sub setupBoard()
         For Each piece In Whitepieces

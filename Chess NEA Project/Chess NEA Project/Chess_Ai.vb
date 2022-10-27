@@ -14,11 +14,15 @@ Public Class Chess_Ai
     Private StartOfLoop, EndofLoop As Integer
     Public Sub New()
         If My.Computer.FileSystem.FileExists("testfile.txt") Then
+            File.Delete("testfile.txt")
+            File.Create("testfile.txt")
         Else
             File.Create("testfile.txt")
         End If
     End Sub
     Public Sub CheckingForLegalMoves()
+        Dim hgfd As Integer
+
         CheckPawns()
         CheckRooks()
         CheckKnights()
@@ -30,6 +34,7 @@ Public Class Chess_Ai
             FileOpen(1, "testfile.txt", OpenMode.Append)
             PrintLine(1, button.Name)
             FileClose(1)
+            hgfd += 1
         Next
     End Sub
     Public Sub CheckButtonsEnabled(Piece)
@@ -135,7 +140,7 @@ Public Class Chess_Ai
             Kings.CheckMoves()
             ChessBoard.chess_piece = piece
             StartOfLoop = 0
-            EndofLoop = 7
+        EndofLoop = 7
         CheckButtonsEnabled(Kings.piece)
     End Sub
 End Class
