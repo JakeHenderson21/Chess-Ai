@@ -3,21 +3,45 @@ Public Class Chess_Ai
     Private LegalMoveNames As New List(Of Button)
     Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
     Private NumberlegalMoves As Integer
-    Private inputLayers(NumberlegalMoves) As Double
-    Private hiddenLayer(3, NumberlegalMoves) As Double
-    Private outputLayer(NumberlegalMoves + 1) As Double
-    Private hiddenLayerWeights(3, NumberlegalMoves + 1) As Double
-    Private hiddenBias(3, NumberlegalMoves) As Double
-    Private outputBias(NumberlegalMoves) As Double
+    Private InputLayer(7, 7, 5) As Integer
+    Private HiddenLayer(255, 3) As Double
+    Private Outputlayer(1882) As Double
+    Private InputToHiddenLayerWeights(383, 255) As Double
+    Private HiddenLayerWeights(255, 255, 2) As Double
+    Private HiddenToOutputLayerWeights(255, 1882) As Double
+    Private HiddenBias(255, 3) As Double
+    Private OutputBias(1882) As Double
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
     Public Sub New()
+
         If My.Computer.FileSystem.FileExists("testfile.txt") Then
             File.Delete("testfile.txt")
             File.Create("testfile.txt")
         Else
             File.Create("testfile.txt")
         End If
+    End Sub
+    Private Sub Initilise_Weights_And_Bias()
+        Dim randomNumber As New Random
+        For Each Weight In InputToHiddenLayerWeights
+            Weight = randomNumber.NextDouble
+        Next
+        For Each Weight In HiddenLayerWeights
+            Weight = randomNumber.NextDouble
+        Next
+        For Each Weight In HiddenToOutputLayerWeights
+            Weight = randomNumber.NextDouble
+        Next
+        For Each bias In HiddenBias
+            bias = randomNumber.NextDouble
+        Next
+        For Each bias In OutputBias
+            bias = randomNumber.NextDouble
+        Next
+    End Sub
+    Private Sub Neural_Network()
+
     End Sub
     Public Sub CheckingForLegalMoves()
         CheckPawns()

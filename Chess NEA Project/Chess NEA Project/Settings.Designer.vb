@@ -52,9 +52,9 @@ Partial Class Settings
         Me.Label2.AutoSize = True
         Me.Label2.Location = New System.Drawing.Point(175, 80)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(24, 17)
+        Me.Label2.Size = New System.Drawing.Size(16, 17)
         Me.Label2.TabIndex = 2
-        Me.Label2.Text = "00"
+        Me.Label2.Text = "0"
         '
         'CancelBtn
         '
