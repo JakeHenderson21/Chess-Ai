@@ -1,20 +1,20 @@
-BPawn1
-BPawn1
-BPawn2
-BPawn2
-BPawn3
-BPawn3
-BPawn4
-BPawn4
-BPawn5
-BPawn5
-BPawn6
-BPawn6
-BPawn7
-BPawn7
-BPawn8
-BPawn8
-BKnight1
-BKnight1
-BKnight2
-BKnight2
+BPawn1 (0,1) (0,2)
+BPawn1 (0,1) (0,3)
+BPawn2 (1,1) (1,2)
+BPawn2 (1,1) (1,3)
+BPawn3 (2,1) (2,2)
+BPawn3 (2,1) (2,3)
+BPawn4 (3,1) (3,2)
+BPawn4 (3,1) (3,3)
+BPawn5 (4,1) (4,2)
+BPawn5 (4,1) (4,3)
+BPawn6 (5,1) (5,2)
+BPawn6 (5,1) (5,3)
+BPawn7 (6,1) (6,2)
+BPawn7 (6,1) (6,3)
+BPawn8 (7,1) (7,2)
+BPawn8 (7,1) (7,3)
+BKnight1 (1,0) (0,2)
+BKnight1 (1,0) (2,2)
+BKnight2 (6,0) (5,2)
+BKnight2 (6,0) (7,2)

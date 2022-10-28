@@ -22,3 +22,4 @@ C:\Users\jakeh\Source\Repos\JakeHenderson21\Chess-Ai\Chess NEA Project\Chess NEA
 C:\Users\jakeh\Source\Repos\JakeHenderson21\Chess-Ai\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.xml
 C:\Users\jakeh\Source\Repos\JakeHenderson21\Chess-Ai\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.pdb
 C:\Users\jakeh\source\repos\JakeHenderson21\Chess-Ai\Chess NEA Project\Chess NEA Project\obj\Debug\Chess_NEA_Project.MainMenu.resources
+C:\Users\jakeh\source\repos\JakeHenderson21\Chess-Ai\Chess NEA Project\Chess NEA Project\obj\Debug\Chess_NEA_Project.Settings.resources

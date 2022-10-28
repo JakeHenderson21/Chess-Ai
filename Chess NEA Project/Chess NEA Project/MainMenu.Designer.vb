@@ -26,6 +26,7 @@ Partial Class MainMenu
         Me.Player_Vs_Player = New System.Windows.Forms.Button()
         Me.Player_Vs_Ai = New System.Windows.Forms.Button()
         Me.ExitBtn = New System.Windows.Forms.Button()
+        Me.SettingsBtn = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
         'Label1
@@ -49,7 +50,7 @@ Partial Class MainMenu
         '
         'Player_Vs_Ai
         '
-        Me.Player_Vs_Ai.Location = New System.Drawing.Point(254, 336)
+        Me.Player_Vs_Ai.Location = New System.Drawing.Point(254, 322)
         Me.Player_Vs_Ai.Name = "Player_Vs_Ai"
         Me.Player_Vs_Ai.Size = New System.Drawing.Size(178, 69)
         Me.Player_Vs_Ai.TabIndex = 2
@@ -58,12 +59,21 @@ Partial Class MainMenu
         '
         'ExitBtn
         '
-        Me.ExitBtn.Location = New System.Drawing.Point(254, 444)
+        Me.ExitBtn.Location = New System.Drawing.Point(254, 513)
         Me.ExitBtn.Name = "ExitBtn"
         Me.ExitBtn.Size = New System.Drawing.Size(178, 69)
         Me.ExitBtn.TabIndex = 3
         Me.ExitBtn.Text = "Exit"
         Me.ExitBtn.UseVisualStyleBackColor = True
+        '
+        'SettingsBtn
+        '
+        Me.SettingsBtn.Location = New System.Drawing.Point(254, 420)
+        Me.SettingsBtn.Name = "SettingsBtn"
+        Me.SettingsBtn.Size = New System.Drawing.Size(178, 69)
+        Me.SettingsBtn.TabIndex = 4
+        Me.SettingsBtn.Text = "Settings"
+        Me.SettingsBtn.UseVisualStyleBackColor = True
         '
         'MainMenu
         '
@@ -71,6 +81,7 @@ Partial Class MainMenu
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.SystemColors.ActiveBorder
         Me.ClientSize = New System.Drawing.Size(700, 617)
+        Me.Controls.Add(Me.SettingsBtn)
         Me.Controls.Add(Me.ExitBtn)
         Me.Controls.Add(Me.Player_Vs_Ai)
         Me.Controls.Add(Me.Player_Vs_Player)
@@ -86,4 +97,5 @@ Partial Class MainMenu
     Friend WithEvents Player_Vs_Player As Button
     Friend WithEvents Player_Vs_Ai As Button
     Friend WithEvents ExitBtn As Button
+    Friend WithEvents SettingsBtn As Button
 End Class

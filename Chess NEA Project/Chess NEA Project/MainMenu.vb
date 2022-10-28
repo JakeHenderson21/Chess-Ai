@@ -6,4 +6,9 @@
         Me.Hide()
         ChessBoard.Show()
     End Sub
+
+    Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
+        Me.Hide()
+        Settings.Show()
+    End Sub
 End Class

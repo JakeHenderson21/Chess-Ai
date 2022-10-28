@@ -122,10 +122,14 @@ Public Class ChessBoard
         WhiteTime.Start()
         seconds = 0
         seconds1 = 0
-        minutes = 0
-        minutes1 = 0
-        WhiteTextBox.Text = "05" & ":" & "00"
-        BlackTextBox.Text = "05" & ":" & "00"
+        If minutes = 0 Then
+            minutes = 5
+        End If
+        If minutes1 = 0 Then
+            minutes1 = 5
+        End If
+        WhiteTextBox.Text = minutes & ":" & "00"
+        BlackTextBox.Text = minutes1 & ":" & "00"
         setupBoard()
         For i = 0 To 15
             Allpieces(i) = Whitepieces(i)
@@ -133,8 +137,7 @@ Public Class ChessBoard
         Next
         clearbuttons()
         blackpiecedisabler()
-        minutes = 5
-        minutes1 = 5
+
         For i = 0 To 7
             KingButtons(i) = buttonmoves(i + 64)
         Next

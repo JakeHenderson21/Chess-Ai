@@ -1,8 +1,7 @@
 ﻿Imports System.IO
 Public Class Chess_Ai
     Private LegalMoveNames As New List(Of Button)
-    Private LegalMoveXCoordinates(LegalMoveNames.Count, 7) As Integer
-    Private LegalMoveYCoordinates(LegalMoveNames.Count, 7) As Integer
+    Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
     Private NumberlegalMoves As Integer
     Private inputLayers(NumberlegalMoves) As Double
     Private hiddenLayer(3, NumberlegalMoves) As Double
@@ -21,8 +20,6 @@ Public Class Chess_Ai
         End If
     End Sub
     Public Sub CheckingForLegalMoves()
-        Dim hgfd As Integer
-
         CheckPawns()
         CheckRooks()
         CheckKnights()
@@ -30,35 +27,30 @@ Public Class Chess_Ai
         CheckQueen()
         CheckKing()
         LegalMoveNames.ToArray()
+        LegalMoveXCoordinates.ToArray()
+        LegalMoveYCoordinates.ToArray()
+        Dim increaser As Integer
         For Each button In LegalMoveNames
             FileOpen(1, "testfile.txt", OpenMode.Append)
-            PrintLine(1, button.Name)
+            PrintLine(1, button.Name & " (" & LegalMoveXCoordinates(LegalMoveNames.IndexOf(button)) & "," & LegalMoveYCoordinates(LegalMoveNames.IndexOf(button)) & ")" & " (" & LegalButtonXCoordinates(LegalMoveNames.IndexOf(button) + increaser) & "," & LegalButtonYCoordinates(LegalMoveNames.IndexOf(button) + increaser) & ")")
+            If increaser = 0 Then
+                increaser = 1
+            Else
+                increaser = 0
+            End If
             FileClose(1)
-            hgfd += 1
         Next
     End Sub
     Public Sub CheckButtonsEnabled(Piece)
-        Dim Ai_X_Coord, Ai_Y_Coord As Integer
         For i = StartOfLoop To EndofLoop
             If ChessBoard.buttonmoves(i).Visible = True Then
+                ChessBoard.buttonmoves(i).Name = ChessBoard.buttonmoves(i).Name
                 LegalMoveNames.Add(Piece)
                 NumberlegalMoves += 1
-                If Piece.left = 0 Then
-                    Ai_X_Coord = 0
-                Else
-                    Ai_X_Coord = Piece.left / 77
-                End If
-                If Piece.top = 0 Then
-                    Ai_Y_Coord = 0
-                Else
-                    Ai_Y_Coord = Piece.top / 77
-                End If
-                If NumberlegalMoves = 0 Then
-                Else
-                    NumberlegalMoves -= 1
-                End If
-                LegalMoveXCoordinates(NumberlegalMoves, Ai_X_Coord) = Piece.Left
-                LegalMoveYCoordinates(NumberlegalMoves, Ai_Y_Coord) = Piece.Top
+                LegalButtonXCoordinates.Add(ChessBoard.buttonmoves(i).Left / 77)
+                LegalButtonYCoordinates.Add(ChessBoard.buttonmoves(i).Top / 77)
+                LegalMoveXCoordinates.Add(Piece.Left / 77)
+                LegalMoveYCoordinates.Add(Piece.Top / 77)
             End If
         Next
     End Sub
