@@ -584,7 +584,7 @@ Public Class ChessBoard
     End Sub
     Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
         Dim Ai As New Chess_Ai
-        Ai.CheckingForLegalMoves()
+        Ai.Initilise_Weights_And_Bias()
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)

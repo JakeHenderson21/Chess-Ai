@@ -22,7 +22,7 @@ Public Class Chess_Ai
             File.Create("testfile.txt")
         End If
     End Sub
-    Private Sub Initilise_Weights_And_Bias()
+    Public Sub Initilise_Weights_And_Bias()
         Dim randomNumber As New Random
         For Each Weight In InputToHiddenLayerWeights
             Weight = randomNumber.NextDouble
@@ -40,9 +40,51 @@ Public Class Chess_Ai
             bias = randomNumber.NextDouble
         Next
     End Sub
-    Private Sub Neural_Network()
-
+    Public Sub NextMoveDecider()
+        Dim PieceChecker As New List(Of Button)
+        For xcoord = 0 To 7
+            For ycoord = 0 To 7
+                For PieceType = 0 To 5
+                    PieceChecker = PieceTypeIdentifier(PieceType)
+                    PieceChecker.ToArray()
+                    For Each piece In PieceChecker
+                        If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
+                            InputLayer(xcoord, ycoord, PieceType) = 1
+                        Else
+                            InputLayer(xcoord, ycoord, PieceType) = 0
+                        End If
+                    Next
+                    PieceChecker.Clear()
+                Next
+            Next
+        Next
     End Sub
+    Public Function PieceTypeIdentifier(PieceType)
+        Dim result As New List(Of Button)
+        result.ToArray()
+        If PieceType = 0 Then
+            For Each piece In Check_Checkmate.Bpawn
+                result.Add(piece)
+            Next
+        ElseIf PieceType = 1 Then
+            For Each piece In Check_Checkmate.Brook
+                result.Add(piece)
+            Next
+        ElseIf PieceType = 2 Then
+            For Each piece In Check_Checkmate.BBishop
+                result.Add(piece)
+            Next
+        ElseIf PieceType = 3 Then
+            For Each piece In Check_Checkmate.BKnight
+                result.Add(piece)
+            Next
+        ElseIf PieceType = 4 Then
+            result.Add(ChessBoard.BQueen)
+        ElseIf PieceType = 5 Then
+            result.Add(ChessBoard.BKing)
+        End If
+        Return result
+    End Function
     Public Sub CheckingForLegalMoves()
         CheckPawns()
         CheckRooks()
