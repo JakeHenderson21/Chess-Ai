@@ -3,7 +3,7 @@ Public Class Chess_Ai
     Private LegalMoveNames As New List(Of Button)
     Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
     Private NumberlegalMoves As Integer
-    Private InputLayer(7, 7, 5) As Integer
+    Private InputLayer(383) As Double
     Private HiddenLayer(255, 3) As Double
     Private Outputlayer(1882) As Double
     Private InputToHiddenLayerWeights(383, 255) As Double
@@ -15,50 +15,109 @@ Public Class Chess_Ai
     Private StartOfLoop, EndofLoop As Integer
     Public Sub New()
 
-        If My.Computer.FileSystem.FileExists("testfile.txt") Then
-            File.Delete("testfile.txt")
-            File.Create("testfile.txt")
-        Else
-            File.Create("testfile.txt")
-        End If
+        'If My.Computer.FileSystem.FileExists("testfile.txt") Then
+        '    File.Delete("testfile.txt")
+        '    File.Create("testfile.txt")
+        'Else
+        '    File.Create("testfile.txt")
+        'End If
     End Sub
     Public Sub Initilise_Weights_And_Bias()
         Dim randomNumber As New Random
-        For Each Weight In InputToHiddenLayerWeights
-            Weight = randomNumber.NextDouble
+        For i = 0 To 383
+            For j = 0 To 255
+                InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble
+            Next
         Next
-        For Each Weight In HiddenLayerWeights
-            Weight = randomNumber.NextDouble
+        For k = 0 To 2
+            For i = 0 To 255
+                For j = 0 To 255
+                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble
+                Next
+            Next
         Next
-        For Each Weight In HiddenToOutputLayerWeights
-            Weight = randomNumber.NextDouble
+        For i = 0 To 255
+            For j = 0 To 1882
+                HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble
+            Next
         Next
-        For Each bias In HiddenBias
-            bias = randomNumber.NextDouble
+        For k = 0 To 3
+            For i = 0 To 255
+                HiddenBias(i, k) = randomNumber.Next(80, 90)
+
+            Next
         Next
-        For Each bias In OutputBias
-            bias = randomNumber.NextDouble
+        For i = 0 To 1882
+            OutputBias(i) = randomNumber.Next(80, 90)
+
         Next
     End Sub
     Public Sub NextMoveDecider()
         Dim PieceChecker As New List(Of Button)
-        For xcoord = 0 To 7
-            For ycoord = 0 To 7
-                For PieceType = 0 To 5
-                    PieceChecker = PieceTypeIdentifier(PieceType)
-                    PieceChecker.ToArray()
-                    For Each piece In PieceChecker
-                        If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
-                            InputLayer(xcoord, ycoord, PieceType) = 1
-                        Else
-                            InputLayer(xcoord, ycoord, PieceType) = 0
-                        End If
-                    Next
-                    PieceChecker.Clear()
+        'For xcoord = 0 To 7
+        '    For ycoord = 0 To 7
+        '        For PieceType = 0 To 5
+        '            PieceChecker = PieceTypeIdentifier(PieceType)
+        '            PieceChecker.ToArray()
+        '            For Each piece In PieceChecker
+        '                If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
+        '                    InputLayer(xcoord, ycoord, PieceType) = 1
+        '                Else
+        '                    InputLayer(xcoord, ycoord, PieceType) = 0
+        '                End If
+        '            Next
+        '            PieceChecker.Clear()
+        '        Next
+        '    Next
+        'Next
+        Dim Arraysorter(1882) As Double
+        Dim randomnumber As New Random
+        For i = 0 To 383
+            InputLayer(i) = randomnumber.NextDouble()
+        Next
+
+        For i = 0 To 255
+            For j = 0 To 383
+                HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
+            Next
+            HiddenLayer(i, 0) -= HiddenBias(i, 0)
+            HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
+        Next
+        For k = 1 To 3
+            For i = 0 To 255
+                For j = 0 To 255
+                    HiddenLayer(i, k) += HiddenLayer(j, k - 1) * HiddenLayerWeights(j, i, k - 1)
                 Next
+                HiddenLayer(i, k) -= HiddenBias(i, k)
+                HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
             Next
         Next
+        For i = 0 To 1882
+            For j = 0 To 255
+                Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
+            Next
+            Outputlayer(i) -= OutputBias(i)
+            Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
+        Next
+        Arraysorter = Outputlayer
+        Dim TempArraySorter As Double
+        Dim message As String = ""
+        For i = 0 To 1881
+            For j = 0 To 1881
+                If Arraysorter(j) > Arraysorter(j + 1) Then
+                    TempArraySorter = Arraysorter(j)
+                    Arraysorter(j) = Arraysorter(j + 1)
+                    Arraysorter(j + 1) = TempArraySorter
+                End If
+            Next
+        Next
+
     End Sub
+    Public Function SigmoidCalculation(input)
+        Dim result As Double
+        result = 1 / (1 + Math.E ^ (-1 * input))
+        Return result
+    End Function
     Public Function PieceTypeIdentifier(PieceType)
         Dim result As New List(Of Button)
         result.ToArray()
@@ -96,16 +155,16 @@ Public Class Chess_Ai
         LegalMoveXCoordinates.ToArray()
         LegalMoveYCoordinates.ToArray()
         Dim increaser As Integer
-        For Each button In LegalMoveNames
-            FileOpen(1, "testfile.txt", OpenMode.Append)
-            PrintLine(1, button.Name & " (" & LegalMoveXCoordinates(LegalMoveNames.IndexOf(button)) & "," & LegalMoveYCoordinates(LegalMoveNames.IndexOf(button)) & ")" & " (" & LegalButtonXCoordinates(LegalMoveNames.IndexOf(button) + increaser) & "," & LegalButtonYCoordinates(LegalMoveNames.IndexOf(button) + increaser) & ")")
-            If increaser = 0 Then
-                increaser = 1
-            Else
-                increaser = 0
-            End If
-            FileClose(1)
-        Next
+        'For Each button In LegalMoveNames
+        '    FileOpen(1, "testfile.txt", OpenMode.Append)
+        '    PrintLine(1, button.Name & " (" & LegalMoveXCoordinates(LegalMoveNames.IndexOf(button)) & "," & LegalMoveYCoordinates(LegalMoveNames.IndexOf(button)) & ")" & " (" & LegalButtonXCoordinates(LegalMoveNames.IndexOf(button) + increaser) & "," & LegalButtonYCoordinates(LegalMoveNames.IndexOf(button) + increaser) & ")")
+        '    If increaser = 0 Then
+        '        increaser = 1
+        '    Else
+        '        increaser = 0
+        '    End If
+        '    FileClose(1)
+        'Next
     End Sub
     Public Sub CheckButtonsEnabled(Piece)
         For i = StartOfLoop To EndofLoop
