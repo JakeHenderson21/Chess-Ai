@@ -588,7 +588,7 @@ Public Class ChessBoard
         Next
     End Sub
     Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
-
+        MsgBox(BKing.Left & "," & BKing.Top)
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)

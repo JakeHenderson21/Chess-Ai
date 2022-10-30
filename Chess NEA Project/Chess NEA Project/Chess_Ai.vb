@@ -16,79 +16,88 @@ Public Class Chess_Ai
     Private BestValue As Integer
     Private PieceOptions(203), ButtonOptions(203) As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
+    Private NumberOfMoves, NumberOfPieces, StartingNumber As Integer
     Public Sub New()
+        Dim buttoncount As Integer
         For i = 0 To 203
-            If i = 100 Then
-                i = i
-            End If
             PieceOptions(i) = PieceDeclarer(i)
         Next
-        For i = 0 To 203
-            For piece = 0 To 5
-                ButtonAmountDecider(piece)
-                For k = 0 To EndofInitialLoop
-                    For j = 0 To EndOfButtonLoop
-                        ButtonOptions(i) = ChessBoard.buttonmoves((j))
-                    Next
+        For k = 0 To 5
+            NumberOfPieces_Moves(k)
+            For i = 0 To NumberOfPieces
+                For j = StartingNumber To NumberOfMoves
+                    ButtonOptions(buttoncount) = ChessBoard.buttonmoves(j)
+                    If buttoncount = 203 Then
+                    Else
+                        buttoncount += 1
+                    End If
+
                 Next
             Next
         Next
+
         EndOfButtonLoop = EndOfButtonLoop
     End Sub
-    Private Sub ButtonAmountDecider(i)
-        If i = 0 Then
-            EndOfButtonLoop = 3
-            EndofInitialLoop = 7
-        ElseIf i = 1 Then
-            EndOfButtonLoop = 31
-            EndofInitialLoop = 1
-        ElseIf i = 2 Then
-            EndOfButtonLoop = 31
-            EndofInitialLoop = 1
-        ElseIf i = 3 Then
-            EndOfButtonLoop = 7
-            EndofInitialLoop = 1
-        ElseIf i = 4 Then
-            EndOfButtonLoop = 63
-            EndofInitialLoop = 0
-        ElseIf i = 5 Then
-            EndOfButtonLoop = 7
-            EndofInitialLoop = 0
+    Private Sub NumberOfPieces_Moves(k)
+        If k = 0 Then
+            StartingNumber = 0
+            NumberOfPieces = 7
+            NumberOfMoves = 3
+        ElseIf k = 1 Then
+            StartingNumber = 0
+            NumberOfPieces = 1
+            NumberOfMoves = 27
+        ElseIf k = 2 Then
+            StartingNumber = 0
+            NumberOfPieces = 1
+            NumberOfMoves = 27
+        ElseIf k = 3 Then
+            StartingNumber = 0
+            NumberOfPieces = 1
+            NumberOfMoves = 7
+        ElseIf k = 4 Then
+            StartingNumber = 0
+            NumberOfPieces = 0
+            NumberOfMoves = 55
+        ElseIf k = 5 Then
+            StartingNumber = 65
+            NumberOfPieces = 0
+            NumberOfMoves = 7
         End If
     End Sub
     Private Function PieceDeclarer(piece)
         Dim result As Button
-        If piece > 196 Then
+        If piece >= 196 Then
             result = ChessBoard.BKing
-        ElseIf piece > 188 Then
+        ElseIf piece >= 188 Then
             result = ChessBoard.BQueen
-        ElseIf piece > 132 Then
+        ElseIf piece >= 132 Then
             result = ChessBoard.BKnight2
-        ElseIf piece > 124 Then
+        ElseIf piece >= 124 Then
             result = ChessBoard.BKnight1
-        ElseIf piece > 116 Then
+        ElseIf piece >= 116 Then
             result = ChessBoard.BBishop2
-        ElseIf piece > 88 Then
+        ElseIf piece >= 88 Then
             result = ChessBoard.BBishop1
-        ElseIf piece > 60 Then
+        ElseIf piece >= 60 Then
             result = ChessBoard.BRook2
-        ElseIf piece > 32 Then
+        ElseIf piece >= 32 Then
             result = ChessBoard.BRook1
-        ElseIf piece > 28 Then
+        ElseIf piece >= 28 Then
             result = ChessBoard.BPawn8
-        ElseIf piece > 24 Then
+        ElseIf piece >= 24 Then
             result = ChessBoard.BPawn7
-        ElseIf piece > 20 Then
+        ElseIf piece >= 20 Then
             result = ChessBoard.BPawn6
-        ElseIf piece > 16 Then
+        ElseIf piece >= 16 Then
             result = ChessBoard.BPawn5
-        ElseIf piece > 12 Then
+        ElseIf piece >= 12 Then
             result = ChessBoard.BPawn4
-        ElseIf piece > 8 Then
+        ElseIf piece >= 8 Then
             result = ChessBoard.BPawn3
-        ElseIf piece > 4 Then
+        ElseIf piece >= 4 Then
             result = ChessBoard.BPawn2
-        ElseIf piece > 0 Then
+        ElseIf piece >= 0 Then
             result = ChessBoard.BPawn1
         End If
         Return result
@@ -97,29 +106,33 @@ Public Class Chess_Ai
         Dim randomNumber As New Random
         For i = 0 To 383
             For j = 0 To 255
-                InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble
+                Randomize()
+                InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble / 100
             Next
         Next
         For k = 0 To 2
             For i = 0 To 255
                 For j = 0 To 255
-                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble
+                    Randomize()
+                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble / 100
                 Next
             Next
         Next
         For i = 0 To 255
             For j = 0 To 203
-                HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble
+                Randomize()
+                HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble / 100
             Next
         Next
         For k = 0 To 3
             For i = 0 To 255
-                HiddenBias(i, k) = randomNumber.Next(80, 90)
+                Randomize()
+                HiddenBias(i, k) = randomNumber.Next(80, 90) / 100
 
             Next
         Next
         For i = 0 To 203
-            OutputBias(i) = randomNumber.Next(80, 90)
+            OutputBias(i) = randomNumber.Next(80, 90) / 100
 
         Next
         randomNumber = randomNumber
