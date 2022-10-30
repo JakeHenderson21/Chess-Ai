@@ -586,6 +586,7 @@ Public Class ChessBoard
         Dim Ai As New Chess_Ai
         Ai.Initilise_Weights_And_Bias()
         Ai.NextMoveDecider()
+
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)
