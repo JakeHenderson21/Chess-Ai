@@ -141,6 +141,11 @@ Public Class ChessBoard
         For i = 0 To 7
             KingButtons(i) = buttonmoves(i + 64)
         Next
+        If MainMenu.AiMode = True Then
+            For Each piece In Blackpieces
+                piece.Enabled = False
+            Next
+        End If
     End Sub
     Public Sub clearbuttons()
         For Each Button In buttonmoves
@@ -583,9 +588,6 @@ Public Class ChessBoard
         Next
     End Sub
     Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
-        Dim Ai As New Chess_Ai
-        Ai.Initilise_Weights_And_Bias()
-        Ai.NextMoveDecider()
 
     End Sub
     Public Sub setRemovedPieces(ByVal piece As Button)
@@ -664,7 +666,7 @@ Public Class ChessBoard
             BKing.Location = New Point(807, 520)
         End If
     End Sub
-    Private Sub blackpiecedisabler()
+    Public Sub blackpiecedisabler()
         AiTurn = False
         colourOfPieces = "white"
         For Each p In Blackpieces
@@ -687,15 +689,22 @@ Public Class ChessBoard
         For Each p In Whitepieces
             p.Enabled = False
         Next
-        For Each p In Blackpieces
-            For Each piece In BPiecesTaken
-                If piece IsNot p Then
-                    p.Enabled = True
-                Else
-                    p.Enabled = False
-                    Exit For
-                End If
+        If MainMenu.AiMode = True Then
+            Dim Ai As New Chess_Ai
+            Ai.Initilise_Weights_And_Bias()
+            Ai.NextMoveDecider()
+
+        Else
+            For Each p In Blackpieces
+                For Each piece In BPiecesTaken
+                    If piece IsNot p Then
+                        p.Enabled = True
+                    Else
+                        p.Enabled = False
+                        Exit For
+                    End If
+                Next
             Next
-        Next
+        End If
     End Sub
 End Class

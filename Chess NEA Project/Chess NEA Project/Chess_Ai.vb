@@ -5,26 +5,25 @@ Public Class Chess_Ai
     Private NumberlegalMoves As Integer
     Private InputLayer(383) As Integer
     Private HiddenLayer(255, 3) As Double
-    Private Outputlayer(243) As Double
+    Private Outputlayer(203) As Double
     Private InputToHiddenLayerWeights(383, 255) As Double
     Private HiddenLayerWeights(255, 255, 2) As Double
-    Private HiddenToOutputLayerWeights(255, 243) As Double
+    Private HiddenToOutputLayerWeights(255, 203) As Double
     Private HiddenBias(255, 3) As Double
-    Private OutputBias(243) As Double
+    Private OutputBias(203) As Double
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
     Private BestValue As Integer
-    Private PieceOptions(243), ButtonOptions(243) As Button
+    Private PieceOptions(203), ButtonOptions(203) As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
     Public Sub New()
-        For i = 0 To 243
-            For piece = 0 To 15
-                For k = 0 To EndofInitialLoop
-                    PieceOptions(i) = PieceDeclarer(piece)
-                Next
-            Next
+        For i = 0 To 203
+            If i = 100 Then
+                i = i
+            End If
+            PieceOptions(i) = PieceDeclarer(i)
         Next
-        For i = 0 To 243
+        For i = 0 To 203
             For piece = 0 To 5
                 ButtonAmountDecider(piece)
                 For k = 0 To EndofInitialLoop
@@ -36,77 +35,61 @@ Public Class Chess_Ai
         Next
         EndOfButtonLoop = EndOfButtonLoop
     End Sub
-    Private Sub ButtonAmountDecider(piece)
-        If piece = 0 Then
+    Private Sub ButtonAmountDecider(i)
+        If i = 0 Then
             EndOfButtonLoop = 3
             EndofInitialLoop = 7
-        ElseIf piece = 1 Then
+        ElseIf i = 1 Then
             EndOfButtonLoop = 31
             EndofInitialLoop = 1
-        ElseIf piece = 2 Then
+        ElseIf i = 2 Then
             EndOfButtonLoop = 31
             EndofInitialLoop = 1
-        ElseIf piece = 3 Then
+        ElseIf i = 3 Then
             EndOfButtonLoop = 7
             EndofInitialLoop = 1
-        ElseIf piece = 4 Then
+        ElseIf i = 4 Then
             EndOfButtonLoop = 63
             EndofInitialLoop = 0
-        ElseIf piece = 5 Then
+        ElseIf i = 5 Then
             EndOfButtonLoop = 7
             EndofInitialLoop = 0
         End If
     End Sub
     Private Function PieceDeclarer(piece)
         Dim result As Button
-        If piece = 0 Then
-            result = ChessBoard.BPawn1
-            EndofInitialLoop = 3
-        ElseIf piece = 1 Then
-            result = ChessBoard.BPawn2
-            EndofInitialLoop = 3
-        ElseIf piece = 2 Then
-            result = ChessBoard.BPawn3
-            EndofInitialLoop = 3
-        ElseIf piece = 3 Then
-            result = ChessBoard.BPawn4
-            EndofInitialLoop = 3
-        ElseIf piece = 4 Then
-            result = ChessBoard.BPawn5
-            EndofInitialLoop = 3
-        ElseIf piece = 5 Then
-            result = ChessBoard.BPawn6
-            EndofInitialLoop = 3
-        ElseIf piece = 6 Then
-            result = ChessBoard.BPawn7
-            EndofInitialLoop = 3
-        ElseIf piece = 7 Then
-            result = ChessBoard.BPawn8
-            EndofInitialLoop = 3
-        ElseIf piece = 8 Then
-            result = ChessBoard.BRook1
-            EndofInitialLoop = 31
-        ElseIf piece = 9 Then
-            result = ChessBoard.BRook2
-            EndofInitialLoop = 31
-        ElseIf piece = 10 Then
-            result = ChessBoard.BBishop1
-            EndofInitialLoop = 31
-        ElseIf piece = 11 Then
-            result = ChessBoard.BBishop2
-            EndofInitialLoop = 31
-        ElseIf piece = 12 Then
-            result = ChessBoard.BKnight1
-            EndofInitialLoop = 7
-        ElseIf piece = 13 Then
-            result = ChessBoard.BKnight2
-            EndofInitialLoop = 7
-        ElseIf piece = 14 Then
-            result = ChessBoard.BQueen
-            EndofInitialLoop = 31
-        ElseIf piece = 15 Then
+        If piece > 196 Then
             result = ChessBoard.BKing
-            EndofInitialLoop = 7
+        ElseIf piece > 188 Then
+            result = ChessBoard.BQueen
+        ElseIf piece > 132 Then
+            result = ChessBoard.BKnight2
+        ElseIf piece > 124 Then
+            result = ChessBoard.BKnight1
+        ElseIf piece > 116 Then
+            result = ChessBoard.BBishop2
+        ElseIf piece > 88 Then
+            result = ChessBoard.BBishop1
+        ElseIf piece > 60 Then
+            result = ChessBoard.BRook2
+        ElseIf piece > 32 Then
+            result = ChessBoard.BRook1
+        ElseIf piece > 28 Then
+            result = ChessBoard.BPawn8
+        ElseIf piece > 24 Then
+            result = ChessBoard.BPawn7
+        ElseIf piece > 20 Then
+            result = ChessBoard.BPawn6
+        ElseIf piece > 16 Then
+            result = ChessBoard.BPawn5
+        ElseIf piece > 12 Then
+            result = ChessBoard.BPawn4
+        ElseIf piece > 8 Then
+            result = ChessBoard.BPawn3
+        ElseIf piece > 4 Then
+            result = ChessBoard.BPawn2
+        ElseIf piece > 0 Then
+            result = ChessBoard.BPawn1
         End If
         Return result
     End Function
@@ -125,7 +108,7 @@ Public Class Chess_Ai
             Next
         Next
         For i = 0 To 255
-            For j = 0 To 243
+            For j = 0 To 203
                 HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble
             Next
         Next
@@ -135,30 +118,38 @@ Public Class Chess_Ai
 
             Next
         Next
-        For i = 0 To 243
+        For i = 0 To 203
             OutputBias(i) = randomNumber.Next(80, 90)
 
         Next
+        randomNumber = randomNumber
     End Sub
     Public Sub NextMoveDecider()
         Dim PieceChecker As New List(Of Button)
+        Dim AICount As Integer
         For xcoord = 0 To 7
             For ycoord = 0 To 7
-                For PieceType = 0 To 5
+                For PieceType = 0 To 6
                     PieceChecker = PieceTypeIdentifier(PieceType)
                     PieceChecker.ToArray()
                     For Each piece In PieceChecker
-                        If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
-                            InputLayer(xcoord * ycoord * PieceType) = 1
+                        If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord And PieceType = 6 Then
+                            InputLayer(AICount) = -1
+                        ElseIf piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
+                            InputLayer(AICount) = 1
                         Else
-                            InputLayer(xcoord * ycoord * PieceType) = 0
+                            InputLayer(AICount) = 0
+                        End If
+                        If AICount >= 383 Then
+                        Else
+                            AICount += 1
                         End If
                     Next
                     PieceChecker.Clear()
                 Next
             Next
         Next
-        Dim BubbleSortArray(1882) As Double
+        Dim BubbleSortArray(203) As Double
 
 
         For i = 0 To 255
@@ -177,7 +168,7 @@ Public Class Chess_Ai
                 HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
             Next
         Next
-        For i = 0 To 1882
+        For i = 0 To 203
             For j = 0 To 255
                 Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
             Next
@@ -187,8 +178,8 @@ Public Class Chess_Ai
         BubbleSortArray = Outputlayer
         Dim TempBubbleSortVariable As Double
 
-        For i = 0 To 243
-            For value = 0 To 243
+        For i = 0 To 202
+            For value = 0 To 202
                 If BubbleSortArray(value) > BubbleSortArray(value + 1) Then
                     TempBubbleSortVariable = BubbleSortArray(value)
                     BubbleSortArray(value) = BubbleSortArray(value + 1)
@@ -201,8 +192,58 @@ Public Class Chess_Ai
         TempOutput = BubbleSortArray.ToList
         BestValue = TempOutput.IndexOf(BubbleSortArray.Max)
 
-
+        If PieceOptions(BestValue) Is ChessBoard.BPawn1 Or PieceOptions(BestValue) Is ChessBoard.BPawn2 Or PieceOptions(BestValue) Is ChessBoard.BPawn3 Or PieceOptions(BestValue) Is ChessBoard.BPawn4 Or PieceOptions(BestValue) Is ChessBoard.BPawn5 Or PieceOptions(BestValue) Is ChessBoard.BPawn6 Or PieceOptions(BestValue) Is ChessBoard.BPawn7 Or PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
+            Dim AiPiece As New Pawn(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue), ChessBoard.FirstCheck(FirstCheckIdentifier))
+            AiPieceMover(AiPiece)
+            FirstCheckNumber = FirstCheckIdentifier()
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BRook1 Or PieceOptions(BestValue) Is ChessBoard.BRook2 Then
+            Dim AiPiece As New Rook(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPieceMover(AiPiece)
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
+            Dim AiPiece As New Bishop(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPieceMover(AiPiece)
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BKnight2 Or PieceOptions(BestValue) Is ChessBoard.BKnight2 Then
+            Dim AiPiece As New Knight(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPieceMover(AiPiece)
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BQueen Then
+            Dim AiPiece As New Queen(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPieceMover(AiPiece)
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BKing Then
+            Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPieceMover(AiPiece)
+        End If
+        PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
+        ChessBoard.clearbuttons()
+        ChessBoard.BlackTime.Stop()
+        ChessBoard.WhiteTime.Start()
+        ChessBoard.blackpiecedisabler()
     End Sub
+    Private Sub AiPieceMover(AiPiece)
+        AiPiece.SetColour()
+        AiPiece.CheckMoves()
+        ChessBoard.chess_piece = PieceOptions(BestValue)
+        ChessBoard.colourOfPieces = "black"
+    End Sub
+    Public Function FirstCheckIdentifier()
+        Dim result As Integer
+        If PieceOptions(BestValue) Is ChessBoard.BPawn1 Then
+            result = 8
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn2 Then
+            result = 9
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn3 Then
+            result = 10
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn4 Then
+            result = 11
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn5 Then
+            result = 12
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn6 Then
+            result = 13
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn7 Then
+            result = 14
+        ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
+            result = 15
+        End If
+    End Function
     Public Function SigmoidCalculation(input)
         Dim result As Double
         result = 1 / (1 + Math.E ^ (-1 * input))
@@ -231,6 +272,10 @@ Public Class Chess_Ai
             result.Add(ChessBoard.BQueen)
         ElseIf PieceType = 5 Then
             result.Add(ChessBoard.BKing)
+        ElseIf PieceType = 6 Then
+            For Each piece In ChessBoard.Whitepieces
+                result.Add(piece)
+            Next
         End If
         Return result
     End Function
