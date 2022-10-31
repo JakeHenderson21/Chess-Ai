@@ -204,7 +204,7 @@ Public Class Chess_Ai
         Dim TempOutput As List(Of Double)
         TempOutput = Outputlayer.ToList
         BestValue = TempOutput.IndexOf(Outputlayer.Max)
-        If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
+        If PieceOptions(BestValue) Is ChessBoard.BKnight1 Then
             BestValue = BestValue
         End If
         If PieceOptions(BestValue) Is ChessBoard.BPawn1 Or PieceOptions(BestValue) Is ChessBoard.BPawn2 Or PieceOptions(BestValue) Is ChessBoard.BPawn3 Or PieceOptions(BestValue) Is ChessBoard.BPawn4 Or PieceOptions(BestValue) Is ChessBoard.BPawn5 Or PieceOptions(BestValue) Is ChessBoard.BPawn6 Or PieceOptions(BestValue) Is ChessBoard.BPawn7 Or PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
@@ -214,18 +214,27 @@ Public Class Chess_Ai
         ElseIf PieceOptions(BestValue) Is ChessBoard.BRook1 Or PieceOptions(BestValue) Is ChessBoard.BRook2 Then
             Dim AiPiece As New Rook(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPiece.SetLoopBoundaries()
-            AiPieceMover(AiPiece)
+            AiPiece.SetColour()
+            AiPiece.CheckMoves()
+            ChessBoard.chess_piece = PieceOptions(BestValue)
+            ChessBoard.colourOfPieces = "black"
         ElseIf PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
             Dim AiPiece As New Bishop(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPiece.SetLoopBoundaries()
-            AiPieceMover(AiPiece)
+            AiPiece.SetColour()
+            AiPiece.CheckMoves()
+            ChessBoard.chess_piece = PieceOptions(BestValue)
+            ChessBoard.colourOfPieces = "black"
         ElseIf PieceOptions(BestValue) Is ChessBoard.BKnight2 Or PieceOptions(BestValue) Is ChessBoard.BKnight2 Then
             Dim AiPiece As New Knight(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPieceMover(AiPiece)
         ElseIf PieceOptions(BestValue) Is ChessBoard.BQueen Then
             Dim AiPiece As New Queen(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPiece.SetLoopBoundaries()
-            AiPieceMover(AiPiece)
+            AiPiece.SetColour()
+            AiPiece.CheckMoves()
+            ChessBoard.chess_piece = PieceOptions(BestValue)
+            ChessBoard.colourOfPieces = "black"
         ElseIf PieceOptions(BestValue) Is ChessBoard.BKing Then
             Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPieceMover(AiPiece)
