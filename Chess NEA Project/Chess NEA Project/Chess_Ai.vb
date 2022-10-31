@@ -142,7 +142,7 @@ Public Class Chess_Ai
         Dim AICount As Integer
         For xcoord = 0 To 7
             For ycoord = 0 To 7
-                For PieceType = 0 To 6
+                For PieceType = 0 To 5
                     PieceChecker = PieceTypeIdentifier(PieceType)
                     PieceChecker.ToArray()
                     For Each piece In PieceChecker
@@ -189,47 +189,62 @@ Public Class Chess_Ai
             Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
         Next
         BubbleSortArray = Outputlayer
-        Dim TempBubbleSortVariable As Double
+        'Dim TempBubbleSortVariable As Double
 
-        For i = 0 To 202
-            For value = 0 To 202
-                If BubbleSortArray(value) > BubbleSortArray(value + 1) Then
-                    TempBubbleSortVariable = BubbleSortArray(value)
-                    BubbleSortArray(value) = BubbleSortArray(value + 1)
-                    BubbleSortArray(value + 1) = TempBubbleSortVariable
-                End If
-            Next
-        Next
+        'For i = 0 To 202
+        '    For value = 0 To 202
+        '        If BubbleSortArray(value) > BubbleSortArray(value + 1) Then
+        '            TempBubbleSortVariable = BubbleSortArray(value)
+        '            BubbleSortArray(value) = BubbleSortArray(value + 1)
+        '            BubbleSortArray(value + 1) = TempBubbleSortVariable
+        '        End If
+        '    Next
+        'Next
 
         Dim TempOutput As List(Of Double)
-        TempOutput = BubbleSortArray.ToList
-        BestValue = TempOutput.IndexOf(BubbleSortArray.Max)
-
+        TempOutput = Outputlayer.ToList
+        BestValue = TempOutput.IndexOf(Outputlayer.Max)
+        If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
+            BestValue = BestValue
+        End If
         If PieceOptions(BestValue) Is ChessBoard.BPawn1 Or PieceOptions(BestValue) Is ChessBoard.BPawn2 Or PieceOptions(BestValue) Is ChessBoard.BPawn3 Or PieceOptions(BestValue) Is ChessBoard.BPawn4 Or PieceOptions(BestValue) Is ChessBoard.BPawn5 Or PieceOptions(BestValue) Is ChessBoard.BPawn6 Or PieceOptions(BestValue) Is ChessBoard.BPawn7 Or PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
             Dim AiPiece As New Pawn(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue), ChessBoard.FirstCheck(FirstCheckIdentifier))
             AiPieceMover(AiPiece)
             FirstCheckNumber = FirstCheckIdentifier()
         ElseIf PieceOptions(BestValue) Is ChessBoard.BRook1 Or PieceOptions(BestValue) Is ChessBoard.BRook2 Then
             Dim AiPiece As New Rook(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPiece.SetLoopBoundaries()
             AiPieceMover(AiPiece)
         ElseIf PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
             Dim AiPiece As New Bishop(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPiece.SetLoopBoundaries()
             AiPieceMover(AiPiece)
         ElseIf PieceOptions(BestValue) Is ChessBoard.BKnight2 Or PieceOptions(BestValue) Is ChessBoard.BKnight2 Then
             Dim AiPiece As New Knight(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPieceMover(AiPiece)
         ElseIf PieceOptions(BestValue) Is ChessBoard.BQueen Then
             Dim AiPiece As New Queen(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+            AiPiece.SetLoopBoundaries()
             AiPieceMover(AiPiece)
         ElseIf PieceOptions(BestValue) Is ChessBoard.BKing Then
             Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPieceMover(AiPiece)
         End If
-        PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
-        ChessBoard.clearbuttons()
-        ChessBoard.BlackTime.Stop()
-        ChessBoard.WhiteTime.Start()
-        ChessBoard.blackpiecedisabler()
+        If ButtonOptions(BestValue).Visible = True Then
+            PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
+            ChessBoard.xcoords = PieceOptions(BestValue).Left
+            ChessBoard.ycoords = PieceOptions(BestValue).Top
+            ChessBoard.clearbuttons()
+            ChessBoard.pieceTakenCheck()
+            ChessBoard.BlackTime.Stop()
+            ChessBoard.WhiteTime.Start()
+            ChessBoard.blackpiecedisabler()
+        Else
+            Initilise_Weights_And_Bias()
+            NextMoveDecider()
+        End If
+       
+
     End Sub
     Private Sub AiPieceMover(AiPiece)
         AiPiece.SetColour()
