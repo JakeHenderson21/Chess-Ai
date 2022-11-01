@@ -204,7 +204,7 @@ Public Class Chess_Ai
         Dim TempOutput As List(Of Double)
         TempOutput = Outputlayer.ToList
         BestValue = TempOutput.IndexOf(Outputlayer.Max)
-        If PieceOptions(BestValue) Is ChessBoard.BKnight1 Then
+        If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
             BestValue = BestValue
         End If
         If PieceOptions(BestValue) Is ChessBoard.BPawn1 Or PieceOptions(BestValue) Is ChessBoard.BPawn2 Or PieceOptions(BestValue) Is ChessBoard.BPawn3 Or PieceOptions(BestValue) Is ChessBoard.BPawn4 Or PieceOptions(BestValue) Is ChessBoard.BPawn5 Or PieceOptions(BestValue) Is ChessBoard.BPawn6 Or PieceOptions(BestValue) Is ChessBoard.BPawn7 Or PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
@@ -239,7 +239,13 @@ Public Class Chess_Ai
             Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
             AiPieceMover(AiPiece)
         End If
-        If ButtonOptions(BestValue).Visible = True Then
+        Dim taken As Boolean = False
+        For Each piece In ChessBoard.BPiecesTaken
+            If piece Is PieceOptions(BestValue) Then
+                taken = True
+            End If
+        Next
+        If ButtonOptions(BestValue).Visible = True And taken = False Then
             PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
             ChessBoard.xcoords = PieceOptions(BestValue).Left
             ChessBoard.ycoords = PieceOptions(BestValue).Top

@@ -191,6 +191,9 @@
         temppostionscore = count
 
         For t = startofloop To endofloop
+            If piece Is ChessBoard.WQueen Then
+                piece = piece
+            End If
             change = False
             piecemove = 0
             l = 0
@@ -281,7 +284,7 @@
                     scoremove = 0
                 End If
                 buttonsPastBorder = 0
-                If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen Then
+                If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count < 4 Then
                     If count = 0 Then
                         If scoremove = 0 And change = True Then
                             upmovecount = scoremove

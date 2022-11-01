@@ -520,11 +520,6 @@ Public Class ChessBoard
         ycoords = buttons.Top
         clearbuttons()
         setNewLocation()
-        If firstRound = True Then
-            firstRound = False
-        Else
-            CheckforCheck()
-        End If
     End Sub
     Public Sub CheckforCheck()
         Dim checkTheKing As New Check_Checkmate
@@ -550,7 +545,12 @@ Public Class ChessBoard
             CheckingCheck(i) = checkTheKing.Check_King
         Next
         If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True Then
-            MsgBox("Checkmate!")
+            If colourOfPieces = "white" Then
+                MsgBox("White Checkmate!")
+            Else
+                MsgBox("Black Checkmate!")
+            End If
+
         ElseIf checkingForCheck = True Then
             MsgBox("Check!")
             checkingForCheck = False
@@ -682,6 +682,11 @@ Public Class ChessBoard
                 End If
             Next
         Next
+        If firstRound = True Then
+            firstRound = False
+        Else
+            CheckforCheck()
+        End If
     End Sub
     Private Sub whitepiecedisabler()
         AiTurn = True
@@ -689,6 +694,11 @@ Public Class ChessBoard
         For Each p In Whitepieces
             p.Enabled = False
         Next
+        If firstRound = True Then
+            firstRound = False
+        Else
+            CheckforCheck()
+        End If
         If MainMenu.AiMode = True Then
             Dim Ai As New Chess_Ai
             Ai.Initilise_Weights_And_Bias()
