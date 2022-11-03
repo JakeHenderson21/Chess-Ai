@@ -246,6 +246,7 @@ Public Class Chess_Ai
             End If
         Next
         If ButtonOptions(BestValue).Visible = True And taken = False Then
+            
             PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
             ChessBoard.xcoords = PieceOptions(BestValue).Left
             ChessBoard.ycoords = PieceOptions(BestValue).Top

@@ -593,10 +593,10 @@ Public Class ChessBoard
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)
         piece.Enabled = False
-        If colourOfPieces = "black" Then
+        If colourOfPieces = "white" Then
             BPiecesTaken(BCountTaken) = piece
             BCountTaken += 1
-        ElseIf colourOfPieces = "white" Then
+        ElseIf colourOfPieces = "black" Then
             WPiecesTaken(WCountTaken) = piece
             WCountTaken += 1
         End If
