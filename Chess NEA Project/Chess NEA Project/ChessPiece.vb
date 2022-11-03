@@ -398,7 +398,6 @@
         End If
         Dim buttonholder As New List(Of Button)
         For Button = 0 To scoremove + value
-            checkbuttons(Button).Name = checkbuttons(Button).Name
             buttonholder.Add(checkbuttons(Button))
         Next
         Return buttonholder

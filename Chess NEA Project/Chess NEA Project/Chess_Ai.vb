@@ -246,7 +246,7 @@ Public Class Chess_Ai
             End If
         Next
         If ButtonOptions(BestValue).Visible = True And taken = False Then
-            
+
             PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
             ChessBoard.xcoords = PieceOptions(BestValue).Left
             ChessBoard.ycoords = PieceOptions(BestValue).Top
@@ -259,7 +259,7 @@ Public Class Chess_Ai
             Initilise_Weights_And_Bias()
             NextMoveDecider()
         End If
-       
+
 
     End Sub
     Private Sub AiPieceMover(AiPiece)
@@ -417,13 +417,13 @@ Public Class Chess_Ai
         piece = ChessBoard.BQueen
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         Dim Queens As New Queen(piece.Left, piece.Top, chesscolour, piece)
-            FirstCheckNumber += 1
-            Queens.SetColour()
-            Queens.SetLoopBoundaries()
-            Queens.CheckMoves()
-            ChessBoard.chess_piece = piece
-            StartOfLoop = 0
-            EndofLoop = 7
+        FirstCheckNumber += 1
+        Queens.SetColour()
+        Queens.SetLoopBoundaries()
+        Queens.CheckMoves()
+        ChessBoard.chess_piece = piece
+        StartOfLoop = 0
+        EndofLoop = 7
         CheckButtonsEnabled(Queens.piece)
     End Sub
     Public Sub CheckKing()
@@ -431,11 +431,11 @@ Public Class Chess_Ai
         Dim piece As Button
         piece = ChessBoard.BKing
         Dim Kings As New King(piece.Left, piece.Top, chesscolour, piece)
-            FirstCheckNumber += 1
-            Kings.SetColour()
-            Kings.CheckMoves()
-            ChessBoard.chess_piece = piece
-            StartOfLoop = 0
+        FirstCheckNumber += 1
+        Kings.SetColour()
+        Kings.CheckMoves()
+        ChessBoard.chess_piece = piece
+        StartOfLoop = 0
         EndofLoop = 7
         CheckButtonsEnabled(Kings.piece)
     End Sub
