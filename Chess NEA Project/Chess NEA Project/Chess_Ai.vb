@@ -329,11 +329,13 @@ Public Class Chess_Ai
         End If
     End Sub
     Public Sub CheckingForBestMoves()
+        CheckingForLegalMoves()
+        Dim randomnumber As New Random
         Dim CheckXCoordsPiece, CheckYCoordsPiece, CheckXCoordsButton, CheckYCoordsButton As Integer
         Dim Value As PieceValue
         For Each move In LegalMoveNames
-            CheckXCoordsPiece = LegalMoveXCoordinates(move.Left)
-            CheckYCoordsPiece = LegalButtonYCoordinates(move.Top)
+            'CheckXCoordsPiece = LegalMoveXCoordinates(move.Left / 77)
+            'CheckYCoordsPiece = LegalButtonYCoordinates(move.Top / 77)
             CheckXCoordsButton = LegalButtonXCoordinates(LegalMoveNames.IndexOf(move)) * 77
             CheckXCoordsButton = LegalButtonYCoordinates(LegalMoveNames.IndexOf(move)) * 77
             For Each piece In ChessBoard.Whitepieces
@@ -345,6 +347,13 @@ Public Class Chess_Ai
         Next
         ChessBoard.BlackSideValue += Value
         ChessBoard.WhiteSideValue -= Value
+        If BestScoreMove = 0 Then
+            BestScoreName = LegalMoveNames(randomnumber.Next(0, LegalMoveNames.Count))
+            BestScoreButton = LegalButtonNames(LegalMoveNames.IndexOf(BestScoreName))
+        End If
+        FileOpen(1, "testfile.txt", OpenMode.Append)
+        PrintLine(1, BestScoreName.Name & " " & BestScoreButton.Name)
+        FileClose(1)
     End Sub
     Public Sub CheckingScoreValue(value, move)
         If value > BestScoreMove Then
