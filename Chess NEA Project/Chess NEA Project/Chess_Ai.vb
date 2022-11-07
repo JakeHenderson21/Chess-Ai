@@ -17,6 +17,14 @@ Public Class Chess_Ai
     Private PieceOptions(203), ButtonOptions(203) As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
     Private NumberOfMoves, NumberOfPieces, StartingNumber As Integer
+    Enum PieceValue
+        Pawn = 5
+        Rook = 15
+        Bishop = 15
+        Knight = 15
+        Queen = 30
+        King = 100
+    End Enum
     Public Sub New()
         Dim buttoncount As Integer
         For i = 0 To 203
@@ -31,11 +39,9 @@ Public Class Chess_Ai
                     Else
                         buttoncount += 1
                     End If
-
                 Next
             Next
         Next
-
         EndOfButtonLoop = EndOfButtonLoop
     End Sub
     Private Sub NumberOfPieces_Moves(k)
@@ -48,9 +54,9 @@ Public Class Chess_Ai
             NumberOfPieces = 1
             NumberOfMoves = 27
         ElseIf k = 2 Then
-            StartingNumber = 0
+            StartingNumber = 28
             NumberOfPieces = 1
-            NumberOfMoves = 27
+            NumberOfMoves = 55
         ElseIf k = 3 Then
             StartingNumber = 0
             NumberOfPieces = 1
@@ -128,14 +134,11 @@ Public Class Chess_Ai
             For i = 0 To 255
                 Randomize()
                 HiddenBias(i, k) = randomNumber.Next(80, 90) / 100
-
             Next
         Next
         For i = 0 To 203
             OutputBias(i) = randomNumber.Next(80, 90) / 100
-
         Next
-        randomNumber = randomNumber
     End Sub
     Public Sub NextMoveDecider()
         Dim PieceChecker As New List(Of Button)
@@ -162,9 +165,6 @@ Public Class Chess_Ai
                 Next
             Next
         Next
-        Dim BubbleSortArray(203) As Double
-
-
         For i = 0 To 255
             For j = 0 To 383
                 HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
@@ -188,18 +188,6 @@ Public Class Chess_Ai
             Outputlayer(i) -= OutputBias(i)
             Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
         Next
-        BubbleSortArray = Outputlayer
-        'Dim TempBubbleSortVariable As Double
-
-        'For i = 0 To 202
-        '    For value = 0 To 202
-        '        If BubbleSortArray(value) > BubbleSortArray(value + 1) Then
-        '            TempBubbleSortVariable = BubbleSortArray(value)
-        '            BubbleSortArray(value) = BubbleSortArray(value + 1)
-        '            BubbleSortArray(value + 1) = TempBubbleSortVariable
-        '        End If
-        '    Next
-        'Next
 
         Dim TempOutput As List(Of Double)
         TempOutput = Outputlayer.ToList
@@ -246,7 +234,9 @@ Public Class Chess_Ai
             End If
         Next
         If ButtonOptions(BestValue).Visible = True And taken = False Then
-
+            If PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
+                BestValue = BestValue
+            End If
             PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
             ChessBoard.xcoords = PieceOptions(BestValue).Left
             ChessBoard.ycoords = PieceOptions(BestValue).Top
@@ -287,6 +277,7 @@ Public Class Chess_Ai
         ElseIf PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
             result = 15
         End If
+        Return result
     End Function
     Public Function SigmoidCalculation(input)
         Dim result As Double
@@ -330,21 +321,37 @@ Public Class Chess_Ai
         CheckBishops()
         CheckQueen()
         CheckKing()
-        LegalMoveNames.ToArray()
-        LegalMoveXCoordinates.ToArray()
-        LegalMoveYCoordinates.ToArray()
-        Dim increaser As Integer
-        'For Each button In LegalMoveNames
-        '    FileOpen(1, "testfile.txt", OpenMode.Append)
-        '    PrintLine(1, button.Name & " (" & LegalMoveXCoordinates(LegalMoveNames.IndexOf(button)) & "," & LegalMoveYCoordinates(LegalMoveNames.IndexOf(button)) & ")" & " (" & LegalButtonXCoordinates(LegalMoveNames.IndexOf(button) + increaser) & "," & LegalButtonYCoordinates(LegalMoveNames.IndexOf(button) + increaser) & ")")
-        '    If increaser = 0 Then
-        '        increaser = 1
-        '    Else
-        '        increaser = 0
-        '    End If
-        '    FileClose(1)
-        'Next
     End Sub
+    Public Sub CheckingForBestMoves()
+        Dim CheckXCoordsPiece, CheckYCoordsPiece, CheckXCoordsButton, CheckYCoordsButton, NewBestMoveScore, OldBestMoveScore As Integer
+        Dim Value As PieceValue
+        For Each move In LegalMoveNames
+            CheckXCoordsPiece = LegalMoveXCoordinates(move.Left)
+            CheckYCoordsPiece = LegalButtonYCoordinates(move.Top)
+            CheckXCoordsButton = LegalButtonXCoordinates(LegalMoveNames.IndexOf(move)) * 77
+            CheckXCoordsButton = LegalButtonYCoordinates(LegalMoveNames.IndexOf(move)) * 77
+            For Each piece In ChessBoard.Whitepieces
+                If piece.Left = CheckXCoordsButton And piece.Top = CheckYCoordsButton Then
+                    Value = GetPieceValue(piece)
+                End If
+            Next
+        Next
+    End Sub
+    Public Function GetPieceValue(piece)
+        Dim result As PieceValue
+        If piece Is ChessBoard.WPawn1 Or piece Is ChessBoard.WPawn2 Or piece Is ChessBoard.WPawn3 Or piece Is ChessBoard.WPawn4 Or piece Is ChessBoard.WPawn5 Or piece Is ChessBoard.WPawn6 Or piece Is ChessBoard.WPawn7 Or piece Is ChessBoard.WPawn8 Then
+            result = PieceValue.Pawn
+        ElseIf piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Then
+            result = PieceValue.Rook
+        ElseIf piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Then
+            result = PieceValue.Bishop
+        ElseIf piece Is ChessBoard.WKnight1 Or piece Is ChessBoard.Wknight2 Then
+            result = PieceValue.Knight
+        ElseIf piece Is ChessBoard.WQueen Then
+            result = PieceValue.Queen
+        End If
+    End Function
+
     Public Sub CheckButtonsEnabled(Piece)
         For i = StartOfLoop To EndofLoop
             If ChessBoard.buttonmoves(i).Visible = True Then
@@ -353,8 +360,6 @@ Public Class Chess_Ai
                 NumberlegalMoves += 1
                 LegalButtonXCoordinates.Add(ChessBoard.buttonmoves(i).Left / 77)
                 LegalButtonYCoordinates.Add(ChessBoard.buttonmoves(i).Top / 77)
-                LegalMoveXCoordinates.Add(Piece.Left / 77)
-                LegalMoveYCoordinates.Add(Piece.Top / 77)
             End If
         Next
     End Sub

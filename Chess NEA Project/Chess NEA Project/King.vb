@@ -4,6 +4,8 @@
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button)
         MyBase.New(X, Y, chess_colour, piece)
     End Sub
+    'overrides chesspiece's checkmoves for the king, it first goes to check_checkmate to check for possible moves, when coming back to check against the other it
+    ' uses different buttons inorder to not mess up the algorithm, then it checks whether or not to display the buttons based on the results of the algorithm
     Public Overrides Sub CheckMoves()   
         Dim temppostionscore As Integer
         Dim checktheking As New Check_Checkmate
@@ -89,6 +91,7 @@
             p = False
         Next
     End Sub
+    'Sets the next button to check based on the loop
     Public Overrides Sub rearrangechecks(ByRef temppostionscore As Integer)
         If temppostionscore = 0 Then
             tx = -77
@@ -112,6 +115,7 @@
             ty = -77
         End If
     End Sub
+    'resets the king button location incase they have moved
     Sub resetkingbuttonlocations()
          ChessBoard.Button65.Location = New Point(X - 77, Y)
         ChessBoard.Button66.Location = New Point(X - 77, Y + 77)

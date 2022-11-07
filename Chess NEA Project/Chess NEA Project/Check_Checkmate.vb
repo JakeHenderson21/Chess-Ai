@@ -4,6 +4,7 @@
     Public resultID As Integer
     Public WPawn(7), Bpawn(7), WRook(1), Brook(1), WBishop(1), BBishop(1), WKnight(1), BKnight(1), PawnSelectedPieces(7), KnightSelectedPieces(1), RookSelectedPieces(1), BishopSelectedPieces(1), QueensSelectedPieces, KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
     Public checking As Boolean
+    'Initisles arrays for the buttons
     Public Sub New()
         For i = 0 To 7
             WPawn(i) = ChessBoard.Whitepieces(i + 8)
@@ -22,6 +23,7 @@
         BKnight(0) = ChessBoard.BKnight1
         BKnight(1) = ChessBoard.BKnight2
     End Sub
+    'Finds out which turn has ended and checks the respective king by going through each piece to see if the it is in check or checkmate or where the king can legally move
     Public Function Check_King()
         Dim check1, check2, check3, check4, check5, check6, check7, check8 As Boolean
         Dim result As Boolean
@@ -68,6 +70,7 @@
         ChessBoard.CheckMode = False
         Return result
     End Function
+    'This checks if their is a piece blocking the king infront of it when checking for check and checkmate
     Public Function CheckKingAgainstOtherPieces()
         Dim result As Integer
         For Each piece In ChessBoard.Allpieces
@@ -77,6 +80,7 @@
         Next
         Return result
     End Function
+    'This checks for if any of the move buttons for king are past the border
     Public Function CheckBorderAgainstKing()
         Dim result As Boolean
         If ChessBoard.buttonsToUse.Left > 539 Or ChessBoard.buttonsToUse.Left < 0 Or ChessBoard.buttonsToUse.Top > 539 Or ChessBoard.buttonsToUse.Top < 0 Then
@@ -86,6 +90,7 @@
         End If
         Return result
     End Function
+    'This checks the king against each move that a pawn can possibly make
     Public Function CheckPawnsAgainstKing()
         Dim result As Boolean = False      
         For Each piece In PawnSelectedPieces
@@ -103,6 +108,7 @@
         Next
         Return result
     End Function
+    'This checks the king against each move that a rook can possibly make
     Public Function CheckRooksAgainstKing()
         Dim result As Boolean = False
         For Each piece In RookSelectedPieces
@@ -127,6 +133,7 @@
         Next
         Return result
     End Function
+    'This checks the king against each move that a bishop can possibly make
     Public Function CheckBishopsAgainstKing()
         Dim result As Boolean = False
         For Each piece In BishopSelectedPieces
@@ -151,6 +158,7 @@
         Next
         Return result
     End Function
+    'This checks the king against each move that a queen can possibly make
     Public Function CheckQueenAgainstKing()
         Dim result As Boolean = False
         Dim Queens As New Queen(QueensSelectedPieces.Left, QueensSelectedPieces.Top, chesscolour, QueensSelectedPieces)
@@ -173,6 +181,7 @@
         Next
         Return result
     End Function
+    'This checks the king against each move that a knight can possibly make
     Public Function CheckKnightsAgainstKing()
         Dim result As Boolean = False
         For Each piece In KnightSelectedPieces
@@ -189,6 +198,7 @@
         Next
         Return result
     End Function
+    'This checks the king against each move that the other king can possibly make
     Public Function CheckKingsAgainstKing()
         Dim chesscolour As ChessPiece.Chesscolour
         Dim result As Boolean = False
@@ -201,6 +211,7 @@
         End If
         Return result
     End Function
+    'This is for the rook, bishop and queen and sets the lists that were find out in checkmove from chesspiece and puts them into an array to use for checking
     Public Function MoveSelector(buttoncheck, rooks)
         Dim result(resultID) As Button
         If rooks.piece Is ChessBoard.WRook1 Or rooks.piece Is ChessBoard.WRook2 Or rooks.piece Is ChessBoard.BRook1 Or rooks.piece Is ChessBoard.BRook2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen And buttoncheck < 4 Then

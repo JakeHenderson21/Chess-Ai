@@ -7,6 +7,7 @@
         MyBase.New(X, Y, chess_colour, piece)
         firstMoveCheck = firstMove
     End Sub
+    'overwrites chesspiece's setcolour to adjust for the pawn
     Public Overrides Sub SetColour()
         Dim counter As Integer
         If colour = Chesscolour.black Then
@@ -23,6 +24,8 @@
             counter += 1
         Next
     End Sub
+    'overrides chesspiece's checkmoves to adjust for the pawn, it checks whether or not the pawn has already moved, if it has it can only move once, if not then 
+    ' it can move twice, it also checks if the pawn can move to its left or right if there is a piece it can take.
     Public Overrides Sub CheckMoves()
         OldScoremove = 2
         ChessBoard.Button1.Location = New Point(piece.Left, piece.Top + (operatorcheck * 77))
@@ -96,6 +99,7 @@
                 End If
             Next
     End Sub
+    'sets the scoremove for how far it can move
     Public Sub PawnMoveChecker()
         If newScoreMove < OldScoremove Then
             OldScoremove = newScoreMove

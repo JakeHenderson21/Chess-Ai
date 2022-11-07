@@ -177,6 +177,7 @@
     Public Function getColour()
         Return colour
     End Function
+    'This sets colour of the pieces to be checked
     Public Overridable Sub SetColour()
         If colour = Chesscolour.black Then
             pieces1 = bpieces
@@ -186,6 +187,9 @@
             pieces2 = bpieces
         End If
     End Sub
+    'This checks where the piece clicked can move by initailly placing all the move buttons and check to see if there is an obstruction in them and only show 
+    ' the amount of it can move, this is used for rooks, bishops and queens by changing the size of the loop and checks each parts of the moves row by row, for example the order of checking buttons go up then right, left and down
+    'When checking for check or checkmate it will how for each section of a piece can move then save it an array for checking later on after going through all parts of the piece
     Public Overridable Sub CheckMoves()
         Dim xcoordinate, ycoordinate, piecemove, l, tempscoremove, temppostionscore As Integer
         temppostionscore = count
@@ -389,6 +393,7 @@
         Next
         count = 0
     End Sub
+    'Stores the possible moves in lists to be used later
     Public Function StoreButtons(scoremove)
         Dim value As Integer
         If scoremove = 0 Then
@@ -398,16 +403,23 @@
         End If
         Dim buttonholder As New List(Of Button)
         For Button = 0 To scoremove + value
-            buttonholder.Add(checkbuttons(Button))
+            If Button < 6 Then
+                buttonholder.Add(checkbuttons(Button))
+            Else
+                Exit For
+            End If
+
         Next
         Return buttonholder
     End Function
+    'Removes all the buttons after checking
     Public Sub clearbuttons()
         For Each Button In buttonMoves
             Button.Hide()
             Button.Location = New Point(1000, 1000)
         Next
     End Sub
+    'This is where it goes checking each section in the loop, the loop id being the temppositionscore where each number represents a certain section
     Public Overridable Sub rearrangechecks(ByRef temppostionscore As Integer)
         If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.BQueen Then
             If temppostionscore = 0 Then
@@ -448,6 +460,7 @@
             End If
         End If
     End Sub
+    'This displays all the buttons the piece can make for each section
     Private Sub movebuttons(ByRef scoremove As Integer)
         If scoremove = 0 Then
             If change = True Then

@@ -4,6 +4,7 @@
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button)
         MyBase.New(X, Y, chess_colour, piece)
     End Sub
+    'overrides chesspiece's checkmove for knight's movements, it checks whether not each button can be visible and then shows which are available
     Public Overrides Sub CheckMoves()
         Dim temppostionscore As Integer
         ChessBoard.Button1.Location = New Point(X - 77, Y - 154)
@@ -66,6 +67,7 @@
             p = False
         Next
     End Sub
+    'Sets the next button to check based on the loop
     Public Overrides Sub rearrangechecks(ByRef temppostionscore As Integer)
         If temppostionscore = 0 Then
             tx = -77
