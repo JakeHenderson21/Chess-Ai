@@ -1,8 +1,8 @@
 ﻿Imports System.IO
 Public Class Chess_Ai
-    Private LegalMoveNames As New List(Of Button)
+    Private LegalMoveNames, LegalButtonNames As New List(Of Button)
     Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
-    Private NumberlegalMoves As Integer
+    Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade As Integer
     Private InputLayer(383) As Integer
     Private HiddenLayer(255, 3) As Double
     Private Outputlayer(203) As Double
@@ -14,7 +14,7 @@ Public Class Chess_Ai
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
     Private BestValue As Integer
-    Private PieceOptions(203), ButtonOptions(203) As Button
+    Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
     Private NumberOfMoves, NumberOfPieces, StartingNumber As Integer
     Enum PieceValue
@@ -245,11 +245,12 @@ Public Class Chess_Ai
             ChessBoard.BlackTime.Stop()
             ChessBoard.WhiteTime.Start()
             ChessBoard.blackpiecedisabler()
+            CheckingForBestMoves()
+            CheckIfBestMovePlayed()
         Else
             Initilise_Weights_And_Bias()
             NextMoveDecider()
         End If
-
 
     End Sub
     Private Sub AiPieceMover(AiPiece)
@@ -322,8 +323,13 @@ Public Class Chess_Ai
         CheckQueen()
         CheckKing()
     End Sub
+    Public Sub CheckIfBestMovePlayed()
+        If PieceOptions(BestValue) Is BestScoreName And ButtonOptions(BestValue) Is BestScoreButton Then
+            TotalBestMovesMade += 1
+        End If
+    End Sub
     Public Sub CheckingForBestMoves()
-        Dim CheckXCoordsPiece, CheckYCoordsPiece, CheckXCoordsButton, CheckYCoordsButton, NewBestMoveScore, OldBestMoveScore As Integer
+        Dim CheckXCoordsPiece, CheckYCoordsPiece, CheckXCoordsButton, CheckYCoordsButton As Integer
         Dim Value As PieceValue
         For Each move In LegalMoveNames
             CheckXCoordsPiece = LegalMoveXCoordinates(move.Left)
@@ -331,11 +337,22 @@ Public Class Chess_Ai
             CheckXCoordsButton = LegalButtonXCoordinates(LegalMoveNames.IndexOf(move)) * 77
             CheckXCoordsButton = LegalButtonYCoordinates(LegalMoveNames.IndexOf(move)) * 77
             For Each piece In ChessBoard.Whitepieces
-                If piece.Left = CheckXCoordsButton And piece.Top = CheckYCoordsButton Then
+                If piece.Left = CheckXCoordsButton And piece.Top = CheckYCoordsButton And piece IsNot move Then
                     Value = GetPieceValue(piece)
                 End If
             Next
+            CheckingScoreValue(Value, move)
         Next
+        ChessBoard.BlackSideValue += Value
+        ChessBoard.WhiteSideValue -= Value
+    End Sub
+    Public Sub CheckingScoreValue(value, move)
+        If value > BestScoreMove Then
+            BestScoreMove = value
+            BestScoreName = move
+            BestScoreButton = LegalButtonNames(LegalMoveNames.IndexOf(move))
+        Else
+        End If
     End Sub
     Public Function GetPieceValue(piece)
         Dim result As PieceValue
@@ -350,13 +367,14 @@ Public Class Chess_Ai
         ElseIf piece Is ChessBoard.WQueen Then
             result = PieceValue.Queen
         End If
+        Return result
     End Function
 
     Public Sub CheckButtonsEnabled(Piece)
         For i = StartOfLoop To EndofLoop
             If ChessBoard.buttonmoves(i).Visible = True Then
-                ChessBoard.buttonmoves(i).Name = ChessBoard.buttonmoves(i).Name
                 LegalMoveNames.Add(Piece)
+                LegalButtonNames.Add(ChessBoard.buttonmoves(i))
                 NumberlegalMoves += 1
                 LegalButtonXCoordinates.Add(ChessBoard.buttonmoves(i).Left / 77)
                 LegalButtonYCoordinates.Add(ChessBoard.buttonmoves(i).Top / 77)
