@@ -1,0 +1,9 @@
+BPawn2 Button1
+BKnight2 Button2
+BKnight2 Button5
+BKnight2 Button5
+BPawn5 Button1
+BPawn5 Button1
+BPawn4 Button1
+BPawn2 Button1
+BPawn2 Button1

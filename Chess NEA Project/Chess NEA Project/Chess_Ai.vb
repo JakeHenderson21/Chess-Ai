@@ -14,6 +14,7 @@ Public Class Chess_Ai
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
     Private BestValue As Integer
+    Private AlreadyChecked As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
     Private NumberOfMoves, NumberOfPieces, StartingNumber As Integer
@@ -141,6 +142,14 @@ Public Class Chess_Ai
         Next
     End Sub
     Public Sub NextMoveDecider()
+        If AlreadyChecked = False Then
+            AlreadyChecked = True
+            CheckingForBestMoves()
+            CheckIfBestMovePlayed()
+        Else
+            AlreadyChecked = True
+        End If
+        
         Dim PieceChecker As New List(Of Button)
         Dim AICount As Integer
         For xcoord = 0 To 7
@@ -245,8 +254,7 @@ Public Class Chess_Ai
             ChessBoard.BlackTime.Stop()
             ChessBoard.WhiteTime.Start()
             ChessBoard.blackpiecedisabler()
-            CheckingForBestMoves()
-            CheckIfBestMovePlayed()
+            AlreadyChecked = False
         Else
             Initilise_Weights_And_Bias()
             NextMoveDecider()
@@ -331,19 +339,25 @@ Public Class Chess_Ai
     Public Sub CheckingForBestMoves()
         CheckingForLegalMoves()
         Dim randomnumber As New Random
+        Dim AICheckerCount As Integer = 0
         Dim CheckXCoordsPiece, CheckYCoordsPiece, CheckXCoordsButton, CheckYCoordsButton As Integer
         Dim Value As PieceValue
         For Each move In LegalMoveNames
-            'CheckXCoordsPiece = LegalMoveXCoordinates(move.Left / 77)
-            'CheckYCoordsPiece = LegalButtonYCoordinates(move.Top / 77)
-            CheckXCoordsButton = LegalButtonXCoordinates(LegalMoveNames.IndexOf(move)) * 77
-            CheckXCoordsButton = LegalButtonYCoordinates(LegalMoveNames.IndexOf(move)) * 77
+            CheckXCoordsButton = LegalButtonXCoordinates(AICheckerCount) * 77
+            CheckYCoordsButton = LegalButtonYCoordinates(AICheckerCount) * 77
+            FileOpen(1, "tester.txt", OpenMode.Append)
+            PrintLine(1, move.Name & " " & LegalButtonNames(AICheckerCount).Name & " " & CheckXCoordsButton & " " & CheckYCoordsButton)
+            FileClose(1)
             For Each piece In ChessBoard.Whitepieces
+                If move Is ChessBoard.BPawn4 Then
+                    Value = Value
+                End If
                 If piece.Left = CheckXCoordsButton And piece.Top = CheckYCoordsButton And piece IsNot move Then
                     Value = GetPieceValue(piece)
                 End If
             Next
             CheckingScoreValue(Value, move)
+            AICheckerCount += 1
         Next
         ChessBoard.BlackSideValue += Value
         ChessBoard.WhiteSideValue -= Value
@@ -382,6 +396,9 @@ Public Class Chess_Ai
     Public Sub CheckButtonsEnabled(Piece)
         For i = StartOfLoop To EndofLoop
             If ChessBoard.buttonmoves(i).Visible = True Then
+                If Piece Is ChessBoard.BPawn4 Then
+                    NumberlegalMoves = NumberlegalMoves
+                End If
                 LegalMoveNames.Add(Piece)
                 LegalButtonNames.Add(ChessBoard.buttonmoves(i))
                 NumberlegalMoves += 1
@@ -391,12 +408,14 @@ Public Class Chess_Ai
         Next
     End Sub
     Public Sub CheckPawns()
+        FirstCheckNumber = 8
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         For Each piece In Check_Checkmate.Bpawn
             Dim Pawns As New Pawn(piece.Left, piece.Top, chesscolour, piece, ChessBoard.FirstCheck(FirstCheckNumber))
-            FirstCheckNumber += 1
+
             Pawns.SetColour()
             Pawns.CheckMoves()
+            FirstCheckNumber += 1
             ChessBoard.chess_piece = piece
             StartOfLoop = 0
             EndofLoop = 3
@@ -407,7 +426,6 @@ Public Class Chess_Ai
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         For Each piece In Check_Checkmate.Brook
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
-            FirstCheckNumber += 1
             Rooks.SetColour()
             Rooks.SetLoopBoundaries()
             Rooks.CheckMoves()
@@ -421,7 +439,6 @@ Public Class Chess_Ai
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         For Each piece In Check_Checkmate.BBishop
             Dim Bishops As New Bishop(piece.Left, piece.Top, chesscolour, piece)
-            FirstCheckNumber += 1
             Bishops.SetColour()
             Bishops.SetLoopBoundaries()
             Bishops.CheckMoves()
@@ -435,7 +452,6 @@ Public Class Chess_Ai
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         For Each piece In Check_Checkmate.BKnight
             Dim Knights As New Knight(piece.Left, piece.Top, chesscolour, piece)
-            FirstCheckNumber += 1
             Knights.SetColour()
             Knights.CheckMoves()
             ChessBoard.chess_piece = piece
@@ -449,7 +465,6 @@ Public Class Chess_Ai
         piece = ChessBoard.BQueen
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         Dim Queens As New Queen(piece.Left, piece.Top, chesscolour, piece)
-        FirstCheckNumber += 1
         Queens.SetColour()
         Queens.SetLoopBoundaries()
         Queens.CheckMoves()
@@ -463,7 +478,6 @@ Public Class Chess_Ai
         Dim piece As Button
         piece = ChessBoard.BKing
         Dim Kings As New King(piece.Left, piece.Top, chesscolour, piece)
-        FirstCheckNumber += 1
         Kings.SetColour()
         Kings.CheckMoves()
         ChessBoard.chess_piece = piece
