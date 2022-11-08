@@ -412,13 +412,6 @@
         Next
         Return buttonholder
     End Function
-    'Removes all the buttons after checking
-    Public Sub clearbuttons()
-        For Each Button In buttonMoves
-            Button.Hide()
-            Button.Location = New Point(1000, 1000)
-        Next
-    End Sub
     'This is where it goes checking each section in the loop, the loop id being the temppositionscore where each number represents a certain section
     Public Overridable Sub rearrangechecks(ByRef temppostionscore As Integer)
         If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.BQueen Then

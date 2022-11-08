@@ -580,11 +580,11 @@ Public Class ChessBoard
         Button70.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
         Button71.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
         Button72.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
-        For i = 0 To 6
+        For i = 0 To 7
             buttonsToUse = KingButtons(i)
-            CheckingCheck(i) = checkTheKing.Check_King
+            CheckingCheck(i) = checkTheKing.Check_King           
         Next
-        If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True Then
+        If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True And CheckingCheck(7) = True Then
             If colourOfPieces = "white" Then
                 MsgBox("White Checkmate!")
             Else
@@ -616,9 +616,6 @@ Public Class ChessBoard
             BlackTime.Stop()
             WhiteTime.Start()
             blackpiecedisabler()
-        End If
-        If Button34.Visible = True Then
-
         End If
     End Sub
     'It goes through piece checking if the piece's clicked position has moved on to a piece, if it has it moves piece to the right display the message

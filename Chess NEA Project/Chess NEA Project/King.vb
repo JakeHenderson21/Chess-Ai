@@ -51,7 +51,6 @@
         Next
         If ChessBoard.CheckMode = False Then
             For i = 0 To 7
-                ChessBoard.checkKing = True
                 ChessBoard.buttonsToUse = ChessBoard.KingButtons(i)
                 checkplaceholder(i) = checktheking.Check_King()
                 resetkingbuttonlocations()
@@ -116,8 +115,8 @@
         End If
     End Sub
     'resets the king button location incase they have moved
-    Sub resetkingbuttonlocations()
-         ChessBoard.Button65.Location = New Point(X - 77, Y)
+    Public Sub resetkingbuttonlocations()
+        ChessBoard.Button65.Location = New Point(X - 77, Y)
         ChessBoard.Button66.Location = New Point(X - 77, Y + 77)
         ChessBoard.Button67.Location = New Point(X, Y + 77)
         ChessBoard.Button68.Location = New Point(X + 77, Y + 77)

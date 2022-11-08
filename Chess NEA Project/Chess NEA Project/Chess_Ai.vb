@@ -340,7 +340,7 @@ Public Class Chess_Ai
         CheckingForLegalMoves()
         Dim randomnumber As New Random
         Dim AICheckerCount As Integer = 0
-        Dim CheckXCoordsPiece, CheckYCoordsPiece, CheckXCoordsButton, CheckYCoordsButton As Integer
+        Dim CheckXCoordsButton, CheckYCoordsButton As Integer
         Dim Value As PieceValue
         For Each move In LegalMoveNames
             CheckXCoordsButton = LegalButtonXCoordinates(AICheckerCount) * 77
@@ -392,7 +392,6 @@ Public Class Chess_Ai
         End If
         Return result
     End Function
-
     Public Sub CheckButtonsEnabled(Piece)
         For i = StartOfLoop To EndofLoop
             If ChessBoard.buttonmoves(i).Visible = True Then
