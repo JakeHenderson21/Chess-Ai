@@ -122,6 +122,7 @@ Public Class Chess_Ai
                 For j = 0 To 255
                     Randomize()
                     HiddenLayerWeights(i, j, k) = randomNumber.NextDouble / 100
+                    MsgBox(HiddenLayerWeights(i, j, k))
                 Next
             Next
         Next
