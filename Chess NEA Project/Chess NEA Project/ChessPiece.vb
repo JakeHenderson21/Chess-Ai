@@ -193,7 +193,6 @@
     Public Overridable Sub CheckMoves()
         Dim xcoordinate, ycoordinate, piecemove, l, tempscoremove, temppostionscore As Integer
         temppostionscore = count
-
         For t = startofloop To endofloop
             If piece Is ChessBoard.WQueen Then
                 piece = piece
@@ -282,7 +281,6 @@
                         End If
                     Next
                 End If
-
                 If buttonsPastBorder = 7 Then
                     change = True
                     scoremove = 0
@@ -408,7 +406,6 @@
             Else
                 Exit For
             End If
-
         Next
         Return buttonholder
     End Function

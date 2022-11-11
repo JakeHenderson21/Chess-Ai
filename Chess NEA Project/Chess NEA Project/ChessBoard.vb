@@ -139,7 +139,6 @@ Public Class ChessBoard
         Next
         clearbuttons()
         blackpiecedisabler()
-
         For i = 0 To 7
             KingButtons(i) = buttonmoves(i + 64)
         Next
@@ -582,7 +581,7 @@ Public Class ChessBoard
         Button72.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
         For i = 0 To 7
             buttonsToUse = KingButtons(i)
-            CheckingCheck(i) = checkTheKing.Check_King           
+            CheckingCheck(i) = checkTheKing.Check_King
         Next
         If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True And CheckingCheck(7) = True Then
             If colourOfPieces = "white" Then
@@ -594,7 +593,7 @@ Public Class ChessBoard
         ElseIf checkingForCheck = True Then
             MsgBox("Check!")
             checkingForCheck = False
-        End If
+        End If       
     End Sub
     'This sets a new location for the piece clicked, it firsts checks if it was a pawn, if it was a pawn and its first turn then it makes FirstCheck for the pawn
     ' equal to true meaning when that pawn is clicked again it can't move 2 steps forward, it then checks if a piece was taken then ends turn and starts the next
@@ -746,9 +745,7 @@ Public Class ChessBoard
         End If
         If MainMenu.AiMode = True Then
             Dim Ai As New Chess_Ai
-            Ai.Initilise_Weights_And_Bias()
             Ai.NextMoveDecider()
-
         Else
             For Each p In Blackpieces
                 For Each piece In BPiecesTaken

@@ -14,7 +14,7 @@ Public Class Chess_Ai
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
     Private BestValue As Integer
-    Private AlreadyChecked As Boolean
+    Private AlreadyChecked, Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
     Private NumberOfMoves, NumberOfPieces, StartingNumber As Integer
@@ -134,132 +134,135 @@ Public Class Chess_Ai
         For k = 0 To 3
             For i = 0 To 255
                 Randomize()
-                HiddenBias(i, k) = randomNumber.Next(80, 90) / 100
+                HiddenBias(i, k) = randomNumber.Next(90, 100) / 100
             Next
         Next
         For i = 0 To 203
-            OutputBias(i) = randomNumber.Next(80, 90) / 100
+            OutputBias(i) = randomNumber.Next(90, 100) / 100
         Next
     End Sub
     Public Sub NextMoveDecider()
-        If AlreadyChecked = False Then
-            AlreadyChecked = True
-            CheckingForBestMoves()
-            CheckIfBestMovePlayed()
-        Else
-            AlreadyChecked = True
-        End If
-        
-        Dim PieceChecker As New List(Of Button)
-        Dim AICount As Integer
-        For xcoord = 0 To 7
-            For ycoord = 0 To 7
-                For PieceType = 0 To 5
-                    PieceChecker = PieceTypeIdentifier(PieceType)
-                    PieceChecker.ToArray()
-                    For Each piece In PieceChecker
-                        If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord And PieceType = 6 Then
-                            InputLayer(AICount) = -1
-                        ElseIf piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
-                            InputLayer(AICount) = 1
-                        Else
-                            InputLayer(AICount) = 0
-                        End If
-                        If AICount >= 383 Then
-                        Else
-                            AICount += 1
-                        End If
-                    Next
-                    PieceChecker.Clear()
-                Next
-            Next
-        Next
-        For i = 0 To 255
-            For j = 0 To 383
-                HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
-            Next
-            HiddenLayer(i, 0) -= HiddenBias(i, 0)
-            HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
-        Next
-        For k = 1 To 3
-            For i = 0 To 255
-                For j = 0 To 255
-                    HiddenLayer(i, k) += HiddenLayer(j, k - 1) * HiddenLayerWeights(j, i, k - 1)
-                Next
-                HiddenLayer(i, k) -= HiddenBias(i, k)
-                HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
-            Next
-        Next
-        For i = 0 To 203
-            For j = 0 To 255
-                Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
-            Next
-            Outputlayer(i) -= OutputBias(i)
-            Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
-        Next
-
-        Dim TempOutput As List(Of Double)
-        TempOutput = Outputlayer.ToList
-        BestValue = TempOutput.IndexOf(Outputlayer.Max)
-        If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
-            BestValue = BestValue
-        End If
-        If PieceOptions(BestValue) Is ChessBoard.BPawn1 Or PieceOptions(BestValue) Is ChessBoard.BPawn2 Or PieceOptions(BestValue) Is ChessBoard.BPawn3 Or PieceOptions(BestValue) Is ChessBoard.BPawn4 Or PieceOptions(BestValue) Is ChessBoard.BPawn5 Or PieceOptions(BestValue) Is ChessBoard.BPawn6 Or PieceOptions(BestValue) Is ChessBoard.BPawn7 Or PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
-            Dim AiPiece As New Pawn(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue), ChessBoard.FirstCheck(FirstCheckIdentifier))
-            AiPieceMover(AiPiece)
-            FirstCheckNumber = FirstCheckIdentifier()
-        ElseIf PieceOptions(BestValue) Is ChessBoard.BRook1 Or PieceOptions(BestValue) Is ChessBoard.BRook2 Then
-            Dim AiPiece As New Rook(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
-            AiPiece.SetLoopBoundaries()
-            AiPiece.SetColour()
-            AiPiece.CheckMoves()
-            ChessBoard.chess_piece = PieceOptions(BestValue)
-            ChessBoard.colourOfPieces = "black"
-        ElseIf PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
-            Dim AiPiece As New Bishop(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
-            AiPiece.SetLoopBoundaries()
-            AiPiece.SetColour()
-            AiPiece.CheckMoves()
-            ChessBoard.chess_piece = PieceOptions(BestValue)
-            ChessBoard.colourOfPieces = "black"
-        ElseIf PieceOptions(BestValue) Is ChessBoard.BKnight2 Or PieceOptions(BestValue) Is ChessBoard.BKnight2 Then
-            Dim AiPiece As New Knight(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
-            AiPieceMover(AiPiece)
-        ElseIf PieceOptions(BestValue) Is ChessBoard.BQueen Then
-            Dim AiPiece As New Queen(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
-            AiPiece.SetLoopBoundaries()
-            AiPiece.SetColour()
-            AiPiece.CheckMoves()
-            ChessBoard.chess_piece = PieceOptions(BestValue)
-            ChessBoard.colourOfPieces = "black"
-        ElseIf PieceOptions(BestValue) Is ChessBoard.BKing Then
-            Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
-            AiPieceMover(AiPiece)
-        End If
-        Dim taken As Boolean = False
-        For Each piece In ChessBoard.BPiecesTaken
-            If piece Is PieceOptions(BestValue) Then
-                taken = True
+        found = False
+        AlreadyChecked = False
+        While found = False
+            If Initialised = False Then
+                Initilise_Weights_And_Bias()
+            Else
+                Initialised = True
             End If
-        Next
-        If ButtonOptions(BestValue).Visible = True And taken = False Then
-            If PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
+            If AlreadyChecked = False Then
+                AlreadyChecked = True
+                CheckingForBestMoves()
+                CheckIfBestMovePlayed()
+            Else
+                AlreadyChecked = True
+            End If
+            Dim PieceChecker As New List(Of Button)
+            Dim AICount As Integer
+            For xcoord = 0 To 7
+                For ycoord = 0 To 7
+                    For PieceType = 0 To 5
+                        PieceChecker = PieceTypeIdentifier(PieceType)
+                        PieceChecker.ToArray()
+                        For Each piece In PieceChecker
+                            If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord And PieceType = 6 Then
+                                InputLayer(AICount) = -1
+                            ElseIf piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
+                                InputLayer(AICount) = 1
+                            Else
+                                InputLayer(AICount) = 0
+                            End If
+                            If AICount >= 383 Then
+                            Else
+                                AICount += 1
+                            End If
+                        Next
+                        PieceChecker.Clear()
+                    Next
+                Next
+            Next
+            For i = 0 To 255
+                For j = 0 To 383
+                    HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
+                Next
+                HiddenLayer(i, 0) -= HiddenBias(i, 0)
+                HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
+            Next
+            For k = 1 To 3
+                For i = 0 To 255
+                    For j = 0 To 255
+                        HiddenLayer(i, k) += HiddenLayer(j, k - 1) * HiddenLayerWeights(j, i, k - 1)
+                    Next
+                    HiddenLayer(i, k) -= HiddenBias(i, k)
+                    HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
+                Next
+            Next
+            For i = 0 To 203
+                For j = 0 To 255
+                    Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
+                Next
+                Outputlayer(i) -= OutputBias(i)
+                Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
+            Next
+            Dim TempOutput As List(Of Double)
+            TempOutput = Outputlayer.ToList
+            BestValue = TempOutput.IndexOf(Outputlayer.Max)
+            If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
                 BestValue = BestValue
             End If
-            PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
-            ChessBoard.xcoords = PieceOptions(BestValue).Left
-            ChessBoard.ycoords = PieceOptions(BestValue).Top
-            ChessBoard.clearbuttons()
-            ChessBoard.pieceTakenCheck()
-            ChessBoard.BlackTime.Stop()
-            ChessBoard.WhiteTime.Start()
-            ChessBoard.blackpiecedisabler()
-            AlreadyChecked = False
-        Else
-            Initilise_Weights_And_Bias()
-            NextMoveDecider()
-        End If
-
+            If PieceOptions(BestValue) Is ChessBoard.BPawn1 Or PieceOptions(BestValue) Is ChessBoard.BPawn2 Or PieceOptions(BestValue) Is ChessBoard.BPawn3 Or PieceOptions(BestValue) Is ChessBoard.BPawn4 Or PieceOptions(BestValue) Is ChessBoard.BPawn5 Or PieceOptions(BestValue) Is ChessBoard.BPawn6 Or PieceOptions(BestValue) Is ChessBoard.BPawn7 Or PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
+                Dim AiPiece As New Pawn(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue), ChessBoard.FirstCheck(FirstCheckIdentifier))
+                AiPieceMover(AiPiece)
+                FirstCheckNumber = FirstCheckIdentifier()
+            ElseIf PieceOptions(BestValue) Is ChessBoard.BRook1 Or PieceOptions(BestValue) Is ChessBoard.BRook2 Then
+                Dim AiPiece As New Rook(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+                AiPiece.SetLoopBoundaries()
+                AiPiece.SetColour()
+                AiPiece.CheckMoves()
+                ChessBoard.chess_piece = PieceOptions(BestValue)
+                ChessBoard.colourOfPieces = "black"
+            ElseIf PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
+                Dim AiPiece As New Bishop(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+                AiPiece.SetLoopBoundaries()
+                AiPiece.SetColour()
+                AiPiece.CheckMoves()
+                ChessBoard.chess_piece = PieceOptions(BestValue)
+                ChessBoard.colourOfPieces = "black"
+            ElseIf PieceOptions(BestValue) Is ChessBoard.BKnight2 Or PieceOptions(BestValue) Is ChessBoard.BKnight2 Then
+                Dim AiPiece As New Knight(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+                AiPieceMover(AiPiece)
+            ElseIf PieceOptions(BestValue) Is ChessBoard.BQueen Then
+                Dim AiPiece As New Queen(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+                AiPiece.SetLoopBoundaries()
+                AiPiece.SetColour()
+                AiPiece.CheckMoves()
+                ChessBoard.chess_piece = PieceOptions(BestValue)
+                ChessBoard.colourOfPieces = "black"
+            ElseIf PieceOptions(BestValue) Is ChessBoard.BKing Then
+                Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+                AiPieceMover(AiPiece)
+            End If
+            Dim taken As Boolean = False
+            For Each piece In ChessBoard.BPiecesTaken
+                If piece Is PieceOptions(BestValue) Then
+                    taken = True
+                End If
+            Next
+            If ButtonOptions(BestValue).Visible = True And taken = False Then
+                If PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
+                    BestValue = BestValue
+                End If
+                PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
+                ChessBoard.xcoords = PieceOptions(BestValue).Left
+                ChessBoard.ycoords = PieceOptions(BestValue).Top
+                ChessBoard.clearbuttons()
+                ChessBoard.pieceTakenCheck()
+                ChessBoard.BlackTime.Stop()
+                ChessBoard.WhiteTime.Start()
+                ChessBoard.blackpiecedisabler()
+                found = True
+            End If
+        End While
     End Sub
     Private Sub AiPieceMover(AiPiece)
         AiPiece.SetColour()
@@ -411,7 +414,6 @@ Public Class Chess_Ai
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         For Each piece In Check_Checkmate.Bpawn
             Dim Pawns As New Pawn(piece.Left, piece.Top, chesscolour, piece, ChessBoard.FirstCheck(FirstCheckNumber))
-
             Pawns.SetColour()
             Pawns.CheckMoves()
             FirstCheckNumber += 1
