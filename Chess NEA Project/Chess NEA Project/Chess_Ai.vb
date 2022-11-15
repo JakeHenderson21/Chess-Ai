@@ -6,18 +6,18 @@ Public Class Chess_Ai
     Private InputLayer(383) As Integer
     Private HiddenLayer(255, 3) As Double
     Private Outputlayer(203) As Double
-    Private InputToHiddenLayerWeights(383, 255) As Double
-    Private HiddenLayerWeights(255, 255, 2) As Double
-    Private HiddenToOutputLayerWeights(255, 203) As Double
-    Private HiddenBias(255, 3) As Double
-    Private OutputBias(203) As Double
+    Public InputToHiddenLayerWeights(383, 255) As Double
+    Public HiddenLayerWeights(255, 255, 2) As Double
+    Public HiddenToOutputLayerWeights(255, 203) As Double
+    Public HiddenBias(255, 3) As Double
+    Public OutputBias(203) As Double
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
     Private BestValue As Integer
     Private AlreadyChecked, Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
-    Private NumberOfMoves, NumberOfPieces, StartingNumber As Integer
+    Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
     Enum PieceValue
         Pawn = 5
         Rook = 15
@@ -109,7 +109,22 @@ Public Class Chess_Ai
         End If
         Return result
     End Function
-    Public Sub Initilise_Weights_And_Bias()
+    Public Sub Initilise_HiddenBias()
+        Dim randomNumber As New Random
+        For k = 0 To 3
+            For i = 0 To 255
+                Randomize()
+                HiddenBias(i, k) = randomNumber.Next(90, 100) / 100
+            Next
+        Next
+    End Sub
+    Public Sub Inititlise_OutputBias()
+        Dim randomNumber As New Random
+        For i = 0 To 203
+            OutputBias(i) = randomNumber.Next(90, 100) / 100
+        Next
+    End Sub
+    Public Sub Inititlise_InputWeights()
         Dim randomNumber As New Random
         For i = 0 To 383
             For j = 0 To 255
@@ -117,29 +132,25 @@ Public Class Chess_Ai
                 InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble / 100
             Next
         Next
-        For k = 0 To 2
+    End Sub
+    Public Sub Initilise_HiddenWeights()
+        Dim randomNumber As New Random
+        For k = StartofHiddenWeightsLoop To EndofHiddenWeightsLoop
             For i = 0 To 255
                 For j = 0 To 255
                     Randomize()
                     HiddenLayerWeights(i, j, k) = randomNumber.NextDouble / 100
-                    MsgBox(HiddenLayerWeights(i, j, k))
                 Next
             Next
         Next
+    End Sub
+    Public Sub Initilise_OutputWeights()
+        Dim randomNumber As New Random
         For i = 0 To 255
             For j = 0 To 203
                 Randomize()
                 HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble / 100
             Next
-        Next
-        For k = 0 To 3
-            For i = 0 To 255
-                Randomize()
-                HiddenBias(i, k) = randomNumber.Next(90, 100) / 100
-            Next
-        Next
-        For i = 0 To 203
-            OutputBias(i) = randomNumber.Next(90, 100) / 100
         Next
     End Sub
     Public Sub NextMoveDecider()
@@ -147,7 +158,13 @@ Public Class Chess_Ai
         AlreadyChecked = False
         While found = False
             If Initialised = False Then
-                Initilise_Weights_And_Bias()
+                StartofHiddenWeightsLoop = 0
+                EndofHiddenWeightsLoop = 2
+                Inititlise_InputWeights()
+                Initilise_HiddenWeights()
+                Initilise_OutputWeights()
+                Initilise_HiddenBias()
+                Inititlise_OutputBias()
             Else
                 Initialised = True
             End If
