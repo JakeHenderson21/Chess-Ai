@@ -17,13 +17,12 @@ Public Class MainMenu
         Dim inputstring As String = ""
         If My.Computer.FileSystem.FileExists("NNInputWeights.csv") Then
         Else
-
             FileOpen(1, "NNInputWeights.csv", OpenMode.Output)
             ai.Inititlise_InputWeights()
-            For i = 0 To 383
+            For j = 0 To 255
                 inputstring = ""
-                For j = 0 To 255
-                    If i <> 255 Then
+                For i = 0 To 383
+                    If i <> 383 Then
                         inputstring += ai.InputToHiddenLayerWeights(i, j).ToString & ","
                     Else
                         inputstring += ai.InputToHiddenLayerWeights(i, j).ToString
@@ -43,7 +42,6 @@ Public Class MainMenu
                 inputstring = ""
                 For j = 0 To 255
                     If j <> 255 Then
-
                         inputstring += ai.HiddenLayerWeights(i, j, 0).ToString & ","
                     Else
                         inputstring += ai.HiddenLayerWeights(i, j, 0).ToString
@@ -120,7 +118,6 @@ Public Class MainMenu
                     Else
                         inputstring += ai.HiddenBias(k, i).ToString
                     End If
-
                 Next
                 PrintLine(6, inputstring)
             Next

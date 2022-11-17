@@ -79,3 +79,4 @@ BBishop2 Button36
 BPawn2 Button1
 BPawn3 Button1
 BPawn3 Button1
+BPawn2 Button1

@@ -3,9 +3,9 @@ Public Class Chess_Ai
     Private LegalMoveNames, LegalButtonNames As New List(Of Button)
     Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
     Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade As Integer
-    Private InputLayer(383) As Integer
-    Private HiddenLayer(255, 3) As Double
-    Private Outputlayer(203) As Double
+    Private InputLayer(383), SigMoidInputLayer(383) As Integer
+    Private HiddenLayer(255, 3), SigMoidHiddenLayer(255, 3) As Double
+    Private Outputlayer(203), SigMoidOutputLayer(203) As Double
     Public InputToHiddenLayerWeights(383, 255) As Double
     Public HiddenLayerWeights(255, 255, 2) As Double
     Public HiddenToOutputLayerWeights(255, 203) As Double
@@ -13,11 +13,13 @@ Public Class Chess_Ai
     Public OutputBias(203) As Double
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
+    Private CostFuctionTotal As Double
     Private BestValue As Integer
     Private AlreadyChecked, Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
     Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
+    Const Desired_Output As Double = 1.0
     Enum PieceValue
         Pawn = 5
         Rook = 15
@@ -109,6 +111,17 @@ Public Class Chess_Ai
         End If
         Return result
     End Function
+    Public Sub CostFunctionCalculation()
+        For i = 0 To 255
+            For j = 0 To 383
+                If i = 0 Then
+                    CostFuctionTotal += SigMoidHiddenLayer(i, j) * (2 * (InputLayer(i)))
+                Else
+                    CostFuctionTotal += InputLayer(i - 1) * SigMoidHiddenLayer(i, j) * (2 * ((InputLayer(j))))
+                End If
+            Next
+        Next
+    End Sub
     Public Sub Initilise_HiddenBias()
         Dim randomNumber As New Random
         For k = 0 To 3
@@ -153,6 +166,11 @@ Public Class Chess_Ai
             Next
         Next
     End Sub
+    Public Function SigMoidDerativeCalculation(input)
+        Dim result As Double
+        result = SigmoidCalculation(input) * (1 - SigmoidCalculation(input))
+        Return result
+    End Function
     Public Sub NextMoveDecider()
         found = False
         AlreadyChecked = False
@@ -204,6 +222,7 @@ Public Class Chess_Ai
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
                 Next
                 HiddenLayer(i, 0) -= HiddenBias(i, 0)
+                SigMoidHiddenLayer(i, 0) = SigMoidDerativeCalculation(HiddenLayer(i, 0))
                 HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
             Next
             For k = 1 To 3
@@ -212,6 +231,7 @@ Public Class Chess_Ai
                         HiddenLayer(i, k) += HiddenLayer(j, k - 1) * HiddenLayerWeights(j, i, k - 1)
                     Next
                     HiddenLayer(i, k) -= HiddenBias(i, k)
+                    SigMoidHiddenLayer(i, k) = SigMoidDerativeCalculation(HiddenLayer(i, k))
                     HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
                 Next
             Next
@@ -220,6 +240,7 @@ Public Class Chess_Ai
                     Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
                 Next
                 Outputlayer(i) -= OutputBias(i)
+                SigMoidOutputLayer(i) = SigMoidDerativeCalculation(Outputlayer(i))
                 Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
             Next
             Dim TempOutput As List(Of Double)
