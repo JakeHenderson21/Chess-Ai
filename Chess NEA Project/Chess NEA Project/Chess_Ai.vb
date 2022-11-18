@@ -112,13 +112,26 @@ Public Class Chess_Ai
         Return result
     End Function
     Public Sub CostFunctionCalculation()
+        Dim add1oradd0 As Integer
         For i = 0 To 255
-            For j = 0 To 383
-                If i = 0 Then
-                    CostFuctionTotal += SigMoidHiddenLayer(i, j) * (2 * (InputLayer(i)))
-                Else
-                    CostFuctionTotal += InputLayer(i - 1) * SigMoidHiddenLayer(i, j) * (2 * ((InputLayer(j))))
-                End If
+            For j = 0 To 383              
+                    CostFuctionTotal += InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))               
+            Next
+        Next
+        For i = 0 To 2
+            For j = 0 To 255 
+                    If i = 2 Then
+                        add1oradd0 = 0
+                    Else
+                        add1oradd0 = 1
+                    End If
+                    CostFuctionTotal += HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
+            Next
+        Next
+        'Need to add code for final hidden layer
+        For i = 0 To 203
+            For j = 0 To 255
+                CostFuctionTotal += HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * Outputlayer(i) - Desired_Output)
             Next
         Next
     End Sub

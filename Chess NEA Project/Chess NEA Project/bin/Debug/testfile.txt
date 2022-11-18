@@ -80,3 +80,7 @@ BPawn2 Button1
 BPawn3 Button1
 BPawn3 Button1
 BPawn2 Button1
+BPawn6 Button1
+BKnight2 Button1
+BPawn4 Button1
+BPawn1 Button1
