@@ -13,7 +13,7 @@ Public Class Chess_Ai
     Public OutputBias(203) As Double
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
-    Private CostFuctionTotal As Double
+    Private CostFunctionTotal, CostFunctionAverage, CFInputtoHiddenlayerWeightChanges(383, 255), CFHiddenLayerWeightChanges(255, 255, 2), CFHiddenToOutputLayerWeightChanges(255, 203) As Double
     Private BestValue As Integer
     Private AlreadyChecked, Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
@@ -111,30 +111,47 @@ Public Class Chess_Ai
         End If
         Return result
     End Function
+  
     Public Sub CostFunctionCalculation()
         Dim add1oradd0 As Integer
         For i = 0 To 255
-            For j = 0 To 383              
-                    CostFuctionTotal += InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))               
+            For j = 0 To 383
+                CFInputtoHiddenlayerWeightChanges(j, i) += InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
             Next
         Next
         For i = 0 To 2
-            For j = 0 To 255 
+            For k = 0 To 255
+                For j = 0 To 255
                     If i = 2 Then
                         add1oradd0 = 0
                     Else
                         add1oradd0 = 1
                     End If
-                    CostFuctionTotal += HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
+                    CFHiddenLayerWeightChanges(j, k, i) += HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
+                Next
             Next
         Next
-        'Need to add code for final hidden layer
         For i = 0 To 203
             For j = 0 To 255
-                CostFuctionTotal += HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * Outputlayer(i) - Desired_Output)
+                CFHiddenToOutputLayerWeightChanges(j, i) += HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
             Next
         Next
     End Sub
+    Public Function GetInputWeights()
+        Return InputToHiddenLayerWeights
+    End Function
+    Public Function GetHiddenWeights()
+        Return HiddenLayerWeights
+    End Function
+    Public Function GetOutputWeights()
+        Return HiddenToOutputLayerWeights
+    End Function
+    Public Function GetHiddenBias()
+        Return HiddenBias
+    End Function
+    Public Function GetOutputBias()
+        Return OutputBias
+    End Function
     Public Sub Initilise_HiddenBias()
         Dim randomNumber As New Random
         For k = 0 To 3
@@ -314,7 +331,28 @@ Public Class Chess_Ai
                 ChessBoard.blackpiecedisabler()
                 found = True
             End If
+            CostFunctionCalculation()
+            AdjustingWeightsAndBias()
         End While
+    End Sub
+    Public Sub AdjustingWeightsAndBias()
+        For i = 0 To 255
+            For j = 0 To 383
+                InputToHiddenLayerWeights(j, i) += CFInputtoHiddenlayerWeightChanges(j, i)
+            Next
+        Next
+        For i = 0 To 2
+            For k = 0 To 255
+                For j = 0 To 255
+                    HiddenLayerWeights(j, k, i) += CFHiddenLayerWeightChanges(j, k, i)
+                Next
+            Next
+        Next
+        For i = 0 To 203
+            For j = 0 To 255
+                HiddenToOutputLayerWeights(j, i) += CFHiddenToOutputLayerWeightChanges(j, i)
+            Next
+        Next
     End Sub
     Private Sub AiPieceMover(AiPiece)
         AiPiece.SetColour()

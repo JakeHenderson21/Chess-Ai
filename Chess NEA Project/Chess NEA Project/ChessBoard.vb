@@ -1,5 +1,6 @@
 ﻿
 Public Class ChessBoard
+    Public Inputweights(383, 255), HiddenWeights(255, 255, 2), OutputWeights(255, 203), HiddenBias(255, 3), OutputBias(203) As Double
     Public colourOfPieces As String
     Public xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
@@ -150,7 +151,7 @@ Public Class ChessBoard
     End Sub
     'Removes all buttons from the board
     Public Sub clearbuttons()
-        For Each Button In buttonmoves  
+        For Each Button In buttonmoves
             Button.Hide()
             Button.Location = New Point(1000, 1000)
         Next
@@ -589,11 +590,108 @@ Public Class ChessBoard
             Else
                 MsgBox("Black Checkmate!")
             End If
-
+            If MainMenu.AiMode = True Then
+                SaveNNdata()
+            End If
         ElseIf checkingForCheck = True Then
             MsgBox("Check!")
             checkingForCheck = False
-        End If       
+
+        End If
+    End Sub
+    Public Sub SaveNNdata()
+        Dim ai As New Chess_Ai
+
+        Dim inputstring As String = ""
+        FileOpen(1, "NNInputWeights.csv", OpenMode.Output)
+        For j = 0 To 255
+            inputstring = ""
+            For i = 0 To 383
+                If i <> 383 Then
+                    inputstring += Inputweights(i, j).ToString & ","
+                Else
+                    inputstring += Inputweights(i, j).ToString
+                End If
+            Next
+            PrintLine(1, inputstring)
+        Next
+        FileClose(1)
+        FileOpen(2, "NN1stHiddenWeights.csv", OpenMode.Output)
+        For i = 0 To 255
+            inputstring = ""
+            For j = 0 To 255
+                If j <> 255 Then
+                    inputstring += HiddenWeights(i, j, 0).ToString & ","
+                Else
+                    inputstring += HiddenWeights(i, j, 0).ToString
+                End If
+            Next
+            PrintLine(2, inputstring)
+        Next
+        FileClose(2)
+        FileOpen(3, "NN2ndHiddenWeights.csv", OpenMode.Output)
+        For i = 0 To 255
+            inputstring = ""
+            For j = 0 To 255
+                If j <> 255 Then
+                    inputstring += HiddenWeights(i, j, 1).ToString & ","
+                Else
+                    inputstring += HiddenWeights(i, j, 1).ToString
+                End If
+            Next
+            PrintLine(3, inputstring)
+        Next
+        FileClose(3)
+        FileOpen(4, "NN3rdHiddenWeights.csv", OpenMode.Output)
+        For i = 0 To 255
+            inputstring = ""
+            For j = 0 To 255
+                If j <> 255 Then
+                    inputstring += HiddenWeights(i, j, 2).ToString & ","
+                Else
+                    inputstring += HiddenWeights(i, j, 2).ToString
+                End If
+            Next
+            PrintLine(4, inputstring)
+        Next
+        FileClose(4)
+        FileOpen(5, "NNOutputWeights.csv", OpenMode.Output)
+        For i = 0 To 255
+            inputstring = ""
+            For j = 0 To 203
+                If j <> 203 Then
+                    inputstring += OutputWeights(i, j).ToString & ","
+                Else
+                    inputstring += OutputWeights(i, j).ToString
+                End If
+            Next
+            PrintLine(5, inputstring)
+        Next
+        FileClose(5)
+
+        FileOpen(6, "NNHiddenBias.csv", OpenMode.Output)
+        For k = 0 To 255
+            inputstring = ""
+            For i = 0 To 3
+                If i <> 3 Then
+                    inputstring += HiddenBias(k, i).ToString & ","
+                Else
+                    inputstring += HiddenBias(k, i).ToString
+                End If
+            Next
+            PrintLine(6, inputstring)
+        Next
+        FileClose(6)
+
+        FileOpen(7, "NNOutputBias.txt", OpenMode.Output)
+        For i = 0 To 203
+            PrintLine(7, OutputBias(i))
+        Next
+        FileClose(7)
+    End Sub
+    Private Sub Chessboard_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
+        SaveNNdata()
+        MainMenu.Close()
     End Sub
     'This sets a new location for the piece clicked, it firsts checks if it was a pawn, if it was a pawn and its first turn then it makes FirstCheck for the pawn
     ' equal to true meaning when that pawn is clicked again it can't move 2 steps forward, it then checks if a piece was taken then ends turn and starts the next
@@ -746,6 +844,11 @@ Public Class ChessBoard
         If MainMenu.AiMode = True Then
             Dim Ai As New Chess_Ai
             Ai.NextMoveDecider()
+            Inputweights = Ai.GetInputWeights()
+            HiddenWeights = Ai.GetHiddenWeights()
+            OutputWeights = Ai.GetOutputWeights()
+            HiddenBias = Ai.GetHiddenBias()
+            OutputBias = Ai.GetOutputBias()
         Else
             For Each p In Blackpieces
                 For Each piece In BPiecesTaken
