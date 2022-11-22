@@ -254,6 +254,9 @@
                 result = DownLeftMoveButton
                 rooks.DownLeftMoveButtonsCheck.Clear()
             ElseIf buttoncheck = 7 Then
+                'If rooks.piece Is ChessBoard.BQueen Then
+                '    resultID = resultID
+                'End If
                 UpLeftMoveButton = rooks.DownLeftMoveButtonsCheck.ToArray()
                 resultID = UpLeftMoveButton.Length
                 result = UpLeftMoveButton

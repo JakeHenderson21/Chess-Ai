@@ -111,7 +111,6 @@ Public Class Chess_Ai
         End If
         Return result
     End Function
-  
     Public Sub CostFunctionCalculation()
         Dim add1oradd0 As Integer
         For i = 0 To 255

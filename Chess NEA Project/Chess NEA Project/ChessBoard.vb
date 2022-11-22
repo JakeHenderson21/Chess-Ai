@@ -690,7 +690,9 @@ Public Class ChessBoard
         FileClose(7)
     End Sub
     Private Sub Chessboard_FormClosing(sender As Object, e As FormClosingEventArgs) Handles Me.FormClosing
-        SaveNNdata()
+        If MainMenu.AiMode = True Then
+            SaveNNdata()
+        End If
         MainMenu.Close()
     End Sub
     'This sets a new location for the piece clicked, it firsts checks if it was a pawn, if it was a pawn and its first turn then it makes FirstCheck for the pawn
@@ -724,9 +726,6 @@ Public Class ChessBoard
                 Exit For
             End If
         Next
-    End Sub
-    Private Sub button73_click(sender As Object, e As EventArgs) Handles Button73.Click
-        MsgBox(BKing.Left & "," & BKing.Top)
     End Sub
     'This checks which piece was just removed and then moves it the right and adding it to an array so it can't be used again
     Public Sub setRemovedPieces(ByVal piece As Button)
