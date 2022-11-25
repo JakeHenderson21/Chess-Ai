@@ -95,7 +95,7 @@
         End If
             For Each Button In buttonMoves
                 If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
-                    Button.Hide()
+                Button.Hide()
                 End If
             Next
     End Sub

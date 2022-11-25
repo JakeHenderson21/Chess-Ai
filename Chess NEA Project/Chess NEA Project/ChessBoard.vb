@@ -1,6 +1,7 @@
 ﻿
 Public Class ChessBoard
     Public Inputweights(383, 255), HiddenWeights(255, 255, 2), OutputWeights(255, 203), HiddenBias(255, 3), OutputBias(203) As Double
+    Public firstAITurn As Boolean
     Public colourOfPieces As String
     Public xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
