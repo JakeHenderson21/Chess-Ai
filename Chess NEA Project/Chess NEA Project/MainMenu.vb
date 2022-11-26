@@ -93,10 +93,10 @@ Public Class MainMenu
         Else
             FileOpen(5, "NNOutputWeights.csv", OpenMode.Output)
             ai.Initilise_OutputWeights()
-            For i = 0 To 255
+            For j = 0 To 203
                 inputstring = ""
-                For j = 0 To 203
-                    If j <> 203 Then
+                For i = 0 To 255
+                    If i <> 255 Then
                         inputstring += ai.HiddenToOutputLayerWeights(i, j).ToString & ","
                     Else
                         inputstring += ai.HiddenToOutputLayerWeights(i, j).ToString
@@ -110,10 +110,10 @@ Public Class MainMenu
         Else
             FileOpen(6, "NNHiddenBias.csv", OpenMode.Output)
             ai.Initilise_HiddenBias()
-            For k = 0 To 255
+            For i = 0 To 3
                 inputstring = ""
-                For i = 0 To 3
-                    If i <> 3 Then
+                For k = 0 To 255
+                    If k <> 255 Then
                         inputstring += ai.HiddenBias(k, i).ToString & ","
                     Else
                         inputstring += ai.HiddenBias(k, i).ToString

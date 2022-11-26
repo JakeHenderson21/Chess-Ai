@@ -160,14 +160,14 @@ Public Class Chess_Ai
         For k = 0 To 3
             For i = 0 To 255
                 Randomize()
-                HiddenBias(i, k) = randomNumber.Next(90, 100)
+                HiddenBias(i, k) = randomNumber.Next(90, 100) / 100
             Next
         Next
     End Sub
     Public Sub Inititlise_OutputBias()
         Dim randomNumber As New Random
         For i = 0 To 203
-            OutputBias(i) = randomNumber.Next(90, 100)
+            OutputBias(i) = randomNumber.Next(90, 100) / 100
         Next
     End Sub
     Public Sub Inititlise_InputWeights()
@@ -256,13 +256,14 @@ Public Class Chess_Ai
         End While
         FileClose(4)
         'OutputWeights
+
         FileOpen(5, "NNOutputWeights.csv", OpenMode.Input)
         While Not EOF(5)
             For y = 0 To 203
                 currentLine = LineInput(5)
                 currentRecord = Split(currentLine, ",")
                 For x = 0 To 255
-                    HiddenToOutputLayerWeights(x, y) = currentRecord(x)
+                    InputToHiddenLayerWeights(x, y) = currentRecord(x)
                 Next
             Next
         End While
@@ -280,7 +281,7 @@ Public Class Chess_Ai
         End While
         FileClose(6)
         'OutputBias
-        FileOpen(7, "NNOutputBias.csv", OpenMode.Input)
+        FileOpen(7, "NNOutputBias.txt", OpenMode.Input)
         Dim countfileline As Integer
         While Not EOF(7)
             OutputBias(countfileline) = LineInput(7)
@@ -303,9 +304,11 @@ Public Class Chess_Ai
                     HiddenBias = ChessBoard.HiddenBias
                     OutputBias = ChessBoard.OutputBias
                 End If
-            Else
                 Initialised = True
+            Else
+
             End If
+
             If AlreadyChecked = False Then
                 AlreadyChecked = True
                 CheckingForBestMoves()
@@ -421,9 +424,9 @@ Public Class Chess_Ai
                 ChessBoard.blackpiecedisabler()
                 found = True
             End If
-            CostFunctionCalculation()
-            AdjustingWeightsAndBias()
         End While
+        CostFunctionCalculation()
+        AdjustingWeightsAndBias()
     End Sub
 
     Public Sub AdjustingWeightsAndBias()
