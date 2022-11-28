@@ -3,9 +3,9 @@ Public Class Chess_Ai
     Private LegalMoveNames, LegalButtonNames As New List(Of Button)
     Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
     Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade As Integer
-    Private InputLayer(383) As Integer
-    Private HiddenLayer(255, 3) As Double
-    Private Outputlayer(203) As Double
+    Private InputLayer(383), SigMoidInputLayer(383) As Integer
+    Private HiddenLayer(255, 3), SigMoidHiddenLayer(255, 3) As Double
+    Private Outputlayer(203), SigMoidOutputLayer(203) As Double
     Public InputToHiddenLayerWeights(383, 255) As Double
     Public HiddenLayerWeights(255, 255, 2) As Double
     Public HiddenToOutputLayerWeights(255, 203) As Double
@@ -13,11 +13,13 @@ Public Class Chess_Ai
     Public OutputBias(203) As Double
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
+    Private CostFunctionTotal, CostFunctionAverage, CFInputtoHiddenlayerWeightChanges(383, 255), CFHiddenLayerWeightChanges(255, 255, 2), CFHiddenToOutputLayerWeightChanges(255, 203), CFHiddenBiasChanges(255, 3), CFOutputBiasChanges(203) As Double
     Private BestValue As Integer
     Private AlreadyChecked, Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
     Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
+    Const Desired_Output As Double = 1.0
     Enum PieceValue
         Pawn = 5
         Rook = 15
@@ -109,6 +111,50 @@ Public Class Chess_Ai
         End If
         Return result
     End Function
+    Public Sub CostFunctionCalculation()
+        Dim add1oradd0 As Integer
+        For i = 0 To 255
+            For j = 0 To 383
+                CFInputtoHiddenlayerWeightChanges(j, i) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
+                CFHiddenBiasChanges(i, 0) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
+            Next
+        Next
+
+        For i = 0 To 2
+            For k = 0 To 255
+                For j = 0 To 255
+                    If i = 2 Then
+                        add1oradd0 = 0
+                    Else
+                        add1oradd0 = 1
+                    End If
+                    CFHiddenLayerWeightChanges(j, k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
+                    CFHiddenBiasChanges(k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
+                Next
+            Next
+        Next
+        For i = 0 To 203
+            For j = 0 To 255
+                CFHiddenToOutputLayerWeightChanges(j, i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
+                CFOutputBiasChanges(i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
+            Next
+        Next
+    End Sub
+    Public Function GetInputWeights()
+        Return InputToHiddenLayerWeights
+    End Function
+    Public Function GetHiddenWeights()
+        Return HiddenLayerWeights
+    End Function
+    Public Function GetOutputWeights()
+        Return HiddenToOutputLayerWeights
+    End Function
+    Public Function GetHiddenBias()
+        Return HiddenBias
+    End Function
+    Public Function GetOutputBias()
+        Return OutputBias
+    End Function
     Public Sub Initilise_HiddenBias()
         Dim randomNumber As New Random
         For k = 0 To 3
@@ -129,7 +175,7 @@ Public Class Chess_Ai
         For i = 0 To 383
             For j = 0 To 255
                 Randomize()
-                InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble / 100
+                InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble
             Next
         Next
     End Sub
@@ -139,7 +185,7 @@ Public Class Chess_Ai
             For i = 0 To 255
                 For j = 0 To 255
                     Randomize()
-                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble / 100
+                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble
                 Next
             Next
         Next
@@ -149,24 +195,116 @@ Public Class Chess_Ai
         For i = 0 To 255
             For j = 0 To 203
                 Randomize()
-                HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble / 100
+                HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble
             Next
         Next
+    End Sub
+    Public Function SigMoidDerativeCalculation(input)
+        Dim result As Double
+        result = SigmoidCalculation(input) * (1 - SigmoidCalculation(input))
+        Return result
+    End Function
+    Public Sub ReadNNData()
+        Dim currentLine As String
+        Dim currentRecord() As String
+        'inputweights
+        FileOpen(1, "NNInputWeights.csv", OpenMode.Input)
+        While Not EOF(1)
+            For y = 0 To 255
+                currentLine = LineInput(1)
+                currentRecord = Split(currentLine, ",")
+                For x = 0 To 383
+                    InputToHiddenLayerWeights(x, y) = currentRecord(x)
+                Next
+            Next
+        End While
+        FileClose(1)
+        '1stHiddenLayerWeights
+        FileOpen(2, "NN1stHiddenWeights.csv", OpenMode.Input)
+        While Not EOF(2)
+            For y = 0 To 255
+                currentLine = LineInput(2)
+                currentRecord = Split(currentLine, ",")
+                For x = 0 To 255
+                    HiddenLayerWeights(x, y, 0) = currentRecord(x)
+                Next
+            Next
+        End While
+        FileClose(2)
+        '2ndHiddenLayerWeights
+        FileOpen(3, "NN2ndHiddenWeights.csv", OpenMode.Input)
+        While Not EOF(3)
+            For y = 0 To 255
+                currentLine = LineInput(3)
+                currentRecord = Split(currentLine, ",")
+                For x = 0 To 255
+                    HiddenLayerWeights(x, y, 1) = currentRecord(x)
+                Next
+            Next
+        End While
+        FileClose(3)
+        '3rdHiddenLayerWeights
+        FileOpen(4, "NN3rdHiddenWeights.csv", OpenMode.Input)
+        While Not EOF(4)
+            For y = 0 To 255
+                currentLine = LineInput(4)
+                currentRecord = Split(currentLine, ",")
+                For x = 0 To 255
+                    HiddenLayerWeights(x, y, 2) = currentRecord(x)
+                Next
+            Next
+        End While
+        FileClose(4)
+        'OutputWeights
+        FileOpen(5, "NNOutputWeights.csv", OpenMode.Input)
+        While Not EOF(5)
+            For y = 0 To 203
+                currentLine = LineInput(5)
+                currentRecord = Split(currentLine, ",")
+                For x = 0 To 255
+                    InputToHiddenLayerWeights(x, y) = currentRecord(x)
+                Next
+            Next
+        End While
+        FileClose(5)
+        'HiddenBias
+        FileOpen(6, "NNHiddenBias.csv", OpenMode.Input)
+        While Not EOF(6)
+            For y = 0 To 3
+                currentLine = LineInput(6)
+                currentRecord = Split(currentLine, ",")
+                For x = 0 To 255
+                    HiddenBias(x, y) = currentRecord(x)
+                Next
+            Next
+        End While
+        FileClose(6)
+        'OutputBias
+        FileOpen(7, "NNOutputBias.txt", OpenMode.Input)
+        Dim countfileline As Integer
+        While Not EOF(7)
+            OutputBias(countfileline) = LineInput(7)
+            countfileline += 1
+        End While
+        FileClose(7)
     End Sub
     Public Sub NextMoveDecider()
         found = False
         AlreadyChecked = False
         While found = False
             If Initialised = False Then
-                StartofHiddenWeightsLoop = 0
-                EndofHiddenWeightsLoop = 2
-                Inititlise_InputWeights()
-                Initilise_HiddenWeights()
-                Initilise_OutputWeights()
-                Initilise_HiddenBias()
-                Inititlise_OutputBias()
-            Else
+                If ChessBoard.firstAITurn = False Then
+                    ReadNNData()
+                    ChessBoard.firstAITurn = True
+                Else
+                    InputToHiddenLayerWeights = ChessBoard.Inputweights
+                    HiddenLayerWeights = ChessBoard.HiddenWeights
+                    HiddenToOutputLayerWeights = ChessBoard.OutputWeights
+                    HiddenBias = ChessBoard.HiddenBias
+                    OutputBias = ChessBoard.OutputBias
+                End If
                 Initialised = True
+            Else
             End If
             If AlreadyChecked = False Then
                 AlreadyChecked = True
@@ -204,6 +342,7 @@ Public Class Chess_Ai
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
                 Next
                 HiddenLayer(i, 0) -= HiddenBias(i, 0)
+                SigMoidHiddenLayer(i, 0) = SigMoidDerativeCalculation(HiddenLayer(i, 0))
                 HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
             Next
             For k = 1 To 3
@@ -212,6 +351,7 @@ Public Class Chess_Ai
                         HiddenLayer(i, k) += HiddenLayer(j, k - 1) * HiddenLayerWeights(j, i, k - 1)
                     Next
                     HiddenLayer(i, k) -= HiddenBias(i, k)
+                    SigMoidHiddenLayer(i, k) = SigMoidDerativeCalculation(HiddenLayer(i, k))
                     HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
                 Next
             Next
@@ -220,11 +360,13 @@ Public Class Chess_Ai
                     Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
                 Next
                 Outputlayer(i) -= OutputBias(i)
+                SigMoidOutputLayer(i) = SigMoidDerativeCalculation(Outputlayer(i))
                 Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
             Next
             Dim TempOutput As List(Of Double)
             TempOutput = Outputlayer.ToList
             BestValue = TempOutput.IndexOf(Outputlayer.Max)
+            MsgBox(BestValue)
             If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
                 BestValue = BestValue
             End If
@@ -264,6 +406,8 @@ Public Class Chess_Ai
             For Each piece In ChessBoard.BPiecesTaken
                 If piece Is PieceOptions(BestValue) Then
                     taken = True
+                ElseIf piece Is Nothing Then
+                    Exit For
                 End If
             Next
             If ButtonOptions(BestValue).Visible = True And taken = False Then
@@ -280,7 +424,38 @@ Public Class Chess_Ai
                 ChessBoard.blackpiecedisabler()
                 found = True
             End If
+            CostFunctionCalculation()
+            AdjustingWeightsAndBias()
         End While
+      
+    End Sub
+
+    Public Sub AdjustingWeightsAndBias()
+        For i = 0 To 255
+            For j = 0 To 383
+                InputToHiddenLayerWeights(j, i) += CFInputtoHiddenlayerWeightChanges(j, i)
+            Next
+        Next
+        For i = 0 To 2
+            For k = 0 To 255
+                For j = 0 To 255
+                    HiddenLayerWeights(j, k, i) += CFHiddenLayerWeightChanges(j, k, i)
+                Next
+            Next
+        Next
+        For i = 0 To 203
+            For j = 0 To 255
+                HiddenToOutputLayerWeights(j, i) += CFHiddenToOutputLayerWeightChanges(j, i)
+            Next
+        Next
+        For i = 0 To 3
+            For j = 0 To 255
+                HiddenBias(j, i) = CFHiddenBiasChanges(j, i)
+            Next
+        Next
+        For i = 0 To 203
+            OutputBias(i) = CFOutputBiasChanges(i)
+        Next
     End Sub
     Private Sub AiPieceMover(AiPiece)
         AiPiece.SetColour()

@@ -17,12 +17,11 @@ Public Class MainMenu
         Dim inputstring As String = ""
         If My.Computer.FileSystem.FileExists("NNInputWeights.csv") Then
         Else
-
             FileOpen(1, "NNInputWeights.csv", OpenMode.Output)
             ai.Inititlise_InputWeights()
-            For i = 0 To 383
+            For j = 0 To 255
                 inputstring = ""
-                For j = 0 To 255
+                For i = 0 To 383
                     If i <> 383 Then
                         inputstring += ai.InputToHiddenLayerWeights(i, j).ToString & ","
                     Else
@@ -43,7 +42,6 @@ Public Class MainMenu
                 inputstring = ""
                 For j = 0 To 255
                     If j <> 255 Then
-
                         inputstring += ai.HiddenLayerWeights(i, j, 0).ToString & ","
                     Else
                         inputstring += ai.HiddenLayerWeights(i, j, 0).ToString
@@ -95,10 +93,10 @@ Public Class MainMenu
         Else
             FileOpen(5, "NNOutputWeights.csv", OpenMode.Output)
             ai.Initilise_OutputWeights()
-            For i = 0 To 255
+            For j = 0 To 203
                 inputstring = ""
-                For j = 0 To 203
-                    If j <> 203 Then
+                For i = 0 To 255
+                    If i <> 255 Then
                         inputstring += ai.HiddenToOutputLayerWeights(i, j).ToString & ","
                     Else
                         inputstring += ai.HiddenToOutputLayerWeights(i, j).ToString
@@ -108,22 +106,32 @@ Public Class MainMenu
             Next
             FileClose(5)
         End If
-        If My.Computer.FileSystem.FileExists("NNBias.csv") Then
+        If My.Computer.FileSystem.FileExists("NNHiddenBias.csv") Then
         Else
-            File.Create("NNBias.csv")
+            FileOpen(6, "NNHiddenBias.csv", OpenMode.Output)
             ai.Initilise_HiddenBias()
-            For k = 0 To 3
-                For i = 0 To 255
-                    If i <> 203 Then
-                        inputstring += ai.HiddenToOutputLayerWeights(k, i).ToString & ","
+            For i = 0 To 3
+                inputstring = ""
+                For k = 0 To 255
+                    If k <> 255 Then
+                        inputstring += ai.HiddenBias(k, i).ToString & ","
                     Else
-                        inputstring += ai.HiddenToOutputLayerWeights(k, i).ToString
+                        inputstring += ai.HiddenBias(k, i).ToString
                     End If
-                    inputstring += ai.HiddenBias(k, i)
                 Next
+                PrintLine(6, inputstring)
             Next
+            FileClose(6)
         End If
-
+        If My.Computer.FileSystem.FileExists("NNOutputBias.txt") Then
+        Else
+            FileOpen(7, "NNOutputBias.txt", OpenMode.Output)
+            ai.Inititlise_OutputBias()
+            For i = 0 To 203
+                PrintLine(7, ai.OutputBias(i))
+            Next
+            FileClose(7)
+        End If
         Me.Hide()
         AiMode = True
         ChessBoard.Show()

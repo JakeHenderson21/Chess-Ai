@@ -249,12 +249,12 @@
                 result = DownRightMoveButton
                 rooks.DownRightMoveButtonsCheck.Clear()
             ElseIf buttoncheck = 6 Then
-                DownLeftMoveButton = rooks.UpLeftMoveButtonsCheck.ToArray()
+                DownLeftMoveButton = rooks.downLeftMoveButtonsCheck.ToArray()
                 resultID = DownLeftMoveButton.Length
                 result = DownLeftMoveButton
                 rooks.DownLeftMoveButtonsCheck.Clear()
-            ElseIf buttoncheck = 7 Then
-                UpLeftMoveButton = rooks.DownLeftMoveButtonsCheck.ToArray()
+            ElseIf buttoncheck = 7 Then              
+                UpLeftMoveButton = rooks.upleftMoveButtonsCheck.ToArray()
                 resultID = UpLeftMoveButton.Length
                 result = UpLeftMoveButton
                 rooks.UpLeftMoveButtonsCheck.Clear()
