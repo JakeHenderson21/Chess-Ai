@@ -116,7 +116,7 @@ Public Class Chess_Ai
         For i = 0 To 255
             For j = 0 To 383
                 CFInputtoHiddenlayerWeightChanges(j, i) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
-                CFHiddenBiasChanges(i, 0) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
+                CFHiddenBiasChanges(i, 0) = SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
             Next
         Next
 
@@ -129,14 +129,14 @@ Public Class Chess_Ai
                         add1oradd0 = 1
                     End If
                     CFHiddenLayerWeightChanges(j, k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
-                    CFHiddenBiasChanges(k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
+                    CFHiddenBiasChanges(k, i) = SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
                 Next
             Next
         Next
         For i = 0 To 203
             For j = 0 To 255
                 CFHiddenToOutputLayerWeightChanges(j, i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
-                CFOutputBiasChanges(i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
+                CFOutputBiasChanges(i) = SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
             Next
         Next
     End Sub
