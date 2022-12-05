@@ -116,10 +116,9 @@ Public Class Chess_Ai
         For i = 0 To 255
             For j = 0 To 383
                 CFInputtoHiddenlayerWeightChanges(j, i) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
-                CFHiddenBiasChanges(i, 0) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
+                CFHiddenBiasChanges(i, 0) = SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
             Next
         Next
-
         For i = 0 To 2
             For k = 0 To 255
                 For j = 0 To 255
@@ -129,14 +128,14 @@ Public Class Chess_Ai
                         add1oradd0 = 1
                     End If
                     CFHiddenLayerWeightChanges(j, k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
-                    CFHiddenBiasChanges(k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
+                    CFHiddenBiasChanges(k, i) = SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
                 Next
             Next
         Next
         For i = 0 To 203
             For j = 0 To 255
                 CFHiddenToOutputLayerWeightChanges(j, i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
-                CFOutputBiasChanges(i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
+                CFOutputBiasChanges(i) = SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
             Next
         Next
     End Sub
@@ -256,7 +255,6 @@ Public Class Chess_Ai
         End While
         FileClose(4)
         'OutputWeights
-
         FileOpen(5, "NNOutputWeights.csv", OpenMode.Input)
         While Not EOF(5)
             For y = 0 To 203
@@ -306,9 +304,7 @@ Public Class Chess_Ai
                 End If
                 Initialised = True
             Else
-
             End If
-
             If AlreadyChecked = False Then
                 AlreadyChecked = True
                 CheckingForBestMoves()
@@ -369,6 +365,7 @@ Public Class Chess_Ai
             Dim TempOutput As List(Of Double)
             TempOutput = Outputlayer.ToList
             BestValue = TempOutput.IndexOf(Outputlayer.Max)
+            MsgBox(BestValue)
             If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
                 BestValue = BestValue
             End If
@@ -408,6 +405,8 @@ Public Class Chess_Ai
             For Each piece In ChessBoard.BPiecesTaken
                 If piece Is PieceOptions(BestValue) Then
                     taken = True
+                ElseIf piece Is Nothing Then
+                    Exit For
                 End If
             Next
             If ButtonOptions(BestValue).Visible = True And taken = False Then
@@ -424,9 +423,10 @@ Public Class Chess_Ai
                 ChessBoard.blackpiecedisabler()
                 found = True
             End If
+            CostFunctionCalculation()
+            AdjustingWeightsAndBias()
         End While
-        CostFunctionCalculation()
-        AdjustingWeightsAndBias()
+      
     End Sub
 
     Public Sub AdjustingWeightsAndBias()
