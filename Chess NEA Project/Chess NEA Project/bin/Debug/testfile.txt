@@ -272,3 +272,6 @@ BPawn1 Button3
 BPawn5 Button1
 BPawn5 Button1
 BKnight2 Button5
+BPawn4 Button1
+BPawn8 Button1
+BPawn6 Button1
