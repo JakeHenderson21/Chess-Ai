@@ -119,7 +119,6 @@ Public Class Chess_Ai
                 CFHiddenBiasChanges(i, 0) = SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
             Next
         Next
-
         For i = 0 To 2
             For k = 0 To 255
                 For j = 0 To 255

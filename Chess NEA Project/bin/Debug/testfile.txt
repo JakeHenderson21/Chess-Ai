@@ -264,3 +264,10 @@ BPawn1 Button3
 BKnight2 Button5
 BPawn7 Button1
 BPawn1 Button3
+BPawn7 Button1
+BPawn5 Button1
+BKnight1 Button5
+BPawn6 Button1
+BPawn1 Button3
+BPawn5 Button1
+BPawn5 Button1
