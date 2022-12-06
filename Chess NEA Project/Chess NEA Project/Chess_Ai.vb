@@ -115,7 +115,9 @@ Public Class Chess_Ai
     Public Sub CostFunctionCalculation()
         Dim TECWRO(203) As Double 'Total Error Change With Respect to Output
         Dim OCWRTN(203) As Double 'Output Change With Respect to Total Net Input
-
+        Dim ECWRH(203) As Double  'Error Change With Respect to Hidden Layer
+        Dim TECWRH(203, 255) As Double 'Total Error Change With Respect to Hidden Layer
+        Dim OCWRHL(255) As Double ' Output Change With Respect to Hidden Layer
         For i = 0 To 203
             If i = BestValue Then
                 Desired_Output = 1
@@ -140,13 +142,24 @@ Public Class Chess_Ai
             Next
         Next
         For i = 0 To 203
-            CFHiddenLayerWeightChanges(0, 0, 0) = 0 '''''''''''''''''''
+            ECWRH(i) = TECWRO(i) * OCWRTN(i)
         Next
+        For i = 0 To 255
+            OCWRHL(i) = HiddenLayer(i, 2) * (1 - HiddenLayer(i, 2))
+        Next
+        For i = 0 To 255
+            For j = 0 To 255
 
-
+            Next
+        Next
     End Sub
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
+        If i = BestValue Then
+            Desired_Output = 1
+        Else
+            Desired_Output = 0
+        End If
         result = -(Desired_Output - Outputlayer(i))
         Return result
     End Function
