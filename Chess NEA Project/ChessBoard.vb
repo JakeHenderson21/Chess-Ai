@@ -843,11 +843,11 @@ Public Class ChessBoard
         If MainMenu.AiMode = True Then
             Dim Ai As New Chess_Ai
             Ai.NextMoveDecider()
-            Inputweights = Ai.GetInputWeights()
-            HiddenWeights = Ai.GetHiddenWeights()
-            OutputWeights = Ai.GetOutputWeights()
             HiddenBias = Ai.GetHiddenBias()
             OutputBias = Ai.GetOutputBias()
+            Inputweights = Ai.GetInputWeights()
+            HiddenWeights = Ai.GetHiddenWeights()
+            OutputWeights = Ai.GetOutputWeights()  
         Else
             For Each p In Blackpieces
                 For Each piece In BPiecesTaken
