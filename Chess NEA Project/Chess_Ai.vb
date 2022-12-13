@@ -129,7 +129,7 @@ Public Class Chess_Ai
 
 
         For i = 0 To 203
-            If i = BestScoreMove Then
+            If PieceOptions(i) Is BestScoreName Then
                 Desired_Output = 1
             Else
                 Desired_Output = 0
@@ -143,7 +143,7 @@ Public Class Chess_Ai
         Next
         For i = 0 To 203
             For j = 0 To 255
-                If i = BestScoreMove Then
+                If PieceOptions(i) Is BestScoreName Then
                     Desired_Output = 1
                 Else
                     Desired_Output = 0
@@ -151,52 +151,52 @@ Public Class Chess_Ai
                 CFHiddenToOutputLayerWeightChanges(j, i) = TECWRO(i) * OCWRTN(i) * (HiddenLayer(j, 3))
             Next
         Next
-        For HiddenLayerCheck = 1 To 2
+        For HiddenLayerCheck = 0 To 2
             For i = 0 To 203
                 ECWRH(i) = TECWRO(i) * OCWRTN(i)
             Next
             For i = 0 To 255
                 OCWRHL(i) = HiddenLayer(i, 2 - HiddenLayerCheck) * (1 - HiddenLayer(i, 2 - HiddenLayerCheck))
             Next
-            For k = 0 To 255
-                For j = 0 To 203
-                    For i = 0 To 255
-                        TECWRH(i, k) += ECWRH(j) * HiddenToOutputLayerWeights(i, j) '''''''''''''
-                    Next
+            Dim HiddenYcount As Integer = 0
+
+            For j = 0 To 203
+                For i = 0 To 255
+                    TECWRH(i, HiddenYcount) += ECWRH(j) * HiddenToOutputLayerWeights(i, j)
                 Next
+                HiddenYcount += 1
             Next
+
             For j = 0 To 255
                 For i = 0 To 255
-                    CFHiddenLayerWeightChanges(i, j, 2 - HiddenLayerCheck) = TECWRH(i, j) * OCWRHL(i) * HiddenLayer(i, 2 - HiddenLayerCheck)
+                    CFHiddenLayerWeightChanges(i, j, 2 - HiddenLayerCheck) = (TECWRH(i, j) * OCWRHL(i) * HiddenLayer(i, 2 - HiddenLayerCheck))
                 Next
             Next
         Next
         For j = 0 To 203
             For k = 0 To 255
                 For i = 0 To 383
-                    ECWRI(i) = TECWRO(j) * (HiddenLayer(k, 0) * (1 - HiddenLayer(k, 0))) ''''''''''''''''
+                    ECWRI(i) = TECWRO(j) * (HiddenLayer(k, 0) * (1 - HiddenLayer(k, 0)))
                 Next
             Next
         Next
         For i = 0 To 383
             OCWRIL(i) = InputLayer(i) * (1 - InputLayer(i))
         Next
-        For k = 0 To 383
-            For j = 0 To 255
-                For i = 0 To 383
-                    TECWRI(k, j) += ECWRI(i) * InputToHiddenLayerWeights(i, j)
-                Next
+        For j = 0 To 255
+            For i = 0 To 383
+                TECWRI(i, j) += ECWRI(i) * InputToHiddenLayerWeights(i, j)
             Next
         Next
         For j = 0 To 255
             For i = 0 To 383
-                CFInputtoHiddenlayerWeightChanges(i, j) = (TECWRI(i, j) / 100) * OCWRIL(i) * InputLayer(i)
+                CFInputtoHiddenlayerWeightChanges(i, j) = (TECWRI(i, j)) * OCWRIL(i) * InputLayer(i)
             Next
         Next
     End Sub
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
-        If i = BestScoreMove Then
+        If PieceOptions(i) Is BestScoreName Then
             Desired_Output = 1
         Else
             Desired_Output = 0
@@ -418,7 +418,6 @@ Public Class Chess_Ai
                 SigMoidHiddenLayer(i, 0) = SigMoidDerativeCalculation(HiddenLayer(i, 0))
                 HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
             Next
-            Dim test(203) As Double
             For k = 1 To 3
                 For i = 0 To 255
                     For j = 0 To 255
@@ -436,7 +435,6 @@ Public Class Chess_Ai
                 Outputlayer(i) -= OutputBias(i)
                 Outputlayer(i) = Outputlayer(i) / 10
                 SigMoidOutputLayer(i) = SigMoidDerativeCalculation(Outputlayer(i))
-                test(i) = Outputlayer(i)
                 Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
             Next
             BestValue = BestValue
@@ -510,7 +508,7 @@ Public Class Chess_Ai
     Public Sub AdjustingWeightsAndBias()
         For i = 0 To 255
             For j = 0 To 383
-                InputToHiddenLayerWeights(j, i) -= CFInputtoHiddenlayerWeightChanges(j, i) * 10
+                InputToHiddenLayerWeights(j, i) -= CFInputtoHiddenlayerWeightChanges(j, i)
             Next
         Next
         For i = 0 To 2

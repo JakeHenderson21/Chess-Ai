@@ -1,4 +1,4 @@
-﻿
+﻿Imports System.Threading
 Public Class ChessBoard
     Public Inputweights(383, 255), HiddenWeights(255, 255, 2), OutputWeights(255, 203), HiddenBias(255, 3), OutputBias(203) As Double
     Public firstAITurn As Boolean
@@ -158,7 +158,7 @@ Public Class ChessBoard
         Next
     End Sub
     'The timer for the white pieces
-    Private Sub WhiteTime_Tick(sender As Object, e As EventArgs) Handles WhiteTime.Tick
+    Public Sub WhiteTime_Tick(sender As Object, e As EventArgs) Handles WhiteTime.Tick
         If seconds > 0 Then
             seconds -= 1
         Else
@@ -847,7 +847,7 @@ Public Class ChessBoard
             OutputBias = Ai.GetOutputBias()
             Inputweights = Ai.GetInputWeights()
             HiddenWeights = Ai.GetHiddenWeights()
-            OutputWeights = Ai.GetOutputWeights()  
+            OutputWeights = Ai.GetOutputWeights()
         Else
             For Each p In Blackpieces
                 For Each piece In BPiecesTaken
