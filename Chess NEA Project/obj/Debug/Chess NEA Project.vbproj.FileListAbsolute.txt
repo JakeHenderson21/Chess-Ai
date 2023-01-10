@@ -35,3 +35,4 @@ C:\Users\jakeh\source\repos\JakeHenderson21\Chess-Ai\Chess NEA Project\Chess NEA
 \\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\Documents\Visual Studio 2013\Projects\Chess-Ai-main\Chess NEA Project\Chess NEA Project\obj\Debug\Chess_NEA_Project.Resources.resources
 \\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\Documents\Visual Studio 2013\Projects\Chess-Ai-main\Chess NEA Project\Chess NEA Project\obj\Debug\Chess_NEA_Project.Settings.resources
 \\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\Documents\Visual Studio 2013\Projects\Chess-Ai-main\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.vbproj.GenerateResource.Cache
+\\coc-shares-1\studentdocuments$\intake 2016\16hendersonj\Documents\Visual Studio 2013\Projects\Chess-Ai-main\Chess NEA Project\Chess NEA Project\obj\Debug\Chess NEA Project.vbprojResolveAssemblyReference.cache
