@@ -388,6 +388,7 @@ Public Class Chess_Ai
         Return result
     End Function
     Public Sub ReadNNData()
+        'creates variables
         Dim currentLine As String
         Dim currentRecord() As String
         'inputweights
