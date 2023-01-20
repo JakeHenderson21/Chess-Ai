@@ -489,3 +489,5 @@ BPawn2 Button1
 BPawn2 Button1
 BPawn1 Button1
 BKnight1 Button5
+BKnight2 Button5
+BPawn2 Button1
