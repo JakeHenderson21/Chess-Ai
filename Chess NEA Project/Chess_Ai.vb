@@ -21,7 +21,7 @@ Public Class Chess_Ai
     Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
-    Const LearningRate As Integer = 0.5
+    Const LearningRate As Double = 0.2
     Enum PieceValue
         Pawn = 5
         Rook = 15
@@ -116,12 +116,15 @@ Public Class Chess_Ai
     Public Sub CostFunctionCalculation()
         Dim count As Integer
         Dim TECWRO(203) As Double 'Total Error Change With Respect to Output
-        Dim TECWRH(255) As Double 'Total Error Change With Respect to Hidden
+        Dim TECWRH(255, 255) As Double 'Total Error Change With Respect to Hidden
+        Dim TECWRI(383, 255) As Double 'Total Error Change With Respect to Input
         Dim OCWRTN(203) As Double 'Output Change With Respect to Total Net Input
         Dim ECWRO(203) As Double  'Error Change With Respect to Output
         Dim FOWRO(203) As Double  'Final Output With Respect to Output
-        Dim E1CWRH(255) As Double '1st Error Change With Repect to Hidden Layer
-        Dim E2CWRH(255) As Double '2nd Error Change With Respect to Hidden Layer
+        Dim E1CWRH(255, 255) As Double '1st Error Change With Repect to Hidden Layer
+        Dim E2CWRH(255, 255) As Double '2nd Error Change With Respect to Hidden Layer
+        Dim E1CWRI(383, 255) As Double '1st Error Change With Repect to Input Layer
+        Dim E2CWRI(383, 255) As Double '2nd Error Change With Respect to Input Layer
         Dim HLWRHL(255) As Double 'Hidden Layer With Respect to Hidden Layer
         'Hidden to Output Weights
         For i = 0 To 203
@@ -151,16 +154,18 @@ Public Class Chess_Ai
             Next
             For i = 0 To 255
                 For k = 0 To 255
-                    E1CWRH(i) += HiddenLayerWeights(k, i, 2 - j) * ECWRO(count)
-                    E2CWRH(i) += HiddenLayerWeights(k, i, 2 - j) * FOWRO(count)
+                    E1CWRH(i, k) += HiddenLayerWeights(k, i, 2 - j) * ECWRO(count)
+                    E2CWRH(i, k) += HiddenLayerWeights(k, i, 2 - j) * FOWRO(count)
                     count += 1
                     If count = 204 Then
                         count = 0
                     End If
                 Next
             Next
-            For i = 0 To 255
-                TECWRH(i) = E1CWRH(i) + E2CWRH(i)
+            For k = 0 To 255
+                For i = 0 To 255
+                    TECWRH(k, i) = E1CWRH(i, k) + E2CWRH(i, k)
+                Next
             Next
             For i = 0 To 255
                 HLWRHL(i) = HiddenLayer(i, 3 - j) * (1 - HiddenLayer(i, 3 - j))
@@ -168,7 +173,7 @@ Public Class Chess_Ai
 
             For i = 0 To 255
                 For k = 0 To 255
-                    CFHiddenLayerWeightChanges(i, k, 2 - j) = TECWRH(k) * HLWRHL(k) * HiddenLayer(k, 2 - j)
+                    CFHiddenLayerWeightChanges(i, k, 2 - j) = TECWRH(k, i) * HLWRHL(k) * HiddenLayer(k, 2 - j)
                 Next
             Next
         Next
@@ -179,9 +184,9 @@ Public Class Chess_Ai
             FOWRO(i) = (0 - Outputlayer(i)) * (-1) * FOWRO(i)
         Next
         For i = 0 To 255
-            For k = 0 To 255
-                E1CWRH(i) += InputToHiddenLayerWeights(k, i) * ECWRO(count)
-                E2CWRH(i) += InputToHiddenLayerWeights(k, i) * FOWRO(count)
+            For k = 0 To 383
+                E1CWRI(k, i) += InputToHiddenLayerWeights(k, i) * ECWRO(count)
+                E2CWRI(k, i) += InputToHiddenLayerWeights(k, i) * FOWRO(count)
                 count += 1
                 If count = 204 Then
                     count = 0
@@ -189,14 +194,16 @@ Public Class Chess_Ai
             Next
         Next
         For i = 0 To 255
-            TECWRH(i) = E1CWRH(i) + E2CWRH(i)
+            For k = 0 To 383
+                TECWRI(k, i) = E1CWRI(k, i) + E2CWRI(k, i)
+            Next
         Next
         For i = 0 To 255
             HLWRHL(i) = HiddenLayer(i, 0) * (1 - HiddenLayer(i, 0))
         Next
         For i = 0 To 255
             For k = 0 To 383
-                CFInputtoHiddenlayerWeightChanges(k, i) = TECWRH(i) * HLWRHL(i) * InputLayer(k)
+                CFInputtoHiddenlayerWeightChanges(k, i) = TECWRI(k, i) * HLWRHL(i) * InputLayer(k)
             Next
         Next
     End Sub
