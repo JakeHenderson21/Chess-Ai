@@ -2,7 +2,7 @@
 Public Class ChessBoard
     Public Inputweights(383, 255), HiddenWeights(255, 255, 2), OutputWeights(255, 203), HiddenBias(255, 3), OutputBias(203) As Double
     Public firstAITurn As Boolean
-    Public colourOfPieces As String
+    Public colourOfPieces, Piece_name As String
     Public xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
@@ -722,7 +722,7 @@ Public Class ChessBoard
         For Each piece In Allpieces
             If piece.Left = xcoords And piece.Top = ycoords And piece IsNot chess_piece Then
                 setRemovedPieces(piece)
-                MsgBox("Piece Taken")
+                MsgBox(Piece_name & " Taken")
                 Exit For
             End If
         Next
@@ -740,68 +740,100 @@ Public Class ChessBoard
         End If
         If piece Is WPawn1 Then
             WPawn1.Location = New Point(633, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn2 Then
             WPawn2.Location = New Point(691, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn3 Then
             WPawn3.Location = New Point(749, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn4 Then
             WPawn4.Location = New Point(807, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn5 Then
             WPawn5.Location = New Point(633, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn6 Then
             WPawn6.Location = New Point(691, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn7 Then
             WPawn7.Location = New Point(749, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn8 Then
             WPawn8.Location = New Point(807, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is BPawn1 Then
             BPawn1.Location = New Point(633, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn2 Then
             BPawn2.Location = New Point(691, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn3 Then
             BPawn3.Location = New Point(749, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn4 Then
             BPawn4.Location = New Point(807, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn5 Then
             BPawn5.Location = New Point(633, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn6 Then
             BPawn6.Location = New Point(691, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn7 Then
             BPawn7.Location = New Point(749, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn8 Then
             BPawn8.Location = New Point(807, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is WRook1 Then
             WRook1.Location = New Point(633, 231)
+            Piece_name = "White Rook"
         ElseIf piece Is WRook2 Then
             WRook2.Location = New Point(691, 231)
+            Piece_name = "White Rook"
         ElseIf piece Is BRook1 Then
             BRook1.Location = New Point(633, 460)
+            Piece_name = "Black Rook"
         ElseIf piece Is BRook2 Then
             BRook2.Location = New Point(691, 460)
+            Piece_name = "Black Rook"
         ElseIf piece Is WBishop1 Then
             WBishop1.Location = New Point(749, 231)
+            Piece_name = "White Bishop"
         ElseIf piece Is WBishop2 Then
             WBishop2.Location = New Point(807, 231)
+            Piece_name = "White Bishop"
         ElseIf piece Is BBishop1 Then
             BBishop1.Location = New Point(749, 460)
+            Piece_name = "Black Bishop"
         ElseIf piece Is BBishop2 Then
             BBishop2.Location = New Point(807, 460)
+            Piece_name = "Black Bishop"
         ElseIf piece Is WKnight1 Then
             WKnight1.Location = New Point(633, 287)
+            Piece_name = "White Knight"
         ElseIf piece Is Wknight2 Then
             Wknight2.Location = New Point(691, 287)
+            Piece_name = "White Knight"
         ElseIf piece Is BKnight1 Then
             BKnight1.Location = New Point(633, 520)
+            Piece_name = "Black Knight"
         ElseIf piece Is BKnight2 Then
             BKnight2.Location = New Point(691, 520)
+            Piece_name = "Black Knight"
         ElseIf piece Is WQueen Then
             WQueen.Location = New Point(749, 520)
+            Piece_name = "White Queen"
         ElseIf piece Is BQueen Then
             BQueen.Location = New Point(749, 520)
+            Piece_name = "Black Queen"
         ElseIf piece Is WKing Then
             WKing.Location = New Point(807, 520)
+            Piece_name = "White King"
         ElseIf piece Is BKing Then
             BKing.Location = New Point(807, 520)
+            Piece_name = "Black King"
         End If
     End Sub
     'It will disable all the black pieces so the player can click on them whilst it is white's turn and enable all white pieces
