@@ -1,8 +1,8 @@
-﻿
+﻿Imports System.Threading
 Public Class ChessBoard
     Public Inputweights(383, 255), HiddenWeights(255, 255, 2), OutputWeights(255, 203), HiddenBias(255, 3), OutputBias(203) As Double
-    Public firstAITurn As Boolean
-    Public colourOfPieces As String
+    Public firstAITurn, endGameState As Boolean
+    Public colourOfPieces, Piece_name As String
     Public xcoords, ycoords As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
@@ -11,6 +11,7 @@ Public Class ChessBoard
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.SetStyle(ControlStyles.UserPaint, True)
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+        Returnbtn.Hide()
         WhiteSideValue = 180
         BlackSideValue = 180
         firstRound = True
@@ -158,7 +159,7 @@ Public Class ChessBoard
         Next
     End Sub
     'The timer for the white pieces
-    Private Sub WhiteTime_Tick(sender As Object, e As EventArgs) Handles WhiteTime.Tick
+    Public Sub WhiteTime_Tick(sender As Object, e As EventArgs) Handles WhiteTime.Tick
         If seconds > 0 Then
             seconds -= 1
         Else
@@ -588,8 +589,10 @@ Public Class ChessBoard
         If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True And CheckingCheck(7) = True Then
             If colourOfPieces = "white" Then
                 MsgBox("White Checkmate!")
+                endgame()
             Else
                 MsgBox("Black Checkmate!")
+                endgame()
             End If
             If MainMenu.AiMode = True Then
                 SaveNNdata()
@@ -600,9 +603,22 @@ Public Class ChessBoard
 
         End If
     End Sub
+    Private Sub endgame()
+        WhiteTime.Stop()
+        BlackTime.Stop()
+        endGameState = True
+        For Each piece In Allpieces
+            piece.Enabled = False
+        Next
+        If MsgBox("Do you want to go to the main menu?", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+            Me.Close()
+            MainMenu.Show()
+        Else
+            Returnbtn.Show()
+        End If
+    End Sub
     Public Sub SaveNNdata()
         Dim ai As New Chess_Ai
-
         Dim inputstring As String = ""
         FileOpen(1, "NNInputWeights.csv", OpenMode.Output)
         For j = 0 To 255
@@ -693,7 +709,12 @@ Public Class ChessBoard
         If MainMenu.AiMode = True Then
             SaveNNdata()
         End If
-        MainMenu.Close()
+        If endGameState = True Then
+            endGameState = False
+        Else
+            MainMenu.Close()
+        End If
+
     End Sub
     'This sets a new location for the piece clicked, it firsts checks if it was a pawn, if it was a pawn and its first turn then it makes FirstCheck for the pawn
     ' equal to true meaning when that pawn is clicked again it can't move 2 steps forward, it then checks if a piece was taken then ends turn and starts the next
@@ -722,7 +743,7 @@ Public Class ChessBoard
         For Each piece In Allpieces
             If piece.Left = xcoords And piece.Top = ycoords And piece IsNot chess_piece Then
                 setRemovedPieces(piece)
-                MsgBox("Piece Taken")
+                MsgBox(Piece_name & " Taken")
                 Exit For
             End If
         Next
@@ -740,68 +761,100 @@ Public Class ChessBoard
         End If
         If piece Is WPawn1 Then
             WPawn1.Location = New Point(633, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn2 Then
             WPawn2.Location = New Point(691, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn3 Then
             WPawn3.Location = New Point(749, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn4 Then
             WPawn4.Location = New Point(807, 112)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn5 Then
             WPawn5.Location = New Point(633, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn6 Then
             WPawn6.Location = New Point(691, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn7 Then
             WPawn7.Location = New Point(749, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is WPawn8 Then
             WPawn8.Location = New Point(807, 171)
+            Piece_name = "White Pawn"
         ElseIf piece Is BPawn1 Then
             BPawn1.Location = New Point(633, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn2 Then
             BPawn2.Location = New Point(691, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn3 Then
             BPawn3.Location = New Point(749, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn4 Then
             BPawn4.Location = New Point(807, 344)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn5 Then
             BPawn5.Location = New Point(633, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn6 Then
             BPawn6.Location = New Point(691, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn7 Then
             BPawn7.Location = New Point(749, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is BPawn8 Then
             BPawn8.Location = New Point(807, 401)
+            Piece_name = "Black Pawn"
         ElseIf piece Is WRook1 Then
             WRook1.Location = New Point(633, 231)
+            Piece_name = "White Rook"
         ElseIf piece Is WRook2 Then
             WRook2.Location = New Point(691, 231)
+            Piece_name = "White Rook"
         ElseIf piece Is BRook1 Then
             BRook1.Location = New Point(633, 460)
+            Piece_name = "Black Rook"
         ElseIf piece Is BRook2 Then
             BRook2.Location = New Point(691, 460)
+            Piece_name = "Black Rook"
         ElseIf piece Is WBishop1 Then
             WBishop1.Location = New Point(749, 231)
+            Piece_name = "White Bishop"
         ElseIf piece Is WBishop2 Then
             WBishop2.Location = New Point(807, 231)
+            Piece_name = "White Bishop"
         ElseIf piece Is BBishop1 Then
             BBishop1.Location = New Point(749, 460)
+            Piece_name = "Black Bishop"
         ElseIf piece Is BBishop2 Then
             BBishop2.Location = New Point(807, 460)
+            Piece_name = "Black Bishop"
         ElseIf piece Is WKnight1 Then
             WKnight1.Location = New Point(633, 287)
+            Piece_name = "White Knight"
         ElseIf piece Is Wknight2 Then
             Wknight2.Location = New Point(691, 287)
+            Piece_name = "White Knight"
         ElseIf piece Is BKnight1 Then
             BKnight1.Location = New Point(633, 520)
+            Piece_name = "Black Knight"
         ElseIf piece Is BKnight2 Then
             BKnight2.Location = New Point(691, 520)
+            Piece_name = "Black Knight"
         ElseIf piece Is WQueen Then
             WQueen.Location = New Point(749, 520)
+            Piece_name = "White Queen"
         ElseIf piece Is BQueen Then
             BQueen.Location = New Point(749, 520)
+            Piece_name = "Black Queen"
         ElseIf piece Is WKing Then
             WKing.Location = New Point(807, 520)
+            Piece_name = "White King"
         ElseIf piece Is BKing Then
             BKing.Location = New Point(807, 520)
+            Piece_name = "Black King"
         End If
     End Sub
     'It will disable all the black pieces so the player can click on them whilst it is white's turn and enable all white pieces
@@ -847,7 +900,7 @@ Public Class ChessBoard
             OutputBias = Ai.GetOutputBias()
             Inputweights = Ai.GetInputWeights()
             HiddenWeights = Ai.GetHiddenWeights()
-            OutputWeights = Ai.GetOutputWeights()  
+            OutputWeights = Ai.GetOutputWeights()
         Else
             For Each p In Blackpieces
                 For Each piece In BPiecesTaken
@@ -860,5 +913,11 @@ Public Class ChessBoard
                 Next
             Next
         End If
+    End Sub
+    Private Sub Returnbtn_Click(sender As Object, e As EventArgs) Handles Returnbtn.Click
+        endGameState = True
+        Me.Close()
+        MainMenu.Show()
+
     End Sub
 End Class

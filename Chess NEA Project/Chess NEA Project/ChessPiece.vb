@@ -294,8 +294,12 @@
                             scoremove = 7
                             upmovecount = 7
                         Else
-                            upmovecount = scoremove + 1
-                            scoremove += 1
+                            If (piece.Left = ChessBoard.WKing.Left And piece.Top - (77 * scoremove) = ChessBoard.WKing.Top) Or (piece.Left = ChessBoard.BKing.Left And piece.Top - (77 * scoremove) = ChessBoard.BKing.Top) Then
+                                upmovecount = scoremove + 1
+                                scoremove += 1
+                            Else
+                                upmovecount = scoremove
+                            End If        
                         End If
                         UpMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 1 Then
@@ -305,8 +309,12 @@
                             scoremove = 7
                             rightmovecount = 7
                         Else
-                            rightmovecount = scoremove + 1
-                            scoremove += 1
+                            If (piece.Left + (77 * scoremove) = ChessBoard.WKing.Left And piece.Top = ChessBoard.WKing.Top) Or (piece.Left + (77 * scoremove) = ChessBoard.BKing.Left And piece.Top = ChessBoard.BKing.Top) Then
+                                rightmovecount = scoremove + 1
+                                scoremove += 1
+                            Else
+                                rightmovecount = scoremove
+                            End If
                         End If
                         RightMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 2 Then
@@ -316,8 +324,13 @@
                             scoremove = 7
                             downmovecount = 7
                         Else
-                            downmovecount = scoremove + 1
-                            scoremove += 1
+                            If (piece.Left = ChessBoard.WKing.Left And piece.Top + (77 * scoremove) = ChessBoard.WKing.Top) Or (piece.Left = ChessBoard.BKing.Left And piece.Top + (77 * scoremove) = ChessBoard.BKing.Top) Then
+                                downmovecount = scoremove + 1
+                                scoremove += 1
+                            Else
+                                downmovecount = scoremove
+                            End If
+                            
                         End If
                         DownMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 3 Then
@@ -327,10 +340,11 @@
                             scoremove = 7
                             leftmovecount = 7
                         Else
-                            leftmovecount = scoremove + 1
-                            If (checkbuttons(scoremove).Left = ChessBoard.KingPiece.Left And checkbuttons(scoremove).Top = ChessBoard.KingPiece.Top) Then
-                            Else
+                            If (piece.Left - (77 * scoremove) = ChessBoard.WKing.Left And piece.Top = ChessBoard.WKing.Top) Or (piece.Left - (77 * scoremove) = ChessBoard.BKing.Left And piece.Top = ChessBoard.BKing.Top) Then
+                                leftmovecount = scoremove + 1
                                 scoremove += 1
+                            Else
+                                leftmovecount = scoremove
                             End If
                         End If
                         LeftMoveButtonsCheck = StoreButtons(scoremove)

@@ -136,6 +136,7 @@ Partial Class ChessBoard
         Me.Button70 = New System.Windows.Forms.Button()
         Me.Button71 = New System.Windows.Forms.Button()
         Me.Button72 = New System.Windows.Forms.Button()
+        Me.Returnbtn = New System.Windows.Forms.Button()
         CType(Me.chess_Board, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
@@ -1839,12 +1840,22 @@ Partial Class ChessBoard
         Me.Button72.TabIndex = 158
         Me.Button72.UseVisualStyleBackColor = False
         '
+        'Returnbtn
+        '
+        Me.Returnbtn.Location = New System.Drawing.Point(773, 83)
+        Me.Returnbtn.Name = "Returnbtn"
+        Me.Returnbtn.Size = New System.Drawing.Size(92, 23)
+        Me.Returnbtn.TabIndex = 159
+        Me.Returnbtn.Text = "Return to menu"
+        Me.Returnbtn.UseVisualStyleBackColor = True
+        '
         'ChessBoard
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
         Me.ClientSize = New System.Drawing.Size(867, 620)
+        Me.Controls.Add(Me.Returnbtn)
         Me.Controls.Add(Me.Button72)
         Me.Controls.Add(Me.Button71)
         Me.Controls.Add(Me.Button70)
@@ -2075,5 +2086,6 @@ Partial Class ChessBoard
     Friend WithEvents Button70 As System.Windows.Forms.Button
     Friend WithEvents Button71 As System.Windows.Forms.Button
     Friend WithEvents Button72 As System.Windows.Forms.Button
+    Friend WithEvents Returnbtn As System.Windows.Forms.Button
 
 End Class

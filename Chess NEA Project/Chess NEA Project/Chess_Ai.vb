@@ -21,6 +21,7 @@ Public Class Chess_Ai
     Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
+    Const LearningRate As Double = 0.2
     Enum PieceValue
         Pawn = 5
         Rook = 15
@@ -113,87 +114,107 @@ Public Class Chess_Ai
         Return result
     End Function
     Public Sub CostFunctionCalculation()
+        Dim count As Integer
         Dim TECWRO(203) As Double 'Total Error Change With Respect to Output
+        Dim TECWRH(255, 255) As Double 'Total Error Change With Respect to Hidden
+        Dim TECWRI(383, 255) As Double 'Total Error Change With Respect to Input
         Dim OCWRTN(203) As Double 'Output Change With Respect to Total Net Input
-        Dim ECWRH(203) As Double  'Error Change With Respect to Hidden Layer
-        Dim ECWRI(383) As Double  'Error Change With Respect To Input Layer
-        Dim TECWRH(255) As Double 'Total Error Change With Respect to Hidden Layer
-        Dim TECWRI(383) As Double 'Total Error Change With Respect to Input Layer
-        Dim OCWRHL(255) As Double 'Output Change With Respect to Hidden Layer
-        Dim OCWRIL(383) As Double 'Output Change With Respect to Input Layer 
+        Dim ECWRO(203) As Double  'Error Change With Respect to Output
+        Dim FOWRO(203) As Double  'Final Output With Respect to Output
+        Dim E1CWRH(255, 255) As Double '1st Error Change With Repect to Hidden Layer
+        Dim E2CWRH(255, 255) As Double '2nd Error Change With Respect to Hidden Layer
+        Dim E1CWRI(383, 255) As Double '1st Error Change With Repect to Input Layer
+        Dim E2CWRI(383, 255) As Double '2nd Error Change With Respect to Input Layer
+        Dim HLWRHL(255) As Double 'Hidden Layer With Respect to Hidden Layer
+        'Hidden to Output Weights
         For i = 0 To 203
-            If i = BestScoreMove Then
+            If PieceOptions(i) Is BestScoreName Then
                 Desired_Output = 1
             Else
                 Desired_Output = 0
             End If
-            OutputError(i) = (1 / 2) * (Desired_Output - Outputlayer(i)) ^ 2
+            OutputError(i) = ((1 / 2) * (Desired_Output - Outputlayer(i))) ^ 2
             TotalError += OutputError(i)
         Next
         For i = 0 To 203
             TECWRO(i) = Total_Error_Change_With_Respect_to_Output(i)
             OCWRTN(i) = Output_Change_With_Respect_to_Total_Net(i)
         Next
-        For i = 0 To 203
-            For j = 0 To 255
-                If i = BestScoreMove Then
-                    Desired_Output = 1
-                Else
-                    Desired_Output = 0
-                End If
-                CFHiddenToOutputLayerWeightChanges(j, i) = TECWRO(i) * OCWRTN(i) * (HiddenLayer(j, 3))
+        For i = 0 To 255
+            For k = 0 To 203
+                CFHiddenToOutputLayerWeightChanges(i, k) = TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
             Next
         Next
-        For HiddenLayerCheck = 1 To 2
+        'Hidden to Hidden Weights
+        For j = 0 To 2
             For i = 0 To 203
-                ECWRH(i) = TECWRO(i) * OCWRTN(i)
+                ECWRO(i) = (1 - Outputlayer(i) * (-1) * OCWRTN(i))
+                FOWRO(i) = Outputlayer(i) * (1 - Outputlayer(i))
+                FOWRO(i) = (0 - Outputlayer(i)) * (-1) * FOWRO(i)
             Next
             For i = 0 To 255
-                OCWRHL(i) = HiddenLayer(i, 2 - HiddenLayerCheck) * (1 - HiddenLayer(i, 2 - HiddenLayerCheck))
-            Next
-            For k = 0 To 255
-                For j = 0 To 203
-                    For i = 0 To 255
-                        TECWRH(k) += ECWRH(j) * HiddenToOutputLayerWeights(i, j) '''''''''''''
-                    Next
+                For k = 0 To 255
+                    E1CWRH(i, k) += HiddenLayerWeights(k, i, 2 - j) * ECWRO(count)
+                    E2CWRH(i, k) += HiddenLayerWeights(k, i, 2 - j) * FOWRO(count)
+                    count += 1
+                    If count = 204 Then
+                        count = 0
+                    End If
                 Next
             Next
-            For j = 0 To 255
+            For k = 0 To 255
                 For i = 0 To 255
-                    CFHiddenLayerWeightChanges(i, j, 2 - HiddenLayerCheck) = TECWRH(i) * OCWRHL(i) * HiddenLayer(i, 2 - HiddenLayerCheck)
+                    TECWRH(k, i) = E1CWRH(i, k) + E2CWRH(i, k)
+                Next
+            Next
+            For i = 0 To 255
+                HLWRHL(i) = HiddenLayer(i, 3 - j) * (1 - HiddenLayer(i, 3 - j))
+            Next
+
+            For i = 0 To 255
+                For k = 0 To 255
+                    CFHiddenLayerWeightChanges(i, k, 2 - j) = TECWRH(k, i) * HLWRHL(k) * HiddenLayer(k, 2 - j)
                 Next
             Next
         Next
-        For j = 0 To 203
-            For k = 0 To 255
-                For i = 0 To 383
-                    ECWRI(i) = TECWRO(j) * (HiddenLayer(k, 0) * (1 - HiddenLayer(k, 0))) ''''''''''''''''
-                Next
+        'For Input to Hidden Weights
+        For i = 0 To 203
+            ECWRO(i) = (1 - Outputlayer(i) * (-1) * OCWRTN(i))
+            FOWRO(i) = Outputlayer(i) * (1 - Outputlayer(i))
+            FOWRO(i) = (0 - Outputlayer(i)) * (-1) * FOWRO(i)
+        Next
+        For i = 0 To 255
+            For k = 0 To 383
+                E1CWRI(k, i) += InputToHiddenLayerWeights(k, i) * ECWRO(count)
+                E2CWRI(k, i) += InputToHiddenLayerWeights(k, i) * FOWRO(count)
+                count += 1
+                If count = 204 Then
+                    count = 0
+                End If
             Next
         Next
-        For i = 0 To 383
-            OCWRIL(i) = InputLayer(i) * (1 - InputLayer(i))
-        Next
-        For k = 0 To 383
-            For j = 0 To 255
-                For i = 0 To 383
-                    TECWRI(k) += ECWRI(i) * InputToHiddenLayerWeights(i, j)
-                Next
+        For i = 0 To 255
+            For k = 0 To 383
+                TECWRI(k, i) = E1CWRI(k, i) + E2CWRI(k, i)
             Next
         Next
-        For j = 0 To 255
-            For i = 0 To 383
-                CFInputtoHiddenlayerWeightChanges(i, j) = (TECWRI(i) / 1000) * OCWRIL(i) * InputLayer(i)
+        For i = 0 To 255
+            HLWRHL(i) = HiddenLayer(i, 0) * (1 - HiddenLayer(i, 0))
+        Next
+        For i = 0 To 255
+            For k = 0 To 383
+                CFInputtoHiddenlayerWeightChanges(k, i) = TECWRI(k, i) * HLWRHL(i) * InputLayer(k)
             Next
         Next
     End Sub
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
-        If i = BestScoreMove Then
+        If PieceOptions(i) Is BestScoreName Then
             Desired_Output = 1
         Else
             Desired_Output = 0
         End If
+
         result = -(Desired_Output - Outputlayer(i))
         Return result
     End Function
@@ -267,6 +288,7 @@ Public Class Chess_Ai
         Return result
     End Function
     Public Sub ReadNNData()
+        'creates variables
         Dim currentLine As String
         Dim currentRecord() As String
         'inputweights
@@ -386,9 +408,9 @@ Public Class Chess_Ai
                             If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord And PieceType = 6 Then
                                 InputLayer(AICount) = 0
                             ElseIf piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
-                                InputLayer(AICount) = 1
+                                InputLayer(AICount) = 2
                             Else
-                                InputLayer(AICount) = -1
+                                InputLayer(AICount) = 1
                             End If
                             If AICount >= 383 Then
                             Else
@@ -399,8 +421,9 @@ Public Class Chess_Ai
                     Next
                 Next
             Next
+            Dim testgh(383) As Double
             For i = 0 To 255
-                
+
                 For j = 0 To 383
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
                 Next
@@ -426,13 +449,15 @@ Public Class Chess_Ai
                     Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
                 Next
                 Outputlayer(i) -= OutputBias(i)
+                Outputlayer(i) = Outputlayer(i)
                 SigMoidOutputLayer(i) = SigMoidDerativeCalculation(Outputlayer(i))
                 Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
             Next
+            BestValue = BestValue
             Dim TempOutput As List(Of Double)
             TempOutput = Outputlayer.ToList
             BestValue = TempOutput.IndexOf(Outputlayer.Max)
-            MsgBox(BestValue)
+
             If PieceOptions(BestValue) Is ChessBoard.BBishop1 Then
                 BestValue = BestValue
             End If
@@ -493,34 +518,34 @@ Public Class Chess_Ai
             CostFunctionCalculation()
             AdjustingWeightsAndBias()
         End While
-      
+
     End Sub
 
     Public Sub AdjustingWeightsAndBias()
         For i = 0 To 255
             For j = 0 To 383
-                InputToHiddenLayerWeights(j, i) -= CFInputtoHiddenlayerWeightChanges(j, i)
+                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i)
             Next
         Next
         For i = 0 To 2
             For k = 0 To 255
                 For j = 0 To 255
-                    HiddenLayerWeights(j, k, i) -= CFHiddenLayerWeightChanges(j, k, i)
+                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i)
                 Next
             Next
         Next
         For i = 0 To 203
             For j = 0 To 255
-                HiddenToOutputLayerWeights(j, i) -= CFHiddenToOutputLayerWeightChanges(j, i)
+                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i)
             Next
         Next
         For i = 0 To 3
             For j = 0 To 255
-                HiddenBias(j, i) += CFHiddenBiasChanges(j, i)
+                HiddenBias(j, i) -= LearningRate * CFHiddenBiasChanges(j, i)
             Next
         Next
         For i = 0 To 203
-            OutputBias(i) += CFOutputBiasChanges(i)
+            OutputBias(i) -= LearningRate * CFOutputBiasChanges(i)
         Next
     End Sub
     Private Sub AiPieceMover(AiPiece)

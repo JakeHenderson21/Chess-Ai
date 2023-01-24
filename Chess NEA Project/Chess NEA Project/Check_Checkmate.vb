@@ -113,10 +113,12 @@
         Dim result As Boolean = False
         For Each piece In RookSelectedPieces
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
+            
             Rooks.SetColour()
             Rooks.SetLoopBoundaries()
             Rooks.CheckMoves()
             chess_piece = piece
+            
             For buttoncheck = 0 To 3
                 check_Buttons = MoveSelector(buttoncheck, Rooks)
                 If check_Buttons.Length - 1 <> 0 Then
