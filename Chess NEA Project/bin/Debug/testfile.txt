@@ -512,3 +512,14 @@ BPawn3 Button1
 BPawn7 Button1
 BPawn1 Button1
 BPawn8 Button1
+BPawn6 Button1
+BPawn6 Button1
+BPawn6 Button1
+BPawn8 Button1
+BPawn4 Button1
+BPawn1 Button1
+BRook2 Button15
+BPawn2 Button1
+BPawn3 Button1
+BPawn6 Button1
+BKnight1 Button5

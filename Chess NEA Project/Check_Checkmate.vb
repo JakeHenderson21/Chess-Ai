@@ -104,6 +104,7 @@
             End If
             If (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Then
                 ChessBoard.checkingForCheck = True
+                ChessBoard.Piece_Causing_Check = piece
             End If
         Next
         Return result
@@ -128,6 +129,8 @@
                         End If
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
                             ChessBoard.checkingForCheck = True
+                            ChessBoard.Piece_Causing_Check = piece
+                            ChessBoard.Button_Causing_Check = PieceMove
                         End If
                     Next
                 End If
@@ -153,6 +156,8 @@
                         End If
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
                             ChessBoard.checkingForCheck = True
+                            ChessBoard.Piece_Causing_Check = piece
+                            ChessBoard.Button_Causing_Check = PieceMove
                         End If
                     Next
                 End If
@@ -177,6 +182,8 @@
                     End If
                     If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
                         ChessBoard.checkingForCheck = True
+                        ChessBoard.Piece_Causing_Check = QueensSelectedPieces
+                        ChessBoard.Button_Causing_Check = PieceMove
                     End If
                 Next
             End If
@@ -196,6 +203,7 @@
             End If
             If (ChessBoard.Button1.Left = ChessBoard.KingPiece.Left And ChessBoard.Button1.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button2.Left = ChessBoard.KingPiece.Left And ChessBoard.Button2.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button5.Left = ChessBoard.KingPiece.Left And ChessBoard.Button5.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button6.Left = ChessBoard.KingPiece.Left And ChessBoard.Button6.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button7.Left = ChessBoard.KingPiece.Left And ChessBoard.Button7.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button8.Left = ChessBoard.KingPiece.Left And ChessBoard.Button8.Top = ChessBoard.KingPiece.Top) Then
                 ChessBoard.checkingForCheck = True
+                ChessBoard.Piece_Causing_Check = piece
             End If
         Next
         Return result
@@ -264,4 +272,36 @@
         End If
         Return result
     End Function
+    'Save position and name of piece putting king in check
+    'Check all available moves and pieces to see if it can either intersect the path or capture that piece
+
+    'Checking can be done through previous functions but overriding them
+    'Saving name and position to a global variable
+    'Need a variable to declare that the king is in check, most likely one for each king and boolean
+    'When check variable is true it will need to check if any possible moves to save the king can be made
+    'Possible moves saved through a file?
+    'Use check system for when checking what can move, so set the buttons to what is checking the king button 65 - 72 
+    Public Function CheckAvailablePieces()
+        Dim pieces_to_check As List(Of Button)
+
+        If ChessBoard.WKinginCheck = True Then
+            pieces_to_check = Whitepieces.ToList
+        Else
+            pieces_to_check = Blackpieces.ToList
+        End If
+        For Each Pawn In PawnSelectedPieces
+            If Pawn Is ChessBoard.Piece_Causing_Check Then
+                ChessBoard.Button65.Left = ChessBoard.Button_Causing_Check.Left
+                ChessBoard.Button65.Top = ChessBoard.Button_Causing_Check.Top
+            End If
+        Next
+        For Each Knight In KnightSelectedPieces
+            If Knight Is ChessBoard.Piece_Causing_Check Then
+                ChessBoard.Button65.Left = ChessBoard.Button_Causing_Check.Left
+                ChessBoard.Button65.Top = ChessBoard.Button_Causing_Check.Top
+            End If
+        Next
+
+    End Function
+
 End Class
