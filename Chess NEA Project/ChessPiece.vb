@@ -419,7 +419,7 @@
                 change = False
             Else
                 If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-
+                    rearrangechecks(temppostionscore - 1)
                     PieceMoveWhenChecked()
                 Else
                     movebuttons(scoremove)
@@ -553,7 +553,7 @@
         End If
         For i = 0 To totalbuttonchecks
             If scoremove = 0 And change = False Then
-                For j = startofloop To endofloop - 1
+                For j = 0 To 7 - 1
                     If checkbuttons(j).Left = ChessBoard.ButtonX_Causing_Check(i) And checkbuttons(j).Top = ChessBoard.ButtonY_Causing_Check(i) Then
                         checkbuttons(j).Show()
                     End If
