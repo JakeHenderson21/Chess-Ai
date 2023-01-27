@@ -243,6 +243,7 @@ Public Class ChessBoard
     End Sub
     'When Wrook1 is clicked it goes through the checking system of where it can move
     Private Sub WRook1_Click(sender As Object, e As EventArgs) Handles WRook1.Click
+        CheckMode = False
         Dim rooks As New Rook(WRook1.Left, WRook1.Top, ChessPiece.Chesscolour.white, WRook1)
         clearbuttons()
         rooks.SetColour()
@@ -253,6 +254,7 @@ Public Class ChessBoard
     End Sub
     'When Wrook2 is clicked it goes through the checking system of where it can move
     Private Sub WRook2_Click(sender As Object, e As EventArgs) Handles WRook2.Click
+        CheckMode = False
         Dim rooks As New Rook(WRook2.Left, WRook2.Top, ChessPiece.Chesscolour.white, WRook2)
         clearbuttons()
         rooks.SetColour()
@@ -263,6 +265,7 @@ Public Class ChessBoard
     End Sub
     'When Brook1 is clicked it goes through the checking system of where it can move
     Private Sub BRook1_Click(sender As Object, e As EventArgs) Handles BRook1.Click
+        CheckMode = False
         Dim rooks As New Rook(BRook1.Left, BRook1.Top, ChessPiece.Chesscolour.black, BRook1)
         clearbuttons()
         rooks.SetColour()
@@ -273,6 +276,7 @@ Public Class ChessBoard
     End Sub
     'When Brook2 is clicked it goes through the checking system of where it can move
     Private Sub BRook2_Click(sender As Object, e As EventArgs) Handles BRook2.Click
+        CheckMode = False
         Dim rooks As New Rook(BRook2.Left, BRook2.Top, ChessPiece.Chesscolour.black, BRook2)
         clearbuttons()
         rooks.SetColour()
@@ -283,6 +287,7 @@ Public Class ChessBoard
     End Sub
     'When WBishop1 is clicked it goes through the checking system of where it can move
     Private Sub WBishop1_Click(sender As Object, e As EventArgs) Handles WBishop1.Click
+        CheckMode = False
         Dim Bishops As New Bishop(WBishop1.Left, WBishop1.Top, ChessPiece.Chesscolour.white, WBishop1)
         clearbuttons()
         Bishops.SetColour()
@@ -293,6 +298,7 @@ Public Class ChessBoard
     End Sub
     'When WBishop2 is clicked it goes through the checking system of where it can move
     Private Sub WBishop2_Click(sender As Object, e As EventArgs) Handles WBishop2.Click
+        CheckMode = False
         Dim Bishops As New Bishop(WBishop2.Left, WBishop2.Top, ChessPiece.Chesscolour.white, WBishop2)
         clearbuttons()
         Bishops.SetColour()
@@ -303,6 +309,7 @@ Public Class ChessBoard
     End Sub
     'When BBishop1 is clicked it goes through the checking system of where it can move
     Private Sub BBishop1_Click(sender As Object, e As EventArgs) Handles BBishop1.Click
+        CheckMode = False
         Dim Bishops As New Bishop(BBishop1.Left, BBishop1.Top, ChessPiece.Chesscolour.black, BBishop1)
         clearbuttons()
         Bishops.SetColour()
@@ -313,6 +320,7 @@ Public Class ChessBoard
     End Sub
     'When BBishop2 is clicked it goes through the checking system of where it can move
     Private Sub BBishop2_Click(sender As Object, e As EventArgs) Handles BBishop2.Click
+        CheckMode = False
         Dim Bishops As New Bishop(BBishop2.Left, BBishop2.Top, ChessPiece.Chesscolour.black, BBishop2)
         clearbuttons()
         Bishops.SetColour()
@@ -323,6 +331,7 @@ Public Class ChessBoard
     End Sub
     'When WQueen is clicked it goes through the checking system of where it can move
     Private Sub WQueen_Click(sender As Object, e As EventArgs) Handles WQueen.Click
+        CheckMode = False
         Dim queen As New Queen(WQueen.Left, WQueen.Top, ChessPiece.Chesscolour.white, WQueen)
         clearbuttons()
         queen.SetColour()
@@ -333,6 +342,7 @@ Public Class ChessBoard
     End Sub
     'When BQueen is clicked it goes through the checking system of where it can move
     Private Sub BQueen_Click(sender As Object, e As EventArgs) Handles BQueen.Click
+        CheckMode = False
         Dim queen As New Queen(BQueen.Left, BQueen.Top, ChessPiece.Chesscolour.black, BQueen)
         clearbuttons()
         queen.SetColour()
@@ -343,6 +353,7 @@ Public Class ChessBoard
     End Sub
     'When WKnight1 is clicked it goes through the checking system of where it can move
     Private Sub WKnight1_Click(sender As Object, e As EventArgs) Handles WKnight1.Click
+        CheckMode = False
         Dim knights As New Knight(WKnight1.Left, WKnight1.Top, ChessPiece.Chesscolour.white, WKnight1)
         clearbuttons()
         knights.SetColour()
@@ -352,6 +363,7 @@ Public Class ChessBoard
     End Sub
     'When WKnight2 is clicked it goes through the checking system of where it can move
     Private Sub WKnight2_Click(sender As Object, e As EventArgs) Handles Wknight2.Click
+        CheckMode = False
         Dim knights As New Knight(Wknight2.Left, Wknight2.Top, ChessPiece.Chesscolour.white, Wknight2)
         clearbuttons()
         knights.SetColour()
@@ -361,6 +373,7 @@ Public Class ChessBoard
     End Sub
     'When BKnight1 is clicked it goes through the checking system of where it can move
     Private Sub BKnight1_Click(sender As Object, e As EventArgs) Handles BKnight1.Click
+        CheckMode = False
         Dim knights As New Knight(BKnight1.Left, BKnight1.Top, ChessPiece.Chesscolour.black, BKnight1)
         clearbuttons()
         knights.SetColour()
@@ -370,6 +383,7 @@ Public Class ChessBoard
     End Sub
     'When BKnight2 is clicked it goes through the checking system of where it can move
     Private Sub BKnight2_Click(sender As Object, e As EventArgs) Handles BKnight2.Click
+        CheckMode = False
         Dim knights As New Knight(BKnight2.Left, BKnight2.Top, ChessPiece.Chesscolour.black, BKnight2)
         clearbuttons()
         knights.SetColour()
@@ -379,6 +393,7 @@ Public Class ChessBoard
     End Sub
     'When WKing is clicked it goes through the checking system of where it can move
     Private Sub Wking_Click(sender As Object, e As EventArgs) Handles WKing.Click
+        CheckMode = False
         Dim kings As New King(WKing.Left, WKing.Top, ChessPiece.Chesscolour.white, WKing)
         clearbuttons()
         kings.SetColour()
@@ -388,6 +403,7 @@ Public Class ChessBoard
     End Sub
     'When BKing is clicked it goes through the checking system of where it can move
     Private Sub Bking_Click(sender As Object, e As EventArgs) Handles BKing.Click
+        CheckMode = False
         Dim kings As New King(BKing.Left, BKing.Top, ChessPiece.Chesscolour.black, BKing)
         clearbuttons()
         kings.SetColour()
@@ -397,6 +413,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn1 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn1_Click(sender As Object, e As EventArgs) Handles WPawn1.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn1.Left, WPawn1.Top, ChessPiece.Chesscolour.white, WPawn1, FirstCheck(0))
         clearbuttons()
         Pawns.SetColour()
@@ -407,6 +424,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn2 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn2_Click(sender As Object, e As EventArgs) Handles WPawn2.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn2.Left, WPawn2.Top, ChessPiece.Chesscolour.white, WPawn2, FirstCheck(1))
         clearbuttons()
         Pawns.SetColour()
@@ -417,6 +435,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn3 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn3_Click(sender As Object, e As EventArgs) Handles WPawn3.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn3.Left, WPawn3.Top, ChessPiece.Chesscolour.white, WPawn3, FirstCheck(2))
         clearbuttons()
         Pawns.SetColour()
@@ -427,6 +446,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn4 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn4_Click(sender As Object, e As EventArgs) Handles WPawn4.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn4.Left, WPawn4.Top, ChessPiece.Chesscolour.white, WPawn4, FirstCheck(3))
         clearbuttons()
         Pawns.SetColour()
@@ -437,6 +457,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn5 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn5_Click(sender As Object, e As EventArgs) Handles WPawn5.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn5.Left, WPawn5.Top, ChessPiece.Chesscolour.white, WPawn5, FirstCheck(4))
         clearbuttons()
         Pawns.SetColour()
@@ -447,6 +468,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn6 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn6_Click(sender As Object, e As EventArgs) Handles WPawn6.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn6.Left, WPawn6.Top, ChessPiece.Chesscolour.white, WPawn6, FirstCheck(5))
         clearbuttons()
         Pawns.SetColour()
@@ -457,6 +479,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn7 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn7_Click(sender As Object, e As EventArgs) Handles WPawn7.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn7.Left, WPawn7.Top, ChessPiece.Chesscolour.white, WPawn7, FirstCheck(6))
         clearbuttons()
         Pawns.SetColour()
@@ -467,6 +490,7 @@ Public Class ChessBoard
     End Sub
     'When Wpawn8 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn8_Click(sender As Object, e As EventArgs) Handles WPawn8.Click
+        CheckMode = False
         Dim Pawns As New Pawn(WPawn8.Left, WPawn8.Top, ChessPiece.Chesscolour.white, WPawn8, FirstCheck(7))
         clearbuttons()
         Pawns.SetColour()
@@ -477,6 +501,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn1 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn1_Click(sender As Object, e As EventArgs) Handles BPawn1.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn1.Left, BPawn1.Top, ChessPiece.Chesscolour.black, BPawn1, FirstCheck(8))
         clearbuttons()
         Pawns.SetColour()
@@ -487,6 +512,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn2 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn2_Click(sender As Object, e As EventArgs) Handles BPawn2.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn2.Left, BPawn2.Top, ChessPiece.Chesscolour.black, BPawn2, FirstCheck(9))
         clearbuttons()
         Pawns.SetColour()
@@ -497,6 +523,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn3 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn3_Click(sender As Object, e As EventArgs) Handles BPawn3.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn3.Left, BPawn3.Top, ChessPiece.Chesscolour.black, BPawn3, FirstCheck(10))
         clearbuttons()
         Pawns.SetColour()
@@ -507,6 +534,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn4 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn4_Click(sender As Object, e As EventArgs) Handles BPawn4.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn4.Left, BPawn4.Top, ChessPiece.Chesscolour.black, BPawn4, FirstCheck(11))
         clearbuttons()
         Pawns.SetColour()
@@ -517,6 +545,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn5 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn5_Click(sender As Object, e As EventArgs) Handles BPawn5.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn5.Left, BPawn5.Top, ChessPiece.Chesscolour.black, BPawn5, FirstCheck(12))
         clearbuttons()
         Pawns.SetColour()
@@ -527,6 +556,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn6 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn6_Click(sender As Object, e As EventArgs) Handles BPawn6.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn6.Left, BPawn6.Top, ChessPiece.Chesscolour.black, BPawn6, FirstCheck(13))
         clearbuttons()
         Pawns.SetColour()
@@ -537,6 +567,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn7 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn7_Click(sender As Object, e As EventArgs) Handles BPawn7.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn7.Left, BPawn7.Top, ChessPiece.Chesscolour.black, BPawn7, FirstCheck(14))
         clearbuttons()
         Pawns.SetColour()
@@ -547,6 +578,7 @@ Public Class ChessBoard
     End Sub
     'When Bpawn8 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn8_Click(sender As Object, e As EventArgs) Handles BPawn8.Click
+        CheckMode = False
         Dim Pawns As New Pawn(BPawn8.Left, BPawn8.Top, ChessPiece.Chesscolour.black, BPawn8, FirstCheck(15))
         clearbuttons()
         Pawns.SetColour()

@@ -3,6 +3,7 @@
     Public everyPiece(31) As Button
     Public firstMoveCheck As Boolean
     Public operatorcheck, newScoreMove, OldScoremove As Integer
+    Dim PieceButtonToCheck As Button
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button, ByVal firstMove As Boolean)
         MyBase.New(X, Y, chess_colour, piece)
         firstMoveCheck = firstMove
@@ -53,56 +54,88 @@
             End If
         Next
         If colour = Chesscolour.white Then
-            For Each pieces In bpieces
-                ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top - 77)
-                ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top - 77)
-                If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
+            ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top - 77)
+            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top - 77)         
+                For Each pieces In bpieces
+                    If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
                     If ChessBoard.CheckMode = False Then
-                        ChessBoard.Button3.Show()
+                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                            PieceButtonToCheck = ChessBoard.Button3
+                            PieceMoveWhenChecked()
+                        Else
+                            ChessBoard.Button3.Show()
+                        End If
                     End If
                 ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
                     If ChessBoard.CheckMode = False Then
-                        ChessBoard.Button4.Show()
+                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                            PieceButtonToCheck = ChessBoard.Button4
+                            PieceMoveWhenChecked()
+                        Else
+                            ChessBoard.Button4.Show()
+                        End If
                     End If
                 End If
             Next
-        Else
-            For Each pieces In wpieces
-                ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top + 77)
-                ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top + 77)
 
-                If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
-                    If ChessBoard.CheckMode = False Then
-                        ChessBoard.Button3.Show()
+        Else
+            ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top + 77)
+            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top + 77)
+
+                For Each pieces In wpieces
+                    If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
+                        If ChessBoard.CheckMode = False Then
+                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                            PieceButtonToCheck = ChessBoard.Button3
+                            PieceMoveWhenChecked()
+                        Else
+                            ChessBoard.Button3.Show()
+                        End If
+                        End If
+                    ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
+                        If ChessBoard.CheckMode = False Then
+                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                            PieceButtonToCheck = ChessBoard.Button4
+                            PieceMoveWhenChecked()
+                        Else
+                            ChessBoard.Button4.Show()
+                        End If
+                        End If
                     End If
-                ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
-                    If ChessBoard.CheckMode = False Then
-                        ChessBoard.Button4.Show()
-                    End If
-                End If
-            Next
-        End If
+                Next
+            End If
+
         If OldScoremove = 0 Then
         ElseIf OldScoremove = 1 Then
             If ChessBoard.CheckMode = False Then
-                ChessBoard.Button1.Show()
+                If ChessBoard.WKinginCheck = False And ChessBoard.BKinginCheck = False Then
+                    ChessBoard.Button1.Show()
+                End If
+
             End If
         ElseIf OldScoremove = 2 Then
             If ChessBoard.CheckMode = False Then
-                ChessBoard.Button1.Show()
-                ChessBoard.Button2.Show()
+                If ChessBoard.WKinginCheck = False And ChessBoard.BKinginCheck = False Then
+                    ChessBoard.Button1.Show()
+                    ChessBoard.Button2.Show()
+                End If
             End If
         End If
-            For Each Button In buttonMoves
-                If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
+        For Each Button In buttonMoves
+            If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                 Button.Hide()
-                End If
-            Next
+            End If
+        Next
     End Sub
     'sets the scoremove for how far it can move
     Public Sub PawnMoveChecker()
         If newScoreMove < OldScoremove Then
             OldScoremove = newScoreMove
+        End If
+    End Sub
+    Protected Overrides Sub PieceMoveWhenChecked()
+        If ChessBoard.ButtonX_Causing_Check(0) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(0) = PieceButtonToCheck.Top Then
+            PieceButtonToCheck.Show()
         End If
     End Sub
 End Class

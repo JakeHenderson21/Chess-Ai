@@ -4,6 +4,7 @@
     Public resultID As Integer
     Public WPawn(7), Bpawn(7), WRook(1), Brook(1), WBishop(1), BBishop(1), WKnight(1), BKnight(1), PawnSelectedPieces(7), KnightSelectedPieces(1), RookSelectedPieces(1), BishopSelectedPieces(1), QueensSelectedPieces, KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
     Public checking As Boolean
+    Public TempButtonX_Causing_Check, TempButtonY_Causing_Check As New List(Of Integer)
     'Initisles arrays for the buttons
     Public Sub New()
         For i = 0 To 7
@@ -92,7 +93,7 @@
     End Function
     'This checks the king against each move that a pawn can possibly make
     Public Function CheckPawnsAgainstKing()
-        Dim result As Boolean = False      
+        Dim result As Boolean = False
         For Each piece In PawnSelectedPieces
             Dim Pawns As New Pawn(piece.Left, piece.Top, chesscolour, piece, FirstCheck(FirstCheckNumber))
             FirstCheckNumber += 1
@@ -106,9 +107,11 @@
                 ChessBoard.checkingForCheck = True
                 ChessBoard.Piece_Causing_Check = piece
                 Dim counter As Integer = 0
-                ChessBoard.ButtonX_Causing_Check(0) = (CheckPawnsForCollisionWithKing(counter))
+                TempButtonX_Causing_Check.Add(CheckPawnsForCollisionWithKing(counter))
                 counter = 1
-                ChessBoard.ButtonY_Causing_Check(0) = (CheckPawnsForCollisionWithKing(counter))
+                TempButtonY_Causing_Check.Add(CheckPawnsForCollisionWithKing(counter))
+                ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
+                ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
             End If
         Next
         Return result
@@ -135,12 +138,12 @@
         Dim result As Boolean = False
         For Each piece In RookSelectedPieces
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
-            
+
             Rooks.SetColour()
             Rooks.SetLoopBoundaries()
             Rooks.CheckMoves()
             chess_piece = piece
-            
+
             For buttoncheck = 0 To 3
                 check_Buttons = MoveSelector(buttoncheck, Rooks)
                 If check_Buttons.Length - 1 <> 0 Then
@@ -149,14 +152,14 @@
                             result = True
                         End If
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
-                            ChessBoard.ButtonX_Causing_Check(0) = (piece.Left)
-                            ChessBoard.ButtonY_Causing_Check(0) = (piece.Top)
-                            Dim counter As Integer = 1
+                            TempButtonX_Causing_Check.Add(piece.Left)
+                            TempButtonY_Causing_Check.Add(piece.Top)
                             For Each member In check_Buttons
-                                ChessBoard.ButtonX_Causing_Check(counter) = (member.Left)
-                                ChessBoard.ButtonY_Causing_Check(counter) = (member.Top)
-                                counter += 1
+                                TempButtonX_Causing_Check.Add(member.Left)
+                                TempButtonY_Causing_Check.Add(member.Top)
                             Next
+                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
+                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
                         End If
                     Next
                 End If
@@ -183,14 +186,14 @@
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
                             ChessBoard.checkingForCheck = True
                             ChessBoard.Piece_Causing_Check = piece
-                            ChessBoard.ButtonX_Causing_Check(0) = (piece.Left)
-                            ChessBoard.ButtonY_Causing_Check(0) = (piece.Top)
-                            Dim counter As Integer = 1
+                            TempButtonX_Causing_Check.Add(piece.Left)
+                            TempButtonY_Causing_Check.Add(piece.Top)
                             For Each member In check_Buttons
-                                ChessBoard.ButtonX_Causing_Check(counter) = (member.Left)
-                                ChessBoard.ButtonY_Causing_Check(counter) = (member.Top)
-                                counter += 1
+                                TempButtonX_Causing_Check.Add(member.Left)
+                                TempButtonY_Causing_Check.Add(member.Top)
                             Next
+                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
+                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
                         End If
                     Next
                 End If
@@ -215,14 +218,14 @@
                     End If
                     If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
                         ChessBoard.checkingForCheck = True
-                        ChessBoard.ButtonX_Causing_Check(0) = (QueensSelectedPieces.Left)
-                        ChessBoard.ButtonY_Causing_Check(0) = (QueensSelectedPieces.Top)
-                        Dim counter As Integer = 1
+                        TempButtonX_Causing_Check.Add(QueensSelectedPieces.Left)
+                        TempButtonY_Causing_Check.Add(QueensSelectedPieces.Top)
                         For Each member In check_Buttons
-                            ChessBoard.ButtonX_Causing_Check(counter) = (member.Left)
-                            ChessBoard.ButtonY_Causing_Check(counter) = (member.Top)
-                            counter += 1
+                            TempButtonX_Causing_Check.Add(member.Left)
+                            TempButtonY_Causing_Check.Add(member.Top)
                         Next
+                        ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
+                        ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
                     End If
                 Next
             End If
@@ -244,9 +247,11 @@
                 ChessBoard.checkingForCheck = True
                 ChessBoard.Piece_Causing_Check = piece
                 Dim counter As Integer
-                ChessBoard.ButtonX_Causing_Check(0) = (CheckKnightsForCollisionWithKing(counter))
+                TempButtonX_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
                 counter = 1
-                ChessBoard.ButtonY_Causing_Check(0) = (CheckKnightsForCollisionWithKing(counter))
+                TempButtonY_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
+                ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
+                ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
             End If
         Next
         Return result
@@ -347,7 +352,7 @@
                 resultID = DownLeftMoveButton.Length
                 result = DownLeftMoveButton
                 rooks.DownLeftMoveButtonsCheck.Clear()
-            ElseIf buttoncheck = 7 Then              
+            ElseIf buttoncheck = 7 Then
                 UpLeftMoveButton = rooks.upleftMoveButtonsCheck.ToArray()
                 resultID = UpLeftMoveButton.Length
                 result = UpLeftMoveButton
@@ -365,5 +370,6 @@
     'When check variable is true it will need to check if any possible moves to save the king can be made
     'Possible moves saved through a file?
     'Use check system for when checking what can move, so set the buttons to what is checking the king button 65 - 72 
-  
+
 End Class
+
