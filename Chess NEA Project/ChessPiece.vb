@@ -417,7 +417,12 @@
                 count += 1
                 change = False
             Else
-                movebuttons(scoremove)
+                If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                    PieceMoveWhenChecked()
+                Else
+                    movebuttons(scoremove)
+                End If
+
             End If
         Next
         count = 0
@@ -536,5 +541,16 @@
             End If
         Next
         scoremove = 0
+    End Sub
+    Private Sub PieceMoveWhenChecked()
+        For i = 0 To ChessBoard.ButtonX_Causing_Check.Count
+            For j = 0 To scoremove - 1
+                If scoremove = 0 And change = False Then
+                End If
+                If checkbuttons(j).Left = ChessBoard.ButtonX_Causing_Check(i) And checkbuttons(j).Top = ChessBoard.ButtonY_Causing_Check(i) Then
+                    checkbuttons(j).Show()
+                End If
+            Next
+        Next
     End Sub
 End Class
