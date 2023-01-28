@@ -3,7 +3,7 @@
     Public everyPiece(31) As Button
     Public firstMoveCheck As Boolean
     Public operatorcheck, newScoreMove, OldScoremove As Integer
-    Dim PieceButtonToCheck As Button
+    Public PieceButtonToCheck As Button
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button, ByVal firstMove As Boolean)
         MyBase.New(X, Y, chess_colour, piece)
         firstMoveCheck = firstMove

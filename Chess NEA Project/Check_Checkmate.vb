@@ -361,15 +361,4 @@
         End If
         Return result
     End Function
-    'Save position and name of piece putting king in check
-    'Check all available moves and pieces to see if it can either intersect the path or capture that piece
-
-    'Checking can be done through previous functions but overriding them
-    'Saving name and position to a global variable
-    'Need a variable to declare that the king is in check, most likely one for each king and boolean
-    'When check variable is true it will need to check if any possible moves to save the king can be made
-    'Possible moves saved through a file?
-    'Use check system for when checking what can move, so set the buttons to what is checking the king button 65 - 72 
-
 End Class
-

@@ -1,6 +1,7 @@
 ﻿Public Class Knight
     Inherits ChessPiece
     Public knightmoves(7) As Boolean
+    Public PieceButtonToCheck As Button
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button)
         MyBase.New(X, Y, chess_colour, piece)
     End Sub
@@ -34,7 +35,39 @@
         Next
         If ChessBoard.CheckMode = False Then
             If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                PieceMoveWhenChecked()
+                If knightmoves(0) = True Then
+                    PieceButtonToCheck = ChessBoard.Button1
+                    PieceMoveWhenChecked()
+                End If
+                If knightmoves(1) = True Then
+                    PieceButtonToCheck = ChessBoard.Button2
+                    PieceMoveWhenChecked()
+                End If
+                If knightmoves(2) = True Then
+                    PieceButtonToCheck = ChessBoard.Button3
+                    PieceMoveWhenChecked()
+                End If
+                If knightmoves(3) = True Then
+                    PieceButtonToCheck = ChessBoard.Button4
+                    PieceMoveWhenChecked()
+                End If
+                If knightmoves(4) = True Then
+                    PieceButtonToCheck = ChessBoard.Button5
+                    PieceMoveWhenChecked()
+                End If
+                If knightmoves(5) = True Then
+                    PieceButtonToCheck = ChessBoard.Button6
+                    PieceMoveWhenChecked()
+                End If
+                If knightmoves(6) = True Then
+                    PieceButtonToCheck = ChessBoard.Button7
+                    PieceMoveWhenChecked()
+                End If
+                If knightmoves(7) = True Then
+                    PieceButtonToCheck = ChessBoard.Button8
+                    PieceMoveWhenChecked()
+                End If
+
             Else
                 If knightmoves(0) = True Then
                     ChessBoard.Button1.Show()
@@ -97,6 +130,22 @@
         ElseIf temppostionscore = 7 Then
             tx = -154
             ty = -77
+        End If
+    End Sub
+    Protected Overrides Sub PieceMoveWhenChecked()
+        Dim totalbuttonchecks As Integer
+        If ChessBoard.ButtonX_Causing_Check.Count > 8 Then
+            totalbuttonchecks = 8
+        Else
+            totalbuttonchecks = ChessBoard.ButtonX_Causing_Check.Count
+        End If
+        For i = 0 To totalbuttonchecks
+            If ChessBoard.ButtonX_Causing_Check(i) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(i) = PieceButtonToCheck.Top Then
+                PieceButtonToCheck.Show()
+            End If
+        Next
+        If ChessBoard.ButtonX_Causing_Check(0) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(0) = PieceButtonToCheck.Top Then
+            PieceButtonToCheck.Show()
         End If
     End Sub
 End Class
