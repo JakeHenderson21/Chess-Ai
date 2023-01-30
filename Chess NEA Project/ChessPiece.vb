@@ -195,9 +195,6 @@
         Dim xcoordinate, ycoordinate, piecemove, l, tempscoremove, temppostionscore As Integer
         temppostionscore = count
         For t = startofloop To endofloop
-            If piece Is ChessBoard.WQueen Then
-                piece = piece
-            End If
             change = False
             piecemove = 0
             l = 0
@@ -449,7 +446,7 @@
     End Function
     'This is where it goes checking each section in the loop, the loop id being the temppositionscore where each number represents a certain section
     Public Overridable Sub rearrangechecks(ByRef temppostionscore As Integer)
-        If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.BQueen Then
+        If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.BQueen Or ChessBoard.PawnRook = True Or ChessBoard.PawnQueen = True Then
             If temppostionscore = 0 Then
                 checkbuttons = upMovebutton
                 tx = 0
@@ -468,7 +465,7 @@
                 ty = 0
             End If
         End If
-        If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.BQueen Then
+        If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.BQueen Or ChessBoard.PawnBishop = True Or ChessBoard.PawnQueen = True Then
             If temppostionscore = 4 Then
                 checkbuttons = upRightMoveButton
                 tx = 77

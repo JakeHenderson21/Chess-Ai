@@ -124,6 +124,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Pawn.vb" />
+    <Compile Include="PromotionChoice.Designer.vb">
+      <DependentUpon>PromotionChoice.vb</DependentUpon>
+    </Compile>
+    <Compile Include="PromotionChoice.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Queen.vb" />
     <Compile Include="Rook.vb" />
     <Compile Include="Settings.Designer.vb">
@@ -145,6 +151,9 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PromotionChoice.resx">
+      <DependentUpon>PromotionChoice.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Settings.resx">
       <DependentUpon>Settings.vb</DependentUpon>

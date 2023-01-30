@@ -1,18 +1,43 @@
 ﻿Imports System.Threading
 Public Class ChessBoard
     Public Inputweights(383, 255), HiddenWeights(255, 255, 2), OutputWeights(255, 203), HiddenBias(255, 3), OutputBias(203) As Double
-    Public firstAITurn, endGameState, WKinginCheck, BKinginCheck As Boolean
-    Public colourOfPieces, Piece_name As String
+    Public firstAITurn, endGameState, WKinginCheck, BKinginCheck, continueexecuting, PawnRook, PawnBishop, PawnKnight, PawnQueen As Boolean
+    Public colourOfPieces, Piece_name, PawnPromotion(15), UsersChoice As String
     Public xcoords, ycoords As Integer
     Public ButtonX_Causing_Check(), ButtonY_Causing_Check() As Integer
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
+    Public CheckWPawn, CheckBPawn, CheckWRook, CheckBRook, CheckWBishop, CheckBBishop, CheckWKnight, CheckBKnight, CheckWQueen, CheckBQueen As New List(Of Button)
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece, Piece_Causing_Check As Button
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.SetStyle(ControlStyles.UserPaint, True)
         Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
+        PawnPromotion(0) = "WPawn"
+        PawnPromotion(1) = "WPawn"
+        PawnPromotion(2) = "WPawn"
+        PawnPromotion(3) = "WPawn"
+        PawnPromotion(4) = "WPawn"
+        PawnPromotion(5) = "WPawn"
+        PawnPromotion(6) = "WPawn"
+        PawnPromotion(7) = "WPawn"
+        PawnPromotion(8) = "BPawn"
+        PawnPromotion(9) = "BPawn"
+        PawnPromotion(10) = "BPawn"
+        PawnPromotion(11) = "BPawn"
+        PawnPromotion(12) = "BPawn"
+        PawnPromotion(13) = "BPawn"
+        PawnPromotion(14) = "BPawn"
+        PawnPromotion(15) = "BPawn"
         Returnbtn.Hide()
+        For i = 0 To 7
+            CheckWPawn.Add(Whitepieces(i + 8))
+            CheckBPawn.Add(Blackpieces(i + 8))
+        Next
+        CheckWRook.Add(WRook1)
+        CheckWRook.Add(WRook2)
+        checkBRook.Add(BRook1)
+        checkBRook.Add(BRook2)
         WhiteSideValue = 180
         BlackSideValue = 180
         firstRound = True
@@ -413,178 +438,130 @@ Public Class ChessBoard
     End Sub
     'When Wpawn1 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn1_Click(sender As Object, e As EventArgs) Handles WPawn1.Click
-        CheckMode = False
-        Dim Pawns As New Pawn(WPawn1.Left, WPawn1.Top, ChessPiece.Chesscolour.white, WPawn1, FirstCheck(0))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn1
         FirstCheckNumber = 0
+        Promotion(0, WPawn1)
+        CheckMode = False        
+        chess_piece = WPawn1
         colourOfPieces = "white"
     End Sub
     'When Wpawn2 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn2_Click(sender As Object, e As EventArgs) Handles WPawn2.Click
         CheckMode = False
-        Dim Pawns As New Pawn(WPawn2.Left, WPawn2.Top, ChessPiece.Chesscolour.white, WPawn2, FirstCheck(1))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn2
         FirstCheckNumber = 1
+        Promotion(1, WPawn2)
+        chess_piece = WPawn2
         colourOfPieces = "white"
     End Sub
     'When Wpawn3 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn3_Click(sender As Object, e As EventArgs) Handles WPawn3.Click
-        CheckMode = False
-        Dim Pawns As New Pawn(WPawn3.Left, WPawn3.Top, ChessPiece.Chesscolour.white, WPawn3, FirstCheck(2))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn3
         FirstCheckNumber = 2
+        Promotion(2, WPawn3)
+        CheckMode = False
+        chess_piece = WPawn3
         colourOfPieces = "white"
     End Sub
     'When Wpawn4 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn4_Click(sender As Object, e As EventArgs) Handles WPawn4.Click
         CheckMode = False
-        Dim Pawns As New Pawn(WPawn4.Left, WPawn4.Top, ChessPiece.Chesscolour.white, WPawn4, FirstCheck(3))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn4
         FirstCheckNumber = 3
+        Promotion(3, WPawn4)
+        chess_piece = WPawn4
         colourOfPieces = "white"
     End Sub
     'When Wpawn5 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn5_Click(sender As Object, e As EventArgs) Handles WPawn5.Click
         CheckMode = False
-        Dim Pawns As New Pawn(WPawn5.Left, WPawn5.Top, ChessPiece.Chesscolour.white, WPawn5, FirstCheck(4))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn5
         FirstCheckNumber = 4
+        Promotion(4, WPawn5)
+        chess_piece = WPawn5
         colourOfPieces = "white"
     End Sub
     'When Wpawn6 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn6_Click(sender As Object, e As EventArgs) Handles WPawn6.Click
         CheckMode = False
-        Dim Pawns As New Pawn(WPawn6.Left, WPawn6.Top, ChessPiece.Chesscolour.white, WPawn6, FirstCheck(5))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn6
         FirstCheckNumber = 5
+        Promotion(5, WPawn6)
+        chess_piece = WPawn6
         colourOfPieces = "white"
     End Sub
     'When Wpawn7 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn7_Click(sender As Object, e As EventArgs) Handles WPawn7.Click
         CheckMode = False
-        Dim Pawns As New Pawn(WPawn7.Left, WPawn7.Top, ChessPiece.Chesscolour.white, WPawn7, FirstCheck(6))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn7
         FirstCheckNumber = 6
+        Promotion(6, WPawn7)
+        chess_piece = WPawn7
         colourOfPieces = "white"
     End Sub
     'When Wpawn8 is clicked it goes through the checking system of where it can move
     Private Sub Wpawn8_Click(sender As Object, e As EventArgs) Handles WPawn8.Click
         CheckMode = False
-        Dim Pawns As New Pawn(WPawn8.Left, WPawn8.Top, ChessPiece.Chesscolour.white, WPawn8, FirstCheck(7))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = WPawn8
         FirstCheckNumber = 7
+        Promotion(7, WPawn8)
+        chess_piece = WPawn8
         colourOfPieces = "white"
     End Sub
     'When Bpawn1 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn1_Click(sender As Object, e As EventArgs) Handles BPawn1.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn1.Left, BPawn1.Top, ChessPiece.Chesscolour.black, BPawn1, FirstCheck(8))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn1
         FirstCheckNumber = 8
+        Promotion(8, BPawn1)
+        chess_piece = BPawn1
         colourOfPieces = "black"
     End Sub
     'When Bpawn2 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn2_Click(sender As Object, e As EventArgs) Handles BPawn2.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn2.Left, BPawn2.Top, ChessPiece.Chesscolour.black, BPawn2, FirstCheck(9))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn2
         FirstCheckNumber = 9
+        Promotion(9, BPawn2)
+        chess_piece = BPawn2
         colourOfPieces = "black"
     End Sub
     'When Bpawn3 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn3_Click(sender As Object, e As EventArgs) Handles BPawn3.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn3.Left, BPawn3.Top, ChessPiece.Chesscolour.black, BPawn3, FirstCheck(10))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn3
         FirstCheckNumber = 10
+        Promotion(11, BPawn3)
+        chess_piece = BPawn3
         colourOfPieces = "black"
     End Sub
     'When Bpawn4 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn4_Click(sender As Object, e As EventArgs) Handles BPawn4.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn4.Left, BPawn4.Top, ChessPiece.Chesscolour.black, BPawn4, FirstCheck(11))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn4
         FirstCheckNumber = 11
+        Promotion(11, BPawn4)
+        chess_piece = BPawn4
         colourOfPieces = "black"
     End Sub
     'When Bpawn5 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn5_Click(sender As Object, e As EventArgs) Handles BPawn5.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn5.Left, BPawn5.Top, ChessPiece.Chesscolour.black, BPawn5, FirstCheck(12))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn5
         FirstCheckNumber = 12
+        Promotion(12, BPawn5)
+        chess_piece = BPawn5
         colourOfPieces = "black"
     End Sub
     'When Bpawn6 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn6_Click(sender As Object, e As EventArgs) Handles BPawn6.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn6.Left, BPawn6.Top, ChessPiece.Chesscolour.black, BPawn6, FirstCheck(13))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn6
         FirstCheckNumber = 13
+        Promotion(13, BPawn6)
+        chess_piece = BPawn6
         colourOfPieces = "black"
     End Sub
     'When Bpawn7 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn7_Click(sender As Object, e As EventArgs) Handles BPawn7.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn7.Left, BPawn7.Top, ChessPiece.Chesscolour.black, BPawn7, FirstCheck(14))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn7
         FirstCheckNumber = 14
+        Promotion(14, BPawn7)
+        chess_piece = BPawn7
         colourOfPieces = "black"
     End Sub
     'When Bpawn8 is clicked it goes through the checking system of where it can move
     Private Sub Bpawn8_Click(sender As Object, e As EventArgs) Handles BPawn8.Click
         CheckMode = False
-        Dim Pawns As New Pawn(BPawn8.Left, BPawn8.Top, ChessPiece.Chesscolour.black, BPawn8, FirstCheck(15))
-        clearbuttons()
-        Pawns.SetColour()
-        Pawns.CheckMoves()
-        chess_piece = BPawn8
         FirstCheckNumber = 15
+        Promotion(15, BPawn8)
+        chess_piece = BPawn8
         colourOfPieces = "black"
     End Sub
     'This is the action for all of buttons the user can use to move a piece, it gets the coordinates then clears the buttons and then sets a new loction for the required piece
@@ -754,7 +731,6 @@ Public Class ChessBoard
         Else
             MainMenu.Close()
         End If
-
     End Sub
     'This sets a new location for the piece clicked, it firsts checks if it was a pawn, if it was a pawn and its first turn then it makes FirstCheck for the pawn
     ' equal to true meaning when that pawn is clicked again it can't move 2 steps forward, it then checks if a piece was taken then ends turn and starts the next
@@ -765,6 +741,10 @@ Public Class ChessBoard
         If chess_piece Is WPawn1 Or chess_piece Is WPawn2 Or chess_piece Is WPawn3 Or chess_piece Is WPawn4 Or chess_piece Is WPawn5 Or chess_piece Is WPawn6 Or chess_piece Is WPawn7 Or chess_piece Is WPawn8 Or chess_piece Is BPawn1 Or chess_piece Is BPawn2 Or chess_piece Is BPawn3 Or chess_piece Is BPawn4 Or chess_piece Is BPawn5 Or chess_piece Is BPawn6 Or chess_piece Is BPawn7 Or chess_piece Is BPawn8 Then
             If FirstCheck(FirstCheckNumber) = False Then
                 FirstCheck(FirstCheckNumber) = True
+            End If
+            If (chess_piece.Top = 0 And colourOfPieces = "white") Or chess_piece.Top = 539 And colourOfPieces = "black" Then
+                PromotionChoice.Show()
+
             End If
         End If
         pieceTakenCheck()
@@ -778,6 +758,60 @@ Public Class ChessBoard
             blackpiecedisabler()
         End If
     End Sub
+    Public Sub PromotePawn(Piece)
+        Select Case Piece.name
+            Case WPawn1.Name
+                PawnPromotion(0) = UsersChoice
+            Case WPawn2.Name
+                PawnPromotion(1) = UsersChoice
+            Case WPawn3.Name
+                PawnPromotion(2) = UsersChoice
+            Case WPawn4.Name
+                PawnPromotion(3) = UsersChoice
+            Case WPawn5.Name
+                PawnPromotion(4) = UsersChoice
+            Case WPawn6.Name
+                PawnPromotion(5) = UsersChoice
+            Case WPawn7.Name
+                PawnPromotion(6) = UsersChoice
+            Case WPawn8.Name
+                PawnPromotion(7) = UsersChoice
+            Case BPawn1.Name
+                PawnPromotion(8) = UsersChoice
+            Case BPawn2.Name
+                PawnPromotion(9) = UsersChoice
+            Case BPawn3.Name
+                PawnPromotion(10) = UsersChoice
+            Case BPawn4.Name
+                PawnPromotion(11) = UsersChoice
+            Case BPawn5.Name
+                PawnPromotion(12) = UsersChoice
+            Case BPawn6.Name
+                PawnPromotion(13) = UsersChoice
+            Case BPawn7.Name
+                PawnPromotion(14) = UsersChoice
+            Case BPawn8.Name
+                PawnPromotion(15) = UsersChoice
+        End Select
+        If UsersChoice = "WRook" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteRook.png")
+        ElseIf UsersChoice = "BRook" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("BlackRook.png")
+        ElseIf UsersChoice = "WBishop" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteBishop.png")
+        ElseIf UsersChoice = "BBishop" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("BlackBishop.png")
+        ElseIf UsersChoice = "WKnight" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteKnight.png")
+        ElseIf UsersChoice = "BKnight" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("BlackKnight.png")
+        ElseIf UsersChoice = "WQueen" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteQueen.png")
+        ElseIf UsersChoice = "BQueen" Then
+            Piece.backgroundimage = System.Drawing.Image.FromFile("BlackQueen.png")
+        End If
+        continueexecuting = False
+    End Sub
     'It goes through piece checking if the piece's clicked position has moved on to a piece, if it has it moves piece to the right display the message
     Public Sub pieceTakenCheck()
         For Each piece In Allpieces
@@ -788,6 +822,68 @@ Public Class ChessBoard
             End If
         Next
     End Sub
+    Private Function SetPawnName(ByVal piece As Button)
+        Dim name As String = ""
+        If piece Is WPawn1 Then
+            name = selectmovetype(0)
+        ElseIf piece Is WPawn2 Then
+            name = selectmovetype(1)
+        ElseIf piece Is WPawn3 Then
+            name = selectmovetype(2)
+        ElseIf piece Is WPawn4 Then
+            name = selectmovetype(3)
+        ElseIf piece Is WPawn5 Then
+            name = selectmovetype(4)
+        ElseIf piece Is WPawn6 Then
+            name = selectmovetype(5)
+        ElseIf piece Is WPawn7 Then
+            name = selectmovetype(6)
+        ElseIf piece Is WPawn8 Then
+            name = selectmovetype(7)
+        ElseIf piece Is BPawn1 Then
+            name = selectmovetype(8)
+        ElseIf piece Is BPawn2 Then
+            name = selectmovetype(9)
+        ElseIf piece Is BPawn3 Then
+            name = selectmovetype(10)
+        ElseIf piece Is BPawn4 Then
+            name = selectmovetype(11)
+        ElseIf piece Is BPawn5 Then
+            name = selectmovetype(12)
+        ElseIf piece Is BPawn6 Then
+            name = selectmovetype(13)
+        ElseIf piece Is BPawn7 Then
+            name = selectmovetype(14)
+        ElseIf piece Is BPawn8 Then
+            name = selectmovetype(15)
+        End If
+        Return name
+    End Function
+    Private Function selectmovetype(ByVal numberToUse As Integer)
+        Dim name As String = ""
+        If PawnPromotion(numberToUse) = "WRook" Then
+            name = "White Rook (White Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "BRook" Then
+            name = "Black Rook (Black Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "WBishop" Then
+            name = "White Bishop (White Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "BBishop" Then
+            name = "Black Bishop (Black Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "WKnight" Then
+            name = "White Knight (White Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "BKnight" Then
+            name = "Black Knight (Black Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "WQueen" Then
+            name = "White Queen (White Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "BQueen" Then
+            name = "Black Queen (Black Pawn)"
+        ElseIf PawnPromotion(numberToUse) = "WPawn" Then
+            name = "White Pawn"
+        ElseIf PawnPromotion(numberToUse) = "BPawn" Then
+            name = "Black Pawn"
+        End If
+        Return name
+    End Function
     'This checks which piece was just removed and then moves it the right and adding it to an array so it can't be used again
     Public Sub setRemovedPieces(ByVal piece As Button)
         piece.Size = New Size(60, 60)
@@ -801,52 +897,52 @@ Public Class ChessBoard
         End If
         If piece Is WPawn1 Then
             WPawn1.Location = New Point(633, 112)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WPawn2 Then
             WPawn2.Location = New Point(691, 112)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WPawn3 Then
             WPawn3.Location = New Point(749, 112)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WPawn4 Then
             WPawn4.Location = New Point(807, 112)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WPawn5 Then
             WPawn5.Location = New Point(633, 171)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WPawn6 Then
             WPawn6.Location = New Point(691, 171)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WPawn7 Then
             WPawn7.Location = New Point(749, 171)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WPawn8 Then
             WPawn8.Location = New Point(807, 171)
-            Piece_name = "White Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn1 Then
             BPawn1.Location = New Point(633, 344)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn2 Then
             BPawn2.Location = New Point(691, 344)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn3 Then
             BPawn3.Location = New Point(749, 344)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn4 Then
             BPawn4.Location = New Point(807, 344)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn5 Then
             BPawn5.Location = New Point(633, 401)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn6 Then
             BPawn6.Location = New Point(691, 401)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn7 Then
             BPawn7.Location = New Point(749, 401)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is BPawn8 Then
             BPawn8.Location = New Point(807, 401)
-            Piece_name = "Black Pawn"
+            Piece_name = SetPawnName(piece)
         ElseIf piece Is WRook1 Then
             WRook1.Location = New Point(633, 231)
             Piece_name = "White Rook"
@@ -919,6 +1015,10 @@ Public Class ChessBoard
         Else
             CheckforCheck()
         End If
+        PawnRook = False
+        PawnBishop = False
+        PawnKnight = False
+        PawnQueen = False
     End Sub
     'For player vs player it will disable all the white pieces so the player can click on them whilst it is black's turn and enable all black pieces
     'For Player vs Ai it will disable the whites pieces but rather enabling black pieces it will activate the Ai for it make its turn
@@ -933,6 +1033,10 @@ Public Class ChessBoard
         Else
             CheckforCheck()
         End If
+        PawnRook = False
+        PawnBishop = False
+        PawnKnight = False
+        PawnQueen = False
         If MainMenu.AiMode = True Then
             Dim Ai As New Chess_Ai
             Ai.NextMoveDecider()
@@ -958,6 +1062,72 @@ Public Class ChessBoard
         endGameState = True
         Me.Close()
         MainMenu.Show()
-
+    End Sub
+    Public Sub Promotion(ByVal idenitifer As Integer, ByVal PawnPiece As Button)
+        If PawnPromotion(idenitifer) = "BRook" Then
+            Dim rooks As New Rook(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.black, PawnPiece)
+            PawnRook = True
+            clearbuttons()
+            rooks.SetColour()
+            rooks.SetLoopBoundaries()
+            rooks.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "WRook" Then
+            Dim rooks As New Rook(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.white, PawnPiece)
+            PawnRook = True
+            clearbuttons()
+            rooks.SetColour()
+            rooks.SetLoopBoundaries()
+            rooks.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "BKnight" Then
+            Dim knights As New Knight(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.black, PawnPiece)
+            PawnKnight = True
+            clearbuttons()
+            knights.SetColour()
+            knights.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "WKnight" Then
+            Dim knights As New Knight(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.white, PawnPiece)
+            PawnKnight = True
+            clearbuttons()
+            knights.SetColour()
+            knights.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "BBishop" Then
+            Dim Bishops As New Bishop(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.black, PawnPiece)
+            PawnBishop = True
+            clearbuttons()
+            Bishops.SetColour()
+            Bishops.SetLoopBoundaries()
+            Bishops.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "WBishop" Then
+            Dim Bishops As New Bishop(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.white, PawnPiece)
+            PawnBishop = True
+            clearbuttons()
+            Bishops.SetColour()
+            Bishops.SetLoopBoundaries()
+            Bishops.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "BQueen" Then
+            Dim queen As New Queen(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.black, PawnPiece)
+            PawnQueen = True
+            clearbuttons()
+            queen.SetColour()
+            queen.SetLoopBoundaries()
+            queen.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "WQueen" Then
+            Dim queen As New Queen(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.white, PawnPiece)
+            PawnQueen = True
+            clearbuttons()
+            queen.SetColour()
+            queen.SetLoopBoundaries()
+            queen.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "WPawn" Then
+            Dim Pawns As New Pawn(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.white, PawnPiece, FirstCheck(FirstCheckNumber))
+            clearbuttons()
+            Pawns.SetColour()
+            Pawns.CheckMoves()
+        ElseIf PawnPromotion(idenitifer) = "BPawn" Then
+            Dim Pawns As New Pawn(PawnPiece.Left, PawnPiece.Top, ChessPiece.Chesscolour.black, PawnPiece, FirstCheck(FirstCheckNumber))
+            clearbuttons()
+            Pawns.SetColour()
+            Pawns.CheckMoves()
+        End If
     End Sub
 End Class

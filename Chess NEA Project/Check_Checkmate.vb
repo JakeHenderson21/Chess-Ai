@@ -2,19 +2,14 @@
     Inherits ChessBoard
     Public chesscolour As ChessPiece.Chesscolour
     Public resultID As Integer
-    Public WPawn(7), Bpawn(7), WRook(1), Brook(1), WBishop(1), BBishop(1), WKnight(1), BKnight(1), PawnSelectedPieces(7), KnightSelectedPieces(1), RookSelectedPieces(1), BishopSelectedPieces(1), QueensSelectedPieces, KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
+    Public WBishop(1), BBishop(1), WKnight(1), BKnight(1), PawnSelectedPieces(7), KnightSelectedPieces(1), RookSelectedPieces(1), BishopSelectedPieces(1), QueensSelectedPieces, KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
     Public checking As Boolean
     Public TempButtonX_Causing_Check, TempButtonY_Causing_Check As New List(Of Integer)
+
     'Initisles arrays for the buttons
     Public Sub New()
-        For i = 0 To 7
-            WPawn(i) = ChessBoard.Whitepieces(i + 8)
-            Bpawn(i) = ChessBoard.Blackpieces(i + 8)
-        Next
-        For i = 0 To 1
-            WRook(i) = ChessBoard.Whitepieces(i * 7)
-            Brook(i) = ChessBoard.Blackpieces(i * 7)
-        Next
+        'Rework the arrays into lists, will need to to actually save the lists in the main chessboard class so they don't get deleted
+    
         WBishop(0) = ChessBoard.WBishop1
         WBishop(1) = ChessBoard.WBishop2
         BBishop(0) = ChessBoard.BBishop1
@@ -32,8 +27,8 @@
         ChessBoard.CheckMode = True
         If ChessBoard.colourOfPieces = "white" Then
             ChessBoard.KingPiece = ChessBoard.WKing
-            PawnSelectedPieces = Bpawn
-            RookSelectedPieces = Brook
+            PawnSelectedPieces = ChessBoard.CheckBPawn
+            RookSelectedPieces = ChessBoard.CheckBRook
             BishopSelectedPieces = BBishop
             QueensSelectedPieces = ChessBoard.BQueen
             KnightSelectedPieces = BKnight
@@ -42,8 +37,8 @@
             chesscolour = ChessPiece.Chesscolour.black
         Else
             ChessBoard.KingPiece = ChessBoard.BKing
-            PawnSelectedPieces = WPawn
-            RookSelectedPieces = WRook
+            PawnSelectedPieces = ChessBoard.CheckWPawn
+            RookSelectedPieces = ChessBoard.CheckWRook
             BishopSelectedPieces = WBishop
             QueensSelectedPieces = ChessBoard.WQueen
             KnightSelectedPieces = WKnight
