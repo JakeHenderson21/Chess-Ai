@@ -284,7 +284,7 @@
                     scoremove = 0
                 End If
                 buttonsPastBorder = 0
-                If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count < 4 Then
+                If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count < 4 Or ChessBoard.PawnRook = True Or ChessBoard.PawnQueen = True Then
                     If count = 0 Then
                         If scoremove = 0 And change = True Then
                             upmovecount = scoremove
@@ -297,7 +297,7 @@
                                 scoremove += 1
                             Else
                                 upmovecount = scoremove
-                            End If        
+                            End If
                         End If
                         UpMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 1 Then
@@ -328,7 +328,7 @@
                             Else
                                 downmovecount = scoremove
                             End If
-                            
+
                         End If
                         DownMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 3 Then
@@ -348,7 +348,7 @@
                         LeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If
                 End If
-                If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count >= 4 Then
+                If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count >= 4 Or ChessBoard.PawnBishop = True Or ChessBoard.PawnQueen = True Then
                     If count = 4 Then
                         If scoremove = 0 And change = True Then
                             uprightmovecount = scoremove
@@ -361,7 +361,7 @@
                                 scoremove += 1
                             Else
                                 uprightmovecount = scoremove
-                            End If 
+                            End If
                         End If
                         UpRightMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 5 Then
@@ -376,7 +376,7 @@
                                 scoremove += 1
                             Else
                                 downrightmovecount = scoremove
-                            End If       
+                            End If
                         End If
                         DownRightMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 6 Then
@@ -391,7 +391,7 @@
                                 scoremove += 1
                             Else
                                 downleftmovecount = scoremove
-                            End If                        
+                            End If
                         End If
                         DownLeftMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 7 Then
@@ -407,7 +407,7 @@
                             Else
                                 upleftmovecount = scoremove
                             End If
-                          
+
                         End If
                         UpLeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If

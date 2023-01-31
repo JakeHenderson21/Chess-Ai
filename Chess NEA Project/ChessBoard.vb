@@ -30,14 +30,6 @@ Public Class ChessBoard
         PawnPromotion(14) = "BPawn"
         PawnPromotion(15) = "BPawn"
         Returnbtn.Hide()
-        For i = 0 To 7
-            CheckWPawn.Add(Whitepieces(i + 8))
-            CheckBPawn.Add(Blackpieces(i + 8))
-        Next
-        CheckWRook.Add(WRook1)
-        CheckWRook.Add(WRook2)
-        checkBRook.Add(BRook1)
-        checkBRook.Add(BRook2)
         WhiteSideValue = 180
         BlackSideValue = 180
         firstRound = True
@@ -176,6 +168,24 @@ Public Class ChessBoard
                 piece.Enabled = False
             Next
         End If
+        For i = 0 To 7
+            CheckWPawn.Add(Whitepieces(i + 8))
+            CheckBPawn.Add(Blackpieces(i + 8))
+        Next
+        CheckWRook.Add(WRook1)
+        CheckWRook.Add(WRook2)
+        CheckBRook.Add(BRook1)
+        CheckBRook.Add(BRook2)
+        CheckWBishop.Add(WBishop1)
+        CheckWBishop.Add(WBishop2)
+        CheckBBishop.Add(BBishop1)
+        CheckBBishop.Add(BBishop2)
+        CheckWKnight.Add(WKnight1)
+        CheckWKnight.Add(Wknight2)
+        CheckBKnight.Add(BKnight1)
+        CheckBKnight.Add(BKnight2)
+        CheckWQueen.Add(WQueen)
+        CheckBQueen.Add(BQueen)
     End Sub
     'Removes all buttons from the board
     Public Sub clearbuttons()
@@ -795,20 +805,36 @@ Public Class ChessBoard
         End Select
         If UsersChoice = "WRook" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteRook.png")
+            CheckWPawn.Remove(Piece)
+            CheckWRook.Add(Piece)
         ElseIf UsersChoice = "BRook" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("BlackRook.png")
+            CheckBPawn.Remove(Piece)
+            CheckBRook.Add(Piece)
         ElseIf UsersChoice = "WBishop" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteBishop.png")
+            CheckWPawn.Remove(Piece)
+            CheckWBishop.Add(Piece)
         ElseIf UsersChoice = "BBishop" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("BlackBishop.png")
+            CheckBPawn.Remove(Piece)
+            CheckBBishop.Add(Piece)
         ElseIf UsersChoice = "WKnight" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteKnight.png")
+            CheckWPawn.Remove(Piece)
+            CheckWKnight.Add(Piece)
         ElseIf UsersChoice = "BKnight" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("BlackKnight.png")
+            CheckBPawn.Remove(Piece)
+            CheckBKnight.Add(Piece)
         ElseIf UsersChoice = "WQueen" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("WhiteQueen.png")
+            CheckWPawn.Remove(Piece)
+            CheckWQueen.Add(Piece)
         ElseIf UsersChoice = "BQueen" Then
             Piece.backgroundimage = System.Drawing.Image.FromFile("BlackQueen.png")
+            CheckBPawn.Remove(Piece)
+            CheckBQueen.Add(Piece)
         End If
         continueexecuting = False
     End Sub

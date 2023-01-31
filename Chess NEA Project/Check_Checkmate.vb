@@ -2,7 +2,8 @@
     Inherits ChessBoard
     Public chesscolour As ChessPiece.Chesscolour
     Public resultID As Integer
-    Public WBishop(1), BBishop(1), WKnight(1), BKnight(1), PawnSelectedPieces(7), KnightSelectedPieces(1), RookSelectedPieces(1), BishopSelectedPieces(1), QueensSelectedPieces, KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
+    Public WBishop(1), BBishop(1), WKnight(1), BKnight(1), KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
+    Public PawnSelectedPieces, KnightSelectedPieces, RookSelectedPieces, QueensSelectedPieces, BishopSelectedPieces As New List(Of Button)
     Public checking As Boolean
     Public TempButtonX_Causing_Check, TempButtonY_Causing_Check As New List(Of Integer)
 
@@ -10,14 +11,6 @@
     Public Sub New()
         'Rework the arrays into lists, will need to to actually save the lists in the main chessboard class so they don't get deleted
     
-        WBishop(0) = ChessBoard.WBishop1
-        WBishop(1) = ChessBoard.WBishop2
-        BBishop(0) = ChessBoard.BBishop1
-        BBishop(1) = ChessBoard.BBishop2
-        WKnight(0) = ChessBoard.WKnight1
-        WKnight(1) = ChessBoard.Wknight2
-        BKnight(0) = ChessBoard.BKnight1
-        BKnight(1) = ChessBoard.BKnight2
     End Sub
     'Finds out which turn has ended and checks the respective king by going through each piece to see if the it is in check or checkmate or where the king can legally move
     Public Function Check_King()
@@ -29,9 +22,9 @@
             ChessBoard.KingPiece = ChessBoard.WKing
             PawnSelectedPieces = ChessBoard.CheckBPawn
             RookSelectedPieces = ChessBoard.CheckBRook
-            BishopSelectedPieces = BBishop
-            QueensSelectedPieces = ChessBoard.BQueen
-            KnightSelectedPieces = BKnight
+            BishopSelectedPieces = ChessBoard.CheckBBishop
+            QueensSelectedPieces = ChessBoard.CheckBQueen
+            KnightSelectedPieces = ChessBoard.CheckBKnight
             KingSelectedPieces = ChessBoard.BKing
             FirstCheckNumber = 0
             chesscolour = ChessPiece.Chesscolour.black
@@ -39,9 +32,9 @@
             ChessBoard.KingPiece = ChessBoard.BKing
             PawnSelectedPieces = ChessBoard.CheckWPawn
             RookSelectedPieces = ChessBoard.CheckWRook
-            BishopSelectedPieces = WBishop
-            QueensSelectedPieces = ChessBoard.WQueen
-            KnightSelectedPieces = WKnight
+            BishopSelectedPieces = ChessBoard.CheckWBishop
+            QueensSelectedPieces = ChessBoard.CheckWQueen
+            KnightSelectedPieces = ChessBoard.CheckWKnight
             KingSelectedPieces = ChessBoard.WKing
             FirstCheckNumber = 8
             chesscolour = ChessPiece.Chesscolour.white
@@ -131,6 +124,7 @@
     'This checks the king against each move that a rook can possibly make
     Public Function CheckRooksAgainstKing()
         Dim result As Boolean = False
+        PawnRook = True
         For Each piece In RookSelectedPieces
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
 
@@ -160,12 +154,15 @@
                 End If
             Next
         Next
+        PawnRook = True
         Return result
     End Function
     'This checks the king against each move that a bishop can possibly make
     Public Function CheckBishopsAgainstKing()
+        PawnBishop = True
         Dim result As Boolean = False
         For Each piece In BishopSelectedPieces
+
             Dim Bishops As New Bishop(piece.Left, piece.Top, chesscolour, piece)
             Bishops.SetColour()
             Bishops.SetLoopBoundaries()
@@ -194,37 +191,42 @@
                 End If
             Next
         Next
+        PawnBishop = False
         Return result
     End Function
     'This checks the king against each move that a queen can possibly make
     Public Function CheckQueenAgainstKing()
         Dim result As Boolean = False
-        Dim Queens As New Queen(QueensSelectedPieces.Left, QueensSelectedPieces.Top, chesscolour, QueensSelectedPieces)
-        Queens.SetColour()
-        Queens.SetLoopBoundaries()
-        Queens.CheckMoves()
-        chess_piece = QueensSelectedPieces
-        For buttoncheck = 0 To 7
-            check_Buttons = MoveSelector(buttoncheck, Queens)
-            If check_Buttons.Length - 1 <> 0 Then
-                For Each PieceMove In check_Buttons
-                    If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
-                        result = True
-                    End If
-                    If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
-                        ChessBoard.checkingForCheck = True
-                        TempButtonX_Causing_Check.Add(QueensSelectedPieces.Left)
-                        TempButtonY_Causing_Check.Add(QueensSelectedPieces.Top)
-                        For Each member In check_Buttons
-                            TempButtonX_Causing_Check.Add(member.Left)
-                            TempButtonY_Causing_Check.Add(member.Top)
-                        Next
-                        ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
-                        ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
-                    End If
-                Next
-            End If
+        PawnQueen = True
+        For Each piece In QueensSelectedPieces
+            Dim Queens As New Queen(piece.Left, piece.Top, chesscolour, piece)
+            Queens.SetColour()
+            Queens.SetLoopBoundaries()
+            Queens.CheckMoves()
+            chess_piece = piece
+            For buttoncheck = 0 To 7
+                check_Buttons = MoveSelector(buttoncheck, Queens)
+                If check_Buttons.Length - 1 <> 0 Then
+                    For Each PieceMove In check_Buttons
+                        If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
+                            result = True
+                        End If
+                        If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
+                            ChessBoard.checkingForCheck = True
+                            TempButtonX_Causing_Check.Add(piece.Left)
+                            TempButtonY_Causing_Check.Add(piece.Top)
+                            For Each member In check_Buttons
+                                TempButtonX_Causing_Check.Add(member.Left)
+                                TempButtonY_Causing_Check.Add(member.Top)
+                            Next
+                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
+                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
+                        End If
+                    Next
+                End If
+            Next
         Next
+        PawnQueen = False
         Return result
     End Function
     'This checks the king against each move that a knight can possibly make

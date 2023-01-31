@@ -108,14 +108,22 @@
         If OldScoremove = 0 Then
         ElseIf OldScoremove = 1 Then
             If ChessBoard.CheckMode = False Then
-                If ChessBoard.WKinginCheck = False And ChessBoard.BKinginCheck = False Then
+                If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                    PieceButtonToCheck = ChessBoard.Button1
+                    BlockCheck()
+                Else
                     ChessBoard.Button1.Show()
                 End If
 
             End If
         ElseIf OldScoremove = 2 Then
             If ChessBoard.CheckMode = False Then
-                If ChessBoard.WKinginCheck = False And ChessBoard.BKinginCheck = False Then
+                If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                    PieceButtonToCheck = ChessBoard.Button1
+                    BlockCheck()
+                    PieceButtonToCheck = ChessBoard.Button2
+                    BlockCheck()
+                Else
                     ChessBoard.Button1.Show()
                     ChessBoard.Button2.Show()
                 End If
@@ -137,5 +145,18 @@
         If ChessBoard.ButtonX_Causing_Check(0) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(0) = PieceButtonToCheck.Top Then
             PieceButtonToCheck.Show()
         End If
+    End Sub
+    Protected Sub BlockCheck()
+        Dim totalbuttonchecks As Integer
+        If ChessBoard.ButtonX_Causing_Check.Count > 8 Then
+            totalbuttonchecks = 8
+        Else
+            totalbuttonchecks = ChessBoard.ButtonX_Causing_Check.Count
+        End If
+        For i = 1 To totalbuttonchecks - 1
+            If ChessBoard.ButtonX_Causing_Check(i) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(i) = PieceButtonToCheck.Top Then
+                PieceButtonToCheck.Show()
+            End If
+        Next
     End Sub
 End Class
