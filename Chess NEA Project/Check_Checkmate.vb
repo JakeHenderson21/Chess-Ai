@@ -57,6 +57,9 @@
             result = False
         End If
         ChessBoard.CheckMode = False
+        PawnBishop = False
+        PawnQueen = False
+        PawnRook = False
         Return result
     End Function
     'This checks if their is a piece blocking the king infront of it when checking for check and checkmate
@@ -154,16 +157,17 @@
                 End If
             Next
         Next
-        PawnRook = True
+
         Return result
     End Function
     'This checks the king against each move that a bishop can possibly make
     Public Function CheckBishopsAgainstKing()
-        PawnBishop = True
+
         Dim result As Boolean = False
         For Each piece In BishopSelectedPieces
 
             Dim Bishops As New Bishop(piece.Left, piece.Top, chesscolour, piece)
+            PawnBishop = True
             Bishops.SetColour()
             Bishops.SetLoopBoundaries()
             Bishops.CheckMoves()
@@ -191,7 +195,6 @@
                 End If
             Next
         Next
-        PawnBishop = False
         Return result
     End Function
     'This checks the king against each move that a queen can possibly make
@@ -226,7 +229,6 @@
                 End If
             Next
         Next
-        PawnQueen = False
         Return result
     End Function
     'This checks the king against each move that a knight can possibly make
@@ -310,7 +312,7 @@
     'This is for the rook, bishop and queen and sets the lists that were find out in checkmove from chesspiece and puts them into an array to use for checking
     Public Function MoveSelector(buttoncheck, rooks)
         Dim result(resultID) As Button
-        If rooks.piece Is ChessBoard.WRook1 Or rooks.piece Is ChessBoard.WRook2 Or rooks.piece Is ChessBoard.BRook1 Or rooks.piece Is ChessBoard.BRook2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen And buttoncheck < 4 Then
+        If rooks.piece Is ChessBoard.WRook1 Or rooks.piece Is ChessBoard.WRook2 Or rooks.piece Is ChessBoard.BRook1 Or rooks.piece Is ChessBoard.BRook2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen And buttoncheck Or ChessBoard.PawnRook = True Or ChessBoard.PawnQueen = True < 4 Then
             If buttoncheck = 0 Then
                 UpMoveButton = rooks.UpMoveButtonsCheck.ToArray()
                 resultID = UpMoveButton.Length
@@ -333,7 +335,7 @@
                 rooks.DownMoveButtonsCheck.Clear()
             End If
         End If
-        If rooks.piece Is ChessBoard.WBishop1 Or rooks.piece Is ChessBoard.WBishop2 Or rooks.piece Is ChessBoard.BBishop1 Or rooks.piece Is ChessBoard.BBishop2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen And buttoncheck >= 4 Then
+        If rooks.piece Is ChessBoard.WBishop1 Or rooks.piece Is ChessBoard.WBishop2 Or rooks.piece Is ChessBoard.BBishop1 Or rooks.piece Is ChessBoard.BBishop2 Or rooks.piece Is ChessBoard.WQueen Or rooks.piece Is ChessBoard.BQueen And buttoncheck >= 4 Or ChessBoard.PawnBishop = True Or ChessBoard.PawnQueen = True Then
             If buttoncheck = 4 Then
                 UpRightMoveButton = rooks.UpRightMoveButtonsCheck.ToArray()
                 resultID = UpRightMoveButton.Length

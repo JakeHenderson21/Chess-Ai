@@ -195,6 +195,13 @@
         Dim xcoordinate, ycoordinate, piecemove, l, tempscoremove, temppostionscore As Integer
         temppostionscore = count
         For t = startofloop To endofloop
+            If ChessBoard.CheckWBishop.Contains(piece) Or ChessBoard.CheckBBishop.Contains(piece) Then
+                ChessBoard.PawnBishop = True
+            ElseIf ChessBoard.CheckWRook.Contains(piece) Or ChessBoard.CheckBRook.Contains(piece) Then
+                ChessBoard.PawnRook = True
+            ElseIf ChessBoard.CheckWQueen.Contains(piece) Or ChessBoard.CheckBQueen.Contains(piece) Then
+                ChessBoard.PawnQueen = True
+            End If
             change = False
             piecemove = 0
             l = 0
