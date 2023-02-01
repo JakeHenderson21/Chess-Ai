@@ -298,12 +298,15 @@
     End Function
     'This checks the king against each move that the other king can possibly make
     Public Function CheckKingsAgainstKing()
-        Dim chesscolour As ChessPiece.Chesscolour
-        Dim result As Boolean = False
-        Dim Kings As New King(KingSelectedPieces.Left, KingSelectedPieces.Top, chesscolour, KingSelectedPieces)
-        Kings.SetColour()
-        Kings.CheckMoves()
-        chess_piece = KingSelectedPieces
+        ChessBoard.Button1.Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top)
+        ChessBoard.Button2.Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top + 77)
+        ChessBoard.Button3.Location = New Point(KingSelectedPieces.Left, KingSelectedPieces.Top + 77)
+        ChessBoard.Button4.Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top + 77)
+        ChessBoard.Button5.Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top)
+        ChessBoard.Button6.Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top - 77)
+        ChessBoard.Button7.Location = New Point(KingSelectedPieces.Left, KingSelectedPieces.Top - 77)
+        ChessBoard.Button8.Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top - 77)
+        Dim result As Boolean = False       
         If (ChessBoard.buttonsToUse.Left = ChessBoard.Button1.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button1.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button2.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button2.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button3.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button3.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button4.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button4.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button5.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button5.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button6.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button6.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button7.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button7.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button8.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button8.Top) Then
             result = True
         End If

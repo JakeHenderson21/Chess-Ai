@@ -752,9 +752,11 @@ Public Class ChessBoard
             If FirstCheck(FirstCheckNumber) = False Then
                 FirstCheck(FirstCheckNumber) = True
             End If
-            If (chess_piece.Top = 0 And colourOfPieces = "white") Or chess_piece.Top = 539 And colourOfPieces = "black" Then
+            If (chess_piece.Top = 0 And colourOfPieces = "white") And PawnPromotion(FirstCheckNumber) = "WPawn" Then
                 PromotionChoice.Show()
-
+            End If
+            If chess_piece.Top = 539 And colourOfPieces = "black" And PawnPromotion(FirstCheckNumber) = "BPawn" Then
+                PromotionChoice.Show()
             End If
         End If
         pieceTakenCheck()

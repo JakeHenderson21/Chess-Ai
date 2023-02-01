@@ -22,6 +22,7 @@ Partial Class PromotionChoice
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(PromotionChoice))
         Me.Button1 = New System.Windows.Forms.Button()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -31,29 +32,30 @@ Partial Class PromotionChoice
         '
         'Button1
         '
+        Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
+        Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button1.Location = New System.Drawing.Point(23, 80)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(112, 114)
         Me.Button1.TabIndex = 0
-        Me.Button1.Text = "Button1"
         Me.Button1.UseVisualStyleBackColor = True
         '
         'Button2
         '
+        Me.Button2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button2.Location = New System.Drawing.Point(167, 80)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(112, 114)
         Me.Button2.TabIndex = 1
-        Me.Button2.Text = "Button2"
         Me.Button2.UseVisualStyleBackColor = True
         '
         'Button3
         '
+        Me.Button3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button3.Location = New System.Drawing.Point(315, 80)
         Me.Button3.Name = "Button3"
         Me.Button3.Size = New System.Drawing.Size(112, 114)
         Me.Button3.TabIndex = 2
-        Me.Button3.Text = "Button3"
         Me.Button3.UseVisualStyleBackColor = True
         '
         'Label1
@@ -67,18 +69,18 @@ Partial Class PromotionChoice
         '
         'Button4
         '
+        Me.Button4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
         Me.Button4.Location = New System.Drawing.Point(461, 80)
         Me.Button4.Name = "Button4"
         Me.Button4.Size = New System.Drawing.Size(112, 114)
         Me.Button4.TabIndex = 4
-        Me.Button4.Text = "Button4"
         Me.Button4.UseVisualStyleBackColor = True
         '
         'PromotionChoice
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(571, 227)
+        Me.ClientSize = New System.Drawing.Size(596, 227)
         Me.Controls.Add(Me.Button4)
         Me.Controls.Add(Me.Label1)
         Me.Controls.Add(Me.Button3)

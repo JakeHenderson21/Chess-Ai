@@ -2,9 +2,15 @@
 
     Private Sub PromotionChoice_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If ChessBoard.colourOfPieces = "white" Then
-
+            Button1.BackgroundImage = System.Drawing.Image.FromFile("WhiteRook.png")
+            Button2.BackgroundImage = System.Drawing.Image.FromFile("WhiteBishop.png")
+            Button3.BackgroundImage = System.Drawing.Image.FromFile("WhiteKnight.png")
+            Button4.BackgroundImage = System.Drawing.Image.FromFile("WhiteQueen.png")    
         Else
-
+            Button1.BackgroundImage = System.Drawing.Image.FromFile("BlackRook.png")
+            Button2.BackgroundImage = System.Drawing.Image.FromFile("BlackBishop.png")
+            Button3.BackgroundImage = System.Drawing.Image.FromFile("BlackKnight.png")
+            Button4.BackgroundImage = System.Drawing.Image.FromFile("BlackQueen.png")
         End If
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click

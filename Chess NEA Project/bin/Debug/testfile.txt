@@ -529,3 +529,6 @@ BRook1 Button15
 BPawn7 Button1
 BKnight1 Button5
 BKnight1 Button5
+BPawn8 Button1
+BPawn5 Button1
+BPawn6 Button1
