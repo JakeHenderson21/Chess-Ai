@@ -4,7 +4,7 @@ Public Class ChessBoard
     Public firstAITurn, endGameState, WKinginCheck, BKinginCheck, continueexecuting, PawnRook, PawnBishop, PawnKnight, PawnQueen As Boolean
     Public colourOfPieces, Piece_name, PawnPromotion(15), UsersChoice As String
     Public xcoords, ycoords As Integer
-    Public ButtonX_Causing_Check(), ButtonY_Causing_Check() As Integer
+    Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
     Public CheckWPawn, CheckBPawn, CheckWRook, CheckBRook, CheckWBishop, CheckBBishop, CheckWKnight, CheckBKnight, CheckWQueen, CheckBQueen As New List(Of Button)
@@ -379,6 +379,7 @@ Public Class ChessBoard
     Private Sub BQueen_Click(sender As Object, e As EventArgs) Handles BQueen.Click
         CheckMode = False
         Dim queen As New Queen(BQueen.Left, BQueen.Top, ChessPiece.Chesscolour.black, BQueen)
+        ButtonX_Causing_Check = ButtonX_Causing_Check
         clearbuttons()
         queen.SetColour()
         queen.SetLoopBoundaries()
@@ -1157,5 +1158,11 @@ Public Class ChessBoard
             Pawns.SetColour()
             Pawns.CheckMoves()
         End If
+    End Sub
+    Public Sub Buttonxvalue(value)
+        ButtonX_Causing_Check = value
+    End Sub
+    Public Sub Buttonyvalue(value)
+        ButtonX_Causing_Check = value
     End Sub
 End Class

@@ -35,7 +35,7 @@ Public Class MainMenu
 
         If My.Computer.FileSystem.FileExists("NN1stHiddenWeights.csv") Then
         Else
-            System.Threading.Thread.Sleep(1500)
+            System.Threading.Thread.Sleep(1000)
             FileOpen(2, "NN1stHiddenWeights.csv", OpenMode.Output)
             ai.StartofHiddenWeightsLoop = 0
             ai.EndofHiddenWeightsLoop = 0
@@ -56,7 +56,7 @@ Public Class MainMenu
 
         If My.Computer.FileSystem.FileExists("NN2ndHiddenWeights.csv") Then
         Else
-            System.Threading.Thread.Sleep(1500)
+            System.Threading.Thread.Sleep(1000)
             FileOpen(3, "NN2ndHiddenWeights.csv", OpenMode.Output)
             ai.StartofHiddenWeightsLoop = 1
             ai.EndofHiddenWeightsLoop = 1
@@ -77,7 +77,7 @@ Public Class MainMenu
 
         If My.Computer.FileSystem.FileExists("NN3rdHiddenWeights.csv") Then
         Else
-            System.Threading.Thread.Sleep(1500)
+            System.Threading.Thread.Sleep(1000)
             FileOpen(4, "NN3rdHiddenWeights.csv", OpenMode.Output)
             ai.StartofHiddenWeightsLoop = 2
             ai.EndofHiddenWeightsLoop = 2
@@ -98,7 +98,7 @@ Public Class MainMenu
 
         If My.Computer.FileSystem.FileExists("NNOutputWeights.csv") Then
         Else
-            System.Threading.Thread.Sleep(1500)
+            System.Threading.Thread.Sleep(1000)
             FileOpen(5, "NNOutputWeights.csv", OpenMode.Output)
             ai.Initilise_OutputWeights()
             For j = 0 To 203
@@ -117,7 +117,7 @@ Public Class MainMenu
 
         If My.Computer.FileSystem.FileExists("NNHiddenBias.csv") Then
         Else
-            System.Threading.Thread.Sleep(1500)
+            System.Threading.Thread.Sleep(1000)
             FileOpen(6, "NNHiddenBias.csv", OpenMode.Output)
             ai.Initilise_HiddenBias()
             For i = 0 To 3
@@ -136,7 +136,7 @@ Public Class MainMenu
 
         If My.Computer.FileSystem.FileExists("NNOutputBias.txt") Then
         Else
-            System.Threading.Thread.Sleep(1500)
+            System.Threading.Thread.Sleep(1000)
             FileOpen(7, "NNOutputBias.txt", OpenMode.Output)
             ai.Inititlise_OutputBias()
             For i = 0 To 203

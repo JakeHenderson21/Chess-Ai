@@ -7,13 +7,15 @@
     Public colour As Chesscolour
     Public UpMoveButtonsCheck, RightMoveButtonsCheck, DownMoveButtonsCheck, LeftMoveButtonsCheck, UpRightMoveButtonsCheck, DownRightMoveButtonsCheck, DownLeftMoveButtonsCheck, UpLeftMoveButtonsCheck As New List(Of Button)
     Public change, sameColourChange, OppositeColourChange, movebuttonchecker As Boolean
-
+    Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
     Public checkbuttons(6), upMovebutton(6), rightMoveButton(6), downMoveButton(6), leftMoveButton(6), upRightMoveButton(6), downRightMoveButton(6), downLeftMoveButton(6), upLeftMoveButton(6), wpieces(15), bpieces(15), piece, buttonMoves(71), pieces1(15), pieces2(15) As Button
     Public Sub New(ByVal xCoord As Integer, ByVal yCoord As Integer, ByVal Chess_colour As Chesscolour, ByVal Chess_piece As Button)
         X = xCoord
         Y = yCoord
         colour = Chess_colour
         piece = Chess_piece
+        ButtonX_Causing_Check = ChessBoard.ButtonX_Causing_Check
+        ButtonY_Causing_Check = ChessBoard.ButtonY_Causing_Check
         upMovebutton(0) = ChessBoard.Button1
         upMovebutton(1) = ChessBoard.Button2
         upMovebutton(2) = ChessBoard.Button3
@@ -218,6 +220,9 @@
             checkbuttons(6).Location = New Point(X + (7 * tx), Y + (7 * ty))
             For m = 0 To 6
                 For Each p In pieces2
+                    If p Is ChessBoard.WKnight1 Then
+                        p = p
+                    End If
                     If p.Left = xcoordinate And p.Top = ycoordinate Then
                         If l = 1 Then
                             If piecemove < scoremove Then
@@ -550,26 +555,25 @@
     End Sub
     Protected Overridable Sub PieceMoveWhenChecked()
         Dim totalbuttonchecks As Integer
-        If ChessBoard.ButtonX_Causing_Check.Count > 8 Then
+        If ButtonX_Causing_Check.Count > 8 Then
             totalbuttonchecks = 8
         Else
-            totalbuttonchecks = ChessBoard.ButtonX_Causing_Check.Count
+            totalbuttonchecks = ButtonX_Causing_Check.Count - 1
         End If
         For i = 0 To totalbuttonchecks
             If scoremove = 0 And change = False Then
                 For j = 0 To 7 - 1
-                    If checkbuttons(j).Left = ChessBoard.ButtonX_Causing_Check(i) And checkbuttons(j).Top = ChessBoard.ButtonY_Causing_Check(i) Then
+                    If checkbuttons(j).Left = ButtonX_Causing_Check(i) And checkbuttons(j).Top = ButtonY_Causing_Check(i) Then
                         checkbuttons(j).Show()
                     End If
                 Next
             Else
                 For j = 0 To scoremove - 1
-                    If checkbuttons(j).Left = ChessBoard.ButtonX_Causing_Check(i) And checkbuttons(j).Top = ChessBoard.ButtonY_Causing_Check(i) Then
+                    If checkbuttons(j).Left = ButtonX_Causing_Check(i) And checkbuttons(j).Top = ButtonY_Causing_Check(i) Then
                         checkbuttons(j).Show()
                     End If
                 Next
-            End If
-            
+            End If        
         Next
     End Sub
 End Class

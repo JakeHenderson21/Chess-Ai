@@ -148,13 +148,13 @@
     End Sub
     Protected Sub BlockCheck()
         Dim totalbuttonchecks As Integer
-        If ChessBoard.ButtonX_Causing_Check.Count > 8 Then
+        If ButtonX_Causing_Check.Count > 8 Then
             totalbuttonchecks = 8
         Else
-            totalbuttonchecks = ChessBoard.ButtonX_Causing_Check.Count
+            totalbuttonchecks = ButtonX_Causing_Check.Count - 1
         End If
         For i = 1 To totalbuttonchecks - 1
-            If ChessBoard.ButtonX_Causing_Check(i) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(i) = PieceButtonToCheck.Top Then
+            If ButtonX_Causing_Check(i) = PieceButtonToCheck.Left And ButtonY_Causing_Check(i) = PieceButtonToCheck.Top Then
                 PieceButtonToCheck.Show()
             End If
         Next

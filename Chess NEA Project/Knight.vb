@@ -134,17 +134,17 @@
     End Sub
     Protected Overrides Sub PieceMoveWhenChecked()
         Dim totalbuttonchecks As Integer
-        If ChessBoard.ButtonX_Causing_Check.Count > 8 Then
+        If ButtonX_Causing_Check.Count > 8 Then
             totalbuttonchecks = 8
         Else
-            totalbuttonchecks = ChessBoard.ButtonX_Causing_Check.Count
+            totalbuttonchecks = ButtonX_Causing_Check.Count - 1
         End If
         For i = 0 To totalbuttonchecks
-            If ChessBoard.ButtonX_Causing_Check(i) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(i) = PieceButtonToCheck.Top Then
+            If ButtonX_Causing_Check(i) = PieceButtonToCheck.Left And ButtonY_Causing_Check(i) = PieceButtonToCheck.Top Then
                 PieceButtonToCheck.Show()
             End If
         Next
-        If ChessBoard.ButtonX_Causing_Check(0) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(0) = PieceButtonToCheck.Top Then
+        If ButtonX_Causing_Check(0) = PieceButtonToCheck.Left And ButtonY_Causing_Check(0) = PieceButtonToCheck.Top Then
             PieceButtonToCheck.Show()
         End If
     End Sub

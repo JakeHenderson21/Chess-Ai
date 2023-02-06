@@ -21,7 +21,7 @@ Public Class Chess_Ai
     Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
-    Const LearningRate As Double = 0.2
+    Const LearningRate As Double = 0.7
     Enum PieceValue
         Pawn = 5
         Rook = 15
@@ -114,35 +114,51 @@ Public Class Chess_Ai
         Return result
     End Function
     Public Sub CostFunctionCalculation()
-        Dim add1oradd0 As Integer
         For i = 0 To 203
             For j = 0 To 255
-                CFHiddenToOutputLayerWeightChanges(j, i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
-                CFOutputBiasChanges(i) = HiddenLayer(j, 3) * SigMoidOutputLayer(i) * (2 * (Outputlayer(i) - Desired_Output))
+                CFHiddenToOutputLayerWeightChanges(j, i) = Total_Error_Change_With_Respect_to_Output(i) * HiddenLayer(j, 3)
             Next
         Next
-        For i = 0 To 2
-            For k = 0 To 255
-                For j = 0 To 255
-                    If i = 2 Then
-                        add1oradd0 = 0
-                    Else
-                        add1oradd0 = 1
-                    End If
-                    CFHiddenLayerWeightChanges(j, k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
-                    CFHiddenBiasChanges(k, i) = HiddenLayer(j, i) * SigMoidHiddenLayer(j, i + add1oradd0) * (2 * (HiddenLayer(j, i + add1oradd0) - Desired_Output))
-                Next
+        Dim counter As Integer
+        For i = 0 To 255
+            For j = 0 To 203
+                CFHiddenLayerWeightChanges(i, counter, 2) = Total_Error_Change_With_Respect_to_Output(j) * HiddenLayer(i, 2) * HiddenToOutputLayerWeights(i, j)
+                counter += 1
             Next
+            counter = 0
         Next
         For i = 0 To 255
-            For j = 0 To 383
-                CFInputtoHiddenlayerWeightChanges(j, i) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
-                CFHiddenBiasChanges(i, 0) = InputLayer(j) * SigMoidHiddenLayer(i, 0) * (2 * ((HiddenLayer(i, 0) - Desired_Output)))
+            For j = 0 To 203
+                CFHiddenLayerWeightChanges(i, counter, 1) = Total_Error_Change_With_Respect_to_Output(j) * HiddenLayer(i, 1) * HiddenLayerWeights(i, counter, 2)
+                counter += 1
+            Next
+            counter = 0
+        Next
+        For i = 0 To 255
+            For j = 0 To 203
+                CFHiddenLayerWeightChanges(i, counter, 0) = Total_Error_Change_With_Respect_to_Output(j) * HiddenLayer(i, 0) * HiddenLayerWeights(i, counter, 1)
+                counter += 1
+            Next
+            counter = 0
+        Next
+        For k = 0 To 383
+            For i = 0 To 255
+                For j = 0 To 203
+                    CFInputtoHiddenlayerWeightChanges(i, counter) = Total_Error_Change_With_Respect_to_Output(j) * InputLayer(k) * HiddenLayerWeights(i, counter, 0)
+                    counter += 1
+                Next
+                counter = 0
             Next
         Next
-
-      
-       
+        For k = 0 To 3
+            For i = 0 To 255
+                For j = 0 To 203
+                    CFHiddenBiasChanges(i, 3 - k) = Total_Error_Change_With_Respect_to_Output(j) * HiddenLayer(i, 3 - k)
+                    counter += 1
+                Next
+                counter = 0
+            Next
+        Next
     End Sub
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
@@ -151,7 +167,6 @@ Public Class Chess_Ai
         Else
             Desired_Output = 0
         End If
-
         result = -(Desired_Output - Outputlayer(i))
         Return result
     End Function
@@ -387,7 +402,7 @@ Public Class Chess_Ai
                 Next
                 Outputlayer(i) -= OutputBias(i)
                 Outputlayer(i) = Outputlayer(i)
-                SigMoidOutputLayer(i) = SigMoidDerativeCalculation(Outputlayer(i))
+                SigMoidOutputLayer(i) = Outputlayer(i)
                 Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
             Next
             BestValue = BestValue
@@ -455,34 +470,32 @@ Public Class Chess_Ai
             CostFunctionCalculation()
             AdjustingWeightsAndBias()
         End While
-
     End Sub
-
     Public Sub AdjustingWeightsAndBias()
         For i = 0 To 255
             For j = 0 To 383
-                InputToHiddenLayerWeights(j, i) += LearningRate * CFInputtoHiddenlayerWeightChanges(j, i)
+                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i)
             Next
         Next
         For i = 0 To 2
             For k = 0 To 255
                 For j = 0 To 255
-                    HiddenLayerWeights(j, k, i) += LearningRate * CFHiddenLayerWeightChanges(j, k, i)
+                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i)
                 Next
             Next
         Next
         For i = 0 To 203
             For j = 0 To 255
-                HiddenToOutputLayerWeights(j, i) += LearningRate * CFHiddenToOutputLayerWeightChanges(j, i)
+                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i)
             Next
         Next
         For i = 0 To 3
             For j = 0 To 255
-                HiddenBias(j, i) += LearningRate * CFHiddenBiasChanges(j, i)
+                HiddenBias(j, i) -= LearningRate * CFHiddenBiasChanges(j, i)
             Next
         Next
         For i = 0 To 203
-            OutputBias(i) += LearningRate * CFOutputBiasChanges(i)
+            OutputBias(i) -= LearningRate * CFOutputBiasChanges(i)
         Next
     End Sub
     Private Sub AiPieceMover(AiPiece)

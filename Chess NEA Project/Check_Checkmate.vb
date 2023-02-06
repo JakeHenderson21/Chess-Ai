@@ -101,8 +101,8 @@
                 TempButtonX_Causing_Check.Add(CheckPawnsForCollisionWithKing(counter))
                 counter = 1
                 TempButtonY_Causing_Check.Add(CheckPawnsForCollisionWithKing(counter))
-                ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
-                ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
+                ChessBoard.Buttonxvalue(TempButtonX_Causing_Check)
+                ChessBoard.Buttonyvalue(TempButtonY_Causing_Check)               
             End If
         Next
         Return result
@@ -150,8 +150,8 @@
                                 TempButtonX_Causing_Check.Add(member.Left)
                                 TempButtonY_Causing_Check.Add(member.Top)
                             Next
-                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
-                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
+                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check
+                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check
                         End If
                     Next
                 End If
@@ -188,8 +188,8 @@
                                 TempButtonX_Causing_Check.Add(member.Left)
                                 TempButtonY_Causing_Check.Add(member.Top)
                             Next
-                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
-                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
+                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check
+                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check
                         End If
                     Next
                 End If
@@ -221,9 +221,9 @@
                             For Each member In check_Buttons
                                 TempButtonX_Causing_Check.Add(member.Left)
                                 TempButtonY_Causing_Check.Add(member.Top)
-                            Next
-                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
-                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
+                            Next                      
+                            ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check
+                            ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check
                         End If
                     Next
                 End If
@@ -246,11 +246,13 @@
                 ChessBoard.checkingForCheck = True
                 ChessBoard.Piece_Causing_Check = piece
                 Dim counter As Integer
+                TempButtonX_Causing_Check.Add(piece.Left)
+                TempButtonY_Causing_Check.Add(piece.Top)
                 TempButtonX_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
                 counter = 1
                 TempButtonY_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
-                ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check.ToArray
-                ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check.ToArray
+                ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check
+                ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check          
             End If
         Next
         Return result
