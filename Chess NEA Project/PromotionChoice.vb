@@ -1,5 +1,4 @@
 ﻿Public Class PromotionChoice
-
     Private Sub PromotionChoice_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         If ChessBoard.colourOfPieces = "white" Then
             Button1.BackgroundImage = System.Drawing.Image.FromFile("WhiteRook.png")

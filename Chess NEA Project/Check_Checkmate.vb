@@ -6,11 +6,9 @@
     Public PawnSelectedPieces, KnightSelectedPieces, RookSelectedPieces, QueensSelectedPieces, BishopSelectedPieces As New List(Of Button)
     Public checking As Boolean
     Public TempButtonX_Causing_Check, TempButtonY_Causing_Check As New List(Of Integer)
-
     'Initisles arrays for the buttons
     Public Sub New()
         'Rework the arrays into lists, will need to to actually save the lists in the main chessboard class so they don't get deleted
-    
     End Sub
     'Finds out which turn has ended and checks the respective king by going through each piece to see if the it is in check or checkmate or where the king can legally move
     Public Function Check_King()
@@ -130,12 +128,10 @@
         PawnRook = True
         For Each piece In RookSelectedPieces
             Dim Rooks As New Rook(piece.Left, piece.Top, chesscolour, piece)
-
             Rooks.SetColour()
             Rooks.SetLoopBoundaries()
             Rooks.CheckMoves()
             chess_piece = piece
-
             For buttoncheck = 0 To 3
                 check_Buttons = MoveSelector(buttoncheck, Rooks)
                 If check_Buttons.Length - 1 <> 0 Then
@@ -157,15 +153,12 @@
                 End If
             Next
         Next
-
         Return result
     End Function
     'This checks the king against each move that a bishop can possibly make
     Public Function CheckBishopsAgainstKing()
-
         Dim result As Boolean = False
         For Each piece In BishopSelectedPieces
-
             Dim Bishops As New Bishop(piece.Left, piece.Top, chesscolour, piece)
             PawnBishop = True
             Bishops.SetColour()

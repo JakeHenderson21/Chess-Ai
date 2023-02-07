@@ -32,7 +32,6 @@ Public Class MainMenu
             Next
         End If
         FileClose(1)
-
         If My.Computer.FileSystem.FileExists("NN1stHiddenWeights.csv") Then
         Else
             System.Threading.Thread.Sleep(1000)
@@ -53,7 +52,6 @@ Public Class MainMenu
             Next
             FileClose(2)
         End If
-
         If My.Computer.FileSystem.FileExists("NN2ndHiddenWeights.csv") Then
         Else
             System.Threading.Thread.Sleep(1000)
@@ -74,7 +72,6 @@ Public Class MainMenu
             Next
             FileClose(3)
         End If
-
         If My.Computer.FileSystem.FileExists("NN3rdHiddenWeights.csv") Then
         Else
             System.Threading.Thread.Sleep(1000)
@@ -95,7 +92,6 @@ Public Class MainMenu
             Next
             FileClose(4)
         End If
-
         If My.Computer.FileSystem.FileExists("NNOutputWeights.csv") Then
         Else
             System.Threading.Thread.Sleep(1000)
@@ -114,7 +110,6 @@ Public Class MainMenu
             Next
             FileClose(5)
         End If
-
         If My.Computer.FileSystem.FileExists("NNHiddenBias.csv") Then
         Else
             System.Threading.Thread.Sleep(1000)
@@ -133,7 +128,6 @@ Public Class MainMenu
             Next
             FileClose(6)
         End If
-
         If My.Computer.FileSystem.FileExists("NNOutputBias.txt") Then
         Else
             System.Threading.Thread.Sleep(1000)

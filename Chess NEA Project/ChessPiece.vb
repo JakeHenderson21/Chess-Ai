@@ -340,7 +340,6 @@
                             Else
                                 downmovecount = scoremove
                             End If
-
                         End If
                         DownMoveButtonsCheck = StoreButtons(scoremove)
                     ElseIf count = 3 Then
@@ -433,7 +432,6 @@
                 Else
                     movebuttons(scoremove)
                 End If
-
             End If
         Next
         count = 0

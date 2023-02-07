@@ -77,11 +77,9 @@
                     End If
                 End If
             Next
-
         Else
             ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top + 77)
             ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top + 77)
-
                 For Each pieces In wpieces
                     If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
                         If ChessBoard.CheckMode = False Then
@@ -104,7 +102,6 @@
                     End If
                 Next
             End If
-
         If OldScoremove = 0 Then
         ElseIf OldScoremove = 1 Then
             If ChessBoard.CheckMode = False Then
@@ -114,7 +111,6 @@
                 Else
                     ChessBoard.Button1.Show()
                 End If
-
             End If
         ElseIf OldScoremove = 2 Then
             If ChessBoard.CheckMode = False Then

@@ -67,7 +67,6 @@
                     PieceButtonToCheck = ChessBoard.Button8
                     PieceMoveWhenChecked()
                 End If
-
             Else
                 If knightmoves(0) = True Then
                     ChessBoard.Button1.Show()
