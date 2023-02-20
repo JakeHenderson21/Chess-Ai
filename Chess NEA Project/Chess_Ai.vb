@@ -1,4 +1,5 @@
-﻿Imports System.IO
+﻿Imports System.Threading
+Imports System.IO
 Public Class Chess_Ai
     Private LegalMoveNames, LegalButtonNames As New List(Of Button)
     Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
@@ -21,6 +22,7 @@ Public Class Chess_Ai
     Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
+    Private T1Finished, T2Finished As Boolean
     Const LearningRate As Double = 1
     Enum PieceValue
         Pawn = 5
@@ -113,7 +115,7 @@ Public Class Chess_Ai
         End If
         Return result
     End Function
-    Public Sub CostFunctionCalculation()     
+    Public Sub CostFunctionCalculation()
         Dim counter As Integer
         Dim TECWRO(203) As Double      'Total Error Change With Respect to Output
         Dim OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
@@ -121,117 +123,126 @@ Public Class Chess_Ai
         Dim OHLWRTSHL12(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^1 to H^2)
         Dim OHLWRTSHL01(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^0 to H^1)
         Dim OHLWRTSHLI0(255) As Double 'Output of Input Layer With Respect to Sum of Hidden Layer (Input to H^0)
-        For l = 0 To 203
-            'Hidden to Output Weight Changes
-            For i = 0 To 203
-                If PieceOptions(i) Is BestScoreName Then
-                    Desired_Output = 1
-                Else
-                    Desired_Output = 0
-                End If
-                OutputError(i) = ((1 / 2) * (Desired_Output - Outputlayer(i))) ^ 2
-                TotalError += OutputError(i)
-            Next
-            For i = 0 To 203
-                TECWRO(i) = Total_Error_Change_With_Respect_to_Output(i)
-                OCWRTN(i) = Output_Change_With_Respect_to_Total_Net(Outputlayer(i))
-            Next
+        Dim t1 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfOfCalculations))
+        Dim t2 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfOfCalculations))
+        Dim sw As New Stopwatch
+        T1Finished = False
+        T2Finished = False
+        sw.Start()
+        For i = 0 To 203
+            If PieceOptions(i) Is BestScoreName Then
+                Desired_Output = 1
+            Else
+                Desired_Output = 0
+            End If
+            OutputError(i) = ((1 / 2) * (Desired_Output - Outputlayer(i))) ^ 2
+            TotalError += OutputError(i)
+        Next
+        t1.Start()
+        t2.Start()
+        While T1Finished <> True And T2Finished <> True
+
+        End While
+        t1.Abort()
+        t2.Abort()
+        sw.Stop()
+        MsgBox(sw.ElapsedMilliseconds)
+    End Sub
+    Private Sub FirstHalfOfCalculations()
+        Dim counter As Integer
+        Dim TECWRO(203) As Double      'Total Error Change With Respect to Output
+        Dim OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
+        Dim OHLWRTSHL23(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^2 to H^3)
+        Dim OHLWRTSHL12(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^1 to H^2)
+        Dim OHLWRTSHL01(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^0 to H^1)
+        Dim OHLWRTSHLI0(255) As Double 'Output of Input Layer With Respect to Sum of Hidden Layer (Input to H^0)
+        For i = 0 To 203
+            TECWRO(i) = Total_Error_Change_With_Respect_to_Output(i)
+            OCWRTN(i) = Output_Change_With_Respect_to_Total_Net(Outputlayer(i))
+        Next
+        For i = 0 To 255
+            OHLWRTSHL23(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 3))
+            OHLWRTSHL12(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 2))
+            OHLWRTSHL01(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 1))
+            OHLWRTSHLI0(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 0))
+        Next
+        For l = 0 To 102
+            'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
             For i = 0 To 255
                 For k = 0 To 203
                     CFHiddenToOutputLayerWeightChanges(i, k) = TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
-                Next
-            Next
-            'H^3 to H^2 Weight Changes
-            For i = 0 To 255
-                OHLWRTSHL23(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 2))
-            Next
-
-            For i = 0 To 255
-                For k = 0 To 203
                     CFHiddenLayerWeightChanges(i, counter, 2) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayer(i, 2)
-                    counter += 1
-                Next
-                counter = 0
-            Next
-
-            'H^2 to H^1 Weight Changes
-            For i = 0 To 255
-                OHLWRTSHL12(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 1))
-            Next
-
-            For i = 0 To 255
-                For k = 0 To 203
                     CFHiddenLayerWeightChanges(i, counter, 1) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i) * HiddenLayer(i, 1)
-                    counter += 1
-                Next
-                counter = 0
-            Next
-
-            'H^1 to H^0 Weight Changes
-            For i = 0 To 255
-                OHLWRTSHL01(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 1))
-            Next
-
-            For i = 0 To 255
-                For k = 0 To 203
                     CFHiddenLayerWeightChanges(i, counter, 0) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i) * HiddenLayer(i, 0)
+                    CFOutputBiasChanges(k) = TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
+                    CFHiddenBiasChanges(i, 3) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * HiddenLayer(i, 2)
+                    CFHiddenBiasChanges(i, 2) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * HiddenLayer(i, 1)
+                    CFHiddenBiasChanges(i, 1) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * OHLWRTSHL01(i) * HiddenLayer(i, 0)
                     counter += 1
                 Next
                 counter = 0
             Next
-
-            'H^0 to input Weight Changes
-            For i = 0 To 255
-                OHLWRTSHLI0(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 0))
-            Next
-
-            For i = 0 To 255
-                For j = 0 To 383
+            'H^0 to input Weight and last hidden bias Changes          
+            For j = 0 To 383
+                For i = 0 To 255
                     For k = 0 To 203
                         CFInputtoHiddenlayerWeightChanges(j, i) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
+                        CFHiddenBiasChanges(i, 0) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * OHLWRTSHL01(i) * OHLWRTSHLI0(i) * InputLayer(j)
                         counter += 1
                     Next
                     counter = 0
                 Next
             Next
-
-            'For the Bias Changes
+        Next
+        T1Finished = True
+    End Sub
+    Private Sub SecondHalfOfCalculations()
+        Dim counter As Integer
+        Dim TECWRO(203) As Double      'Total Error Change With Respect to Output
+        Dim OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
+        Dim OHLWRTSHL23(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^2 to H^3)
+        Dim OHLWRTSHL12(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^1 to H^2)
+        Dim OHLWRTSHL01(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^0 to H^1)
+        Dim OHLWRTSHLI0(255) As Double 'Output of Input Layer With Respect to Sum of Hidden Layer (Input to H^0)
+        For i = 0 To 203
+            TECWRO(i) = Total_Error_Change_With_Respect_to_Output(i)
+            OCWRTN(i) = Output_Change_With_Respect_to_Total_Net(Outputlayer(i))
+        Next
+        For i = 0 To 255
+            OHLWRTSHL23(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 3))
+            OHLWRTSHL12(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 2))
+            OHLWRTSHL01(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 1))
+            OHLWRTSHLI0(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 0))
+        Next
+        For l = 103 To 203
+            'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
             For i = 0 To 255
                 For k = 0 To 203
+                    CFHiddenToOutputLayerWeightChanges(i, k) = TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
+                    CFHiddenLayerWeightChanges(i, counter, 2) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayer(i, 2)
+                    CFHiddenLayerWeightChanges(i, counter, 1) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i) * HiddenLayer(i, 1)
+                    CFHiddenLayerWeightChanges(i, counter, 0) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i) * HiddenLayer(i, 0)
                     CFOutputBiasChanges(k) = TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
-                Next
-            Next
-
-            For i = 0 To 255
-                For k = 0 To 203
                     CFHiddenBiasChanges(i, 3) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * HiddenLayer(i, 2)
-                Next
-            Next
-
-
-            For i = 0 To 255
-                For k = 0 To 203
                     CFHiddenBiasChanges(i, 2) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * HiddenLayer(i, 1)
-                Next
-            Next
-
-
-            For i = 0 To 255
-                For k = 0 To 203
                     CFHiddenBiasChanges(i, 1) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * OHLWRTSHL01(i) * HiddenLayer(i, 0)
+                    counter += 1
                 Next
+                counter = 0
             Next
-
-
-            For i = 0 To 255
-                For j = 0 To 383
+            'H^0 to input Weight and last hidden bias Changes          
+            For j = 0 To 383
+                For i = 0 To 255
                     For k = 0 To 203
+                        CFInputtoHiddenlayerWeightChanges(j, i) += TECWRO(k) * OCWRTN(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
                         CFHiddenBiasChanges(i, 0) += TECWRO(k) * OCWRTN(k) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * OHLWRTSHL01(i) * OHLWRTSHLI0(i) * InputLayer(j)
+                        counter += 1
                     Next
+                    counter = 0
                 Next
             Next
         Next
-
+        T2Finished = True
     End Sub
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
