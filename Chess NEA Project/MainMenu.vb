@@ -13,6 +13,8 @@ Public Class MainMenu
     End Sub
     'Opens Player vs Ai
     Private Sub Player_Vs_Ai_Click(sender As Object, e As EventArgs) Handles Player_Vs_Ai.Click
+        ChessBoard.Show()
+        ChessBoard.Hide()
         Dim ai As New Chess_Ai
         Dim inputstring As String = ""
         If My.Computer.FileSystem.FileExists("NNInputWeights.csv") Then
