@@ -7,6 +7,11 @@ Public Class ChessBoard
     Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
+
+    Private Sub chess_Board_Click(sender As Object, e As EventArgs) Handles chess_Board.Click
+
+    End Sub
+
     Public CheckWPawn, CheckBPawn, CheckWRook, CheckBRook, CheckWBishop, CheckBBishop, CheckWKnight, CheckBKnight, CheckWQueen, CheckBQueen As New List(Of Button)
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece, Piece_Causing_Check As Button
 
@@ -125,14 +130,15 @@ Public Class ChessBoard
 
         ' Add any initialization after the InitializeComponent() call.
 
-        For Each b As Button In buttonmoves
-            b = New Button
-            AddHandler b.Click, AddressOf buttons_click
-            b.BackgroundImageLayout = ImageLayout.Zoom
-            b.FlatStyle = FlatStyle.Flat
-            b.Size = New Size(78, 78)
-            b.BackColor = Color.Transparent
-            Me.Controls.Add(b)
+        For b = 0 To 71
+            buttonmoves(b) = New Button
+            AddHandler buttonmoves(b).Click, AddressOf buttons_click
+            buttonmoves(b).BackgroundImage = System.Drawing.Image.FromFile("GreyCircle.png")
+            buttonmoves(b).BackgroundImageLayout = ImageLayout.Zoom
+            buttonmoves(b).FlatStyle = FlatStyle.Flat
+            buttonmoves(b).Size = New Size(78, 78)
+            buttonmoves(b).BackColor = Color.Transparent
+            Me.Controls.Add(buttonmoves(b))
         Next
 
     End Sub
@@ -357,7 +363,7 @@ Public Class ChessBoard
         End Select
     End Sub
     'This is the action for all of buttons the user can use to move a piece, it gets the coordinates then clears the buttons and then sets a new loction for the required piece
-    Public Sub buttons_click(sender As Object, e As EventArgs) Handles Button64.Click
+    Public Sub buttons_click(sender As Object, e As EventArgs)
         Dim buttons = DirectCast(sender, Button)
         xcoords = buttons.Left
         ycoords = buttons.Top
@@ -376,14 +382,14 @@ Public Class ChessBoard
             colourOfPieces = "black"
             KingPiece = BKing
         End If
-        Button65.Location = New Point(KingPiece.Left - 77, KingPiece.Top)
-        Button66.Location = New Point(KingPiece.Left - 77, KingPiece.Top + 77)
-        Button67.Location = New Point(KingPiece.Left, KingPiece.Top + 77)
-        Button68.Location = New Point(KingPiece.Left + 77, KingPiece.Top + 77)
-        Button69.Location = New Point(KingPiece.Left + 77, KingPiece.Top)
-        Button70.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
-        Button71.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
-        Button72.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
+        buttonmoves(64).Location = New Point(KingPiece.Left - 77, KingPiece.Top)
+        buttonmoves(65).Location = New Point(KingPiece.Left - 77, KingPiece.Top + 77)
+        buttonmoves(66).Location = New Point(KingPiece.Left, KingPiece.Top + 77)
+        buttonmoves(67).Location = New Point(KingPiece.Left + 77, KingPiece.Top + 77)
+        buttonmoves(68).Location = New Point(KingPiece.Left + 77, KingPiece.Top)
+        buttonmoves(69).Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
+        buttonmoves(70).Location = New Point(KingPiece.Left, KingPiece.Top - 77)
+        buttonmoves(71).Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
         For i = 0 To 7
             buttonsToUse = KingButtons(i)
             CheckingCheck(i) = checkTheKing.Check_King

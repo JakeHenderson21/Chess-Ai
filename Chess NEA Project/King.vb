@@ -79,7 +79,7 @@
             If kingmoves(7) = True And checkplaceholder(7) = False Then
                 ChessBoard.buttonmoves(71).Show()
             End If
-            For Each Button In buttonMoves
+            For Each Button In ChessBoard.buttonmoves
                 If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                     Button.Hide()
                 End If

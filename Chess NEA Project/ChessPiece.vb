@@ -8,8 +8,9 @@
     Public UpMoveButtonsCheck, RightMoveButtonsCheck, DownMoveButtonsCheck, LeftMoveButtonsCheck, UpRightMoveButtonsCheck, DownRightMoveButtonsCheck, DownLeftMoveButtonsCheck, UpLeftMoveButtonsCheck As New List(Of Button)
     Public change, sameColourChange, OppositeColourChange, movebuttonchecker As Boolean
     Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
-    Public checkbuttons(6), upMovebutton(6), rightMoveButton(6), downMoveButton(6), leftMoveButton(6), upRightMoveButton(6), downRightMoveButton(6), downLeftMoveButton(6), upLeftMoveButton(6), wpieces(15), bpieces(15), piece, buttonMoves(71), pieces1(15), pieces2(15) As Button
+    Public checkbuttons(6), upMovebutton(6), rightMoveButton(6), downMoveButton(6), leftMoveButton(6), upRightMoveButton(6), downRightMoveButton(6), downLeftMoveButton(6), upLeftMoveButton(6), wpieces(15), bpieces(15), piece, pieces1(15), pieces2(15) As Button
     Public Sub New(ByVal xCoord As Integer, ByVal yCoord As Integer, ByVal Chess_colour As Chesscolour, ByVal Chess_piece As Button)
+        Dim counter As Integer
         X = xCoord
         Y = yCoord
         colour = Chess_colour
@@ -17,29 +18,42 @@
         ButtonX_Causing_Check = ChessBoard.ButtonX_Causing_Check
         ButtonY_Causing_Check = ChessBoard.ButtonY_Causing_Check
         For X As ButtonMoveIndex = ButtonMoveIndex.upMovebuttonLow To ButtonMoveIndex.upMovebuttonHigh
-            upMovebutton(X) = buttonMoves(X)
+            upMovebutton(X) = ChessBoard.buttonmoves(X)
         Next
         For X As ButtonMoveIndex = ButtonMoveIndex.rightMovebuttonLow To ButtonMoveIndex.rightMovebuttonHigh
-            rightMoveButton(X) = buttonMoves(X)
+            rightMoveButton(counter) = ChessBoard.buttonmoves(X)
+            counter += 1
         Next
+        counter = 0
         For X As ButtonMoveIndex = ButtonMoveIndex.downMovebuttonLow To ButtonMoveIndex.downMovebuttonHigh
-            downMoveButton(X) = buttonMoves(X)
+            downMoveButton(counter) = ChessBoard.buttonmoves(X)
+            counter += 1
         Next
+        counter = 0
         For X As ButtonMoveIndex = ButtonMoveIndex.leftMovebuttonLow To ButtonMoveIndex.leftMovebuttonHigh
-            leftMoveButton(X) = buttonMoves(X)
+            leftMoveButton(counter) = ChessBoard.buttonmoves(X)
+            counter += 1
         Next
+        counter = 0
         For X As ButtonMoveIndex = ButtonMoveIndex.upRightMovebuttonLow To ButtonMoveIndex.upRightMovebuttonHigh
-            upRightMoveButton(X) = buttonMoves(X)
+            upRightMoveButton(counter) = ChessBoard.buttonmoves(X)
+            counter += 1
         Next
+        counter = 0
         For X As ButtonMoveIndex = ButtonMoveIndex.downRightMovebuttonLow To ButtonMoveIndex.downRightMovebuttonHigh
-            downRightMoveButton(X) = buttonMoves(X)
+            downRightMoveButton(counter) = ChessBoard.buttonmoves(X)
+            counter += 1
         Next
+        counter = 0
         For X As ButtonMoveIndex = ButtonMoveIndex.downLeftMovebuttonLow To ButtonMoveIndex.downLeftMovebuttonHigh
-            downLeftMoveButton(X) = buttonMoves(X)
+            downLeftMoveButton(counter) = ChessBoard.buttonmoves(X)
+            counter += 1
         Next
+        counter = 0
         For X As ButtonMoveIndex = ButtonMoveIndex.upLeftMovebuttonlow To ButtonMoveIndex.upLeftMovebuttonHigh
-            upLeftMoveButton(X) = buttonMoves(X)
-        Next   
+            upLeftMoveButton(counter) = ChessBoard.buttonmoves(X)
+            counter += 1
+        Next
         wpieces(0) = ChessBoard.WPawn1
         wpieces(1) = ChessBoard.WPawn2
         wpieces(2) = ChessBoard.WPawn3
@@ -72,7 +86,7 @@
         bpieces(13) = ChessBoard.BKnight2
         bpieces(14) = ChessBoard.BQueen
         bpieces(15) = ChessBoard.BKing
-        
+
     End Sub
     Public Function getColour()
         Return colour
@@ -441,7 +455,7 @@
             checkbuttons(5).Show()
             checkbuttons(6).Show()
         End If
-        For Each Button In buttonMoves
+        For Each Button In ChessBoard.buttonmoves
             If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                 Button.Hide()
             End If
