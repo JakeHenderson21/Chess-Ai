@@ -9,6 +9,7 @@ Public Class ChessBoard
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
     Public CheckWPawn, CheckBPawn, CheckWRook, CheckBRook, CheckWBishop, CheckBBishop, CheckWKnight, CheckBKnight, CheckWQueen, CheckBQueen As New List(Of Button)
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece, Piece_Causing_Check As Button
+
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.SetStyle(ControlStyles.UserPaint, True)
@@ -70,78 +71,7 @@ Public Class ChessBoard
         Blackpieces(13) = BPawn6
         Blackpieces(14) = BPawn7
         Blackpieces(15) = BPawn8
-        buttonmoves(0) = Button1
-        buttonmoves(1) = Button2
-        buttonmoves(2) = Button3
-        buttonmoves(3) = Button4
-        buttonmoves(4) = Button5
-        buttonmoves(5) = Button6
-        buttonmoves(6) = Button7
-        buttonmoves(7) = Button8
-        buttonmoves(8) = Button9
-        buttonmoves(9) = Button10
-        buttonmoves(10) = Button11
-        buttonmoves(11) = Button12
-        buttonmoves(12) = Button13
-        buttonmoves(13) = Button14
-        buttonmoves(14) = Button15
-        buttonmoves(15) = Button16
-        buttonmoves(16) = Button17
-        buttonmoves(17) = Button18
-        buttonmoves(18) = Button19
-        buttonmoves(19) = Button20
-        buttonmoves(20) = Button21
-        buttonmoves(21) = Button22
-        buttonmoves(22) = Button23
-        buttonmoves(23) = Button24
-        buttonmoves(24) = Button25
-        buttonmoves(25) = Button26
-        buttonmoves(26) = Button27
-        buttonmoves(27) = Button28
-        buttonmoves(28) = Button29
-        buttonmoves(29) = Button30
-        buttonmoves(30) = Button31
-        buttonmoves(31) = Button32
-        buttonmoves(32) = Button33
-        buttonmoves(33) = Button34
-        buttonmoves(34) = Button35
-        buttonmoves(35) = Button36
-        buttonmoves(36) = Button37
-        buttonmoves(37) = Button38
-        buttonmoves(38) = Button39
-        buttonmoves(39) = Button40
-        buttonmoves(40) = Button41
-        buttonmoves(41) = Button42
-        buttonmoves(42) = Button43
-        buttonmoves(43) = Button44
-        buttonmoves(44) = Button45
-        buttonmoves(45) = Button46
-        buttonmoves(46) = Button47
-        buttonmoves(47) = Button48
-        buttonmoves(48) = Button49
-        buttonmoves(49) = Button50
-        buttonmoves(50) = Button51
-        buttonmoves(51) = Button52
-        buttonmoves(52) = Button53
-        buttonmoves(53) = Button54
-        buttonmoves(54) = Button55
-        buttonmoves(55) = Button56
-        buttonmoves(56) = Button57
-        buttonmoves(57) = Button58
-        buttonmoves(58) = Button59
-        buttonmoves(59) = Button60
-        buttonmoves(60) = Button61
-        buttonmoves(61) = Button62
-        buttonmoves(62) = Button63
-        buttonmoves(63) = Button64
-        buttonmoves(64) = Button65
-        buttonmoves(65) = Button66
-        buttonmoves(66) = Button67
-        buttonmoves(67) = Button68
-        buttonmoves(68) = Button69
-        buttonmoves(69) = Button70
-        buttonmoves(70) = Button71
-        buttonmoves(71) = Button72
+       
         WhiteTime.Start()
         seconds = 0
         seconds1 = 0
@@ -186,6 +116,25 @@ Public Class ChessBoard
         CheckBKnight.Add(BKnight2)
         CheckWQueen.Add(WQueen)
         CheckBQueen.Add(BQueen)
+    End Sub
+
+    Public Sub New()
+
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+
+        For Each b As Button In buttonmoves
+            b = New Button
+            AddHandler b.Click, AddressOf buttons_click
+            b.BackgroundImageLayout = ImageLayout.Zoom
+            b.FlatStyle = FlatStyle.Flat
+            b.Size = New Size(78, 78)
+            b.BackColor = Color.Transparent
+            Me.Controls.Add(b)
+        Next
+
     End Sub
     'Removes all buttons from the board
     Public Sub clearbuttons()
@@ -408,7 +357,7 @@ Public Class ChessBoard
         End Select
     End Sub
     'This is the action for all of buttons the user can use to move a piece, it gets the coordinates then clears the buttons and then sets a new loction for the required piece
-    Public Sub buttons_click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click, Button3.Click, Button4.Click, Button5.Click, Button6.Click, Button7.Click, Button8.Click, Button9.Click, Button10.Click, Button11.Click, Button12.Click, Button13.Click, Button14.Click, Button15.Click, Button16.Click, Button17.Click, Button18.Click, Button19.Click, Button20.Click, Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click, Button27.Click, Button28.Click, Button29.Click, Button30.Click, Button31.Click, Button32.Click, Button33.Click, Button34.Click, Button35.Click, Button36.Click, Button37.Click, Button38.Click, Button39.Click, Button40.Click, Button41.Click, Button42.Click, Button43.Click, Button44.Click, Button45.Click, Button46.Click, Button47.Click, Button48.Click, Button49.Click, Button50.Click, Button51.Click, Button52.Click, Button53.Click, Button54.Click, Button55.Click, Button56.Click, Button57.Click, Button58.Click, Button59.Click, Button60.Click, Button61.Click, Button62.Click, Button63.Click, Button64.Click, Button65.Click, Button66.Click, Button67.Click, Button68.Click, Button69.Click, Button70.Click, Button71.Click, Button72.Click
+    Public Sub buttons_click(sender As Object, e As EventArgs) Handles Button64.Click
         Dim buttons = DirectCast(sender, Button)
         xcoords = buttons.Left
         ycoords = buttons.Top

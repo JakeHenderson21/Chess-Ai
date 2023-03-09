@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bishop.vb" />
+    <Compile Include="Button Index Enums.vb" />
     <Compile Include="Check_Checkmate.vb">
       <SubType>Form</SubType>
     </Compile>
