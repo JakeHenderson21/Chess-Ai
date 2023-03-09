@@ -6,7 +6,7 @@ Public Class Chess_Ai
     Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade As Integer
     Private InputLayer(383), SigMoidInputLayer(383) As Integer
     Private HiddenLayer(255, 3), SigMoidHiddenLayer(255, 3) As Double
-    Private Outputlayer(203), SigMoidOutputLayer(203) As Double
+    Private Outputlayer(203), SigMoidOutputLayer(203), totalOutputLayer As Double
     Public InputToHiddenLayerWeights(383, 255) As Double
     Public HiddenLayerWeights(255, 255, 2) As Double
     Public HiddenToOutputLayerWeights(255, 203) As Double
@@ -25,6 +25,7 @@ Public Class Chess_Ai
     Private TotalError, OutputError(203) As Double
     Private T1Finished, T2Finished, T3Finished, T4Finished, T5Finished, T6Finished, T7Finished, T8Finished As Boolean
     Const LearningRate As Double = 1
+    Private threadingInProgress As Boolean
     Private TECWRO(203) As Double      'Total Error Change With Respect to Output
     Private OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
     Private OHLWRTSHL23(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^2 to H^3)
@@ -129,10 +130,12 @@ Public Class Chess_Ai
         Dim t7 As Thread = New Thread(New ThreadStart(AddressOf ThirdPartOfCalculations))
         Dim t8 As Thread = New Thread(New ThreadStart(AddressOf FourthPartOfCalculations))
         Dim sw As New Stopwatch
-        T1Finished = False
-        T2Finished = False
-        T7Finished = False
-        T8Finished = False
+        If threadingInProgress = False Then
+            T1Finished = False
+            T2Finished = False
+            T7Finished = False
+            T8Finished = False
+        End If
         sw.Start()
         For i = 0 To 203
             If PieceOptions(i) Is BestScoreName Then
@@ -164,17 +167,26 @@ Public Class Chess_Ai
             Next
             counter = 0
         Next
-        t1.Start()
-        t2.Start()
-        t7.Start()
-        t8.Start()
-        While T1Finished <> True And T2Finished <> True And T7Finished <> True And T8Finished <> True
+        If threadingInProgress = False Then
+            t1.Start()
+            t2.Start()
+            t7.Start()
+            t8.Start()
+        Else
+            threadingInProgress = True
+        End If
+        T1Finished = False
+        T2Finished = False
+        T7Finished = False
+        T8Finished = False
+        While T1Finished = False Or T2Finished = False Or T7Finished = False Or T8Finished = False
         End While
         t1.Abort()
         t2.Abort()
         t7.Abort()
         t8.Abort()
         sw.Stop()
+        threadingInProgress = False
         'MsgBox(sw.ElapsedMilliseconds)
     End Sub
     Private Sub FirstHalfOfCalculations()
@@ -182,7 +194,7 @@ Public Class Chess_Ai
         sw.Start()
         Dim counter As Integer
         For l = 0 To 50
-            If l = 38 Then
+            If l = 50 Then
                 l = l
             End If
             Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
@@ -209,10 +221,9 @@ Public Class Chess_Ai
             t4.Start()
             While T3Finished <> True And T4Finished <> True
             End While
-           
         Next
         sw.Stop()
-        MsgBox(sw.ElapsedMilliseconds)
+        'MsgBox(sw.ElapsedMilliseconds)
         T1Finished = True
     End Sub
     Private Sub FirstHalfofChangesCalculations()
@@ -245,7 +256,10 @@ Public Class Chess_Ai
     End Sub
     Private Sub SecondHalfOfCalculations()
         Dim counter As Integer
-        For l = 0 To 50
+        For p = 0 To 50
+            If p = 50 Then
+                p = p
+            End If
             Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
             Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
             'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
@@ -275,7 +289,10 @@ Public Class Chess_Ai
     End Sub
     Private Sub ThirdPartOfCalculations()
         Dim counter As Integer
-        For l = 0 To 50
+        For r = 0 To 50
+            If r = 50 Then
+                r = r
+            End If
             Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
             Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
             'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
@@ -307,7 +324,10 @@ Public Class Chess_Ai
         Dim sw As New Stopwatch
         sw.Start()
         Dim counter As Integer
-        For l = 0 To 50
+        For q = 0 To 50
+            If q = 50 Then
+                q = q
+            End If
             Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
             Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
             'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
@@ -537,7 +557,7 @@ Public Class Chess_Ai
                             ElseIf piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
                                 InputLayer(AICount) = 1
                             Else
-                                InputLayer(AICount) = -1
+                                InputLayer(AICount) = 0
                             End If
                             If AICount >= 383 Then
                             Else
@@ -575,8 +595,11 @@ Public Class Chess_Ai
                     Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
                 Next
                 Outputlayer(i) -= OutputBias(i)
-                SigMoidOutputLayer(i) = SigMoidDerativeCalculation(Outputlayer(i))
                 Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
+                totalOutputLayer += Outputlayer(i)
+            Next
+            For i = 0 To 203
+                Outputlayer(i) = Outputlayer(i) / totalOutputLayer
             Next
             BestValue = BestValue
             Dim TempOutput As List(Of Double)

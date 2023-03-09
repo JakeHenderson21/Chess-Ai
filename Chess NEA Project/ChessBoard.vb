@@ -276,94 +276,6 @@ Public Class ChessBoard
             count = count + 1
         Next
     End Sub
-    'When Wrook1 is clicked it goes through the checking system of where it can move
-    Private Sub WRook1_Click(sender As Object, e As EventArgs) Handles WRook1.Click
-        CheckMode = False
-        Dim rooks As New Rook(WRook1.Left, WRook1.Top, ChessPiece.Chesscolour.white, WRook1)
-        clearbuttons()
-        rooks.SetColour()
-        rooks.SetLoopBoundaries()
-        rooks.CheckMoves()
-        chess_piece = WRook1
-        colourOfPieces = "white"
-    End Sub
-    'When Wrook2 is clicked it goes through the checking system of where it can move
-    Private Sub WRook2_Click(sender As Object, e As EventArgs) Handles WRook2.Click
-        CheckMode = False
-        Dim rooks As New Rook(WRook2.Left, WRook2.Top, ChessPiece.Chesscolour.white, WRook2)
-        clearbuttons()
-        rooks.SetColour()
-        rooks.SetLoopBoundaries()
-        rooks.CheckMoves()
-        chess_piece = WRook2
-        colourOfPieces = "white"
-    End Sub
-    'When Brook1 is clicked it goes through the checking system of where it can move
-    Private Sub BRook1_Click(sender As Object, e As EventArgs) Handles BRook1.Click
-        CheckMode = False
-        Dim rooks As New Rook(BRook1.Left, BRook1.Top, ChessPiece.Chesscolour.black, BRook1)
-        clearbuttons()
-        rooks.SetColour()
-        rooks.SetLoopBoundaries()
-        rooks.CheckMoves()
-        chess_piece = BRook1
-        colourOfPieces = "black"
-    End Sub
-    'When Brook2 is clicked it goes through the checking system of where it can move
-    Private Sub BRook2_Click(sender As Object, e As EventArgs) Handles BRook2.Click
-        CheckMode = False
-        Dim rooks As New Rook(BRook2.Left, BRook2.Top, ChessPiece.Chesscolour.black, BRook2)
-        clearbuttons()
-        rooks.SetColour()
-        rooks.SetLoopBoundaries()
-        rooks.CheckMoves()
-        chess_piece = BRook2
-        colourOfPieces = "black"
-    End Sub
-    'When WBishop1 is clicked it goes through the checking system of where it can move
-    Private Sub WBishop1_Click(sender As Object, e As EventArgs) Handles WBishop1.Click
-        CheckMode = False
-        Dim Bishops As New Bishop(WBishop1.Left, WBishop1.Top, ChessPiece.Chesscolour.white, WBishop1)
-        clearbuttons()
-        Bishops.SetColour()
-        Bishops.SetLoopBoundaries()
-        Bishops.CheckMoves()
-        chess_piece = WBishop1
-        colourOfPieces = "white"
-    End Sub
-    'When WBishop2 is clicked it goes through the checking system of where it can move
-    Private Sub WBishop2_Click(sender As Object, e As EventArgs) Handles WBishop2.Click
-        CheckMode = False
-        Dim Bishops As New Bishop(WBishop2.Left, WBishop2.Top, ChessPiece.Chesscolour.white, WBishop2)
-        clearbuttons()
-        Bishops.SetColour()
-        Bishops.SetLoopBoundaries()
-        Bishops.CheckMoves()
-        chess_piece = WBishop2
-        colourOfPieces = "white"
-    End Sub
-    'When BBishop1 is clicked it goes through the checking system of where it can move
-    Private Sub BBishop1_Click(sender As Object, e As EventArgs) Handles BBishop1.Click
-        CheckMode = False
-        Dim Bishops As New Bishop(BBishop1.Left, BBishop1.Top, ChessPiece.Chesscolour.black, BBishop1)
-        clearbuttons()
-        Bishops.SetColour()
-        Bishops.SetLoopBoundaries()
-        Bishops.CheckMoves()
-        chess_piece = BBishop1
-        colourOfPieces = "black"
-    End Sub
-    'When BBishop2 is clicked it goes through the checking system of where it can move
-    Private Sub BBishop2_Click(sender As Object, e As EventArgs) Handles BBishop2.Click
-        CheckMode = False
-        Dim Bishops As New Bishop(BBishop2.Left, BBishop2.Top, ChessPiece.Chesscolour.black, BBishop2)
-        clearbuttons()
-        Bishops.SetColour()
-        Bishops.SetLoopBoundaries()
-        Bishops.CheckMoves()
-        chess_piece = BBishop2
-        colourOfPieces = "black"
-    End Sub
     'When WQueen is clicked it goes through the checking system of where it can move
     Private Sub WQueen_Click(sender As Object, e As EventArgs) Handles WQueen.Click
         CheckMode = False
@@ -387,46 +299,7 @@ Public Class ChessBoard
         chess_piece = BQueen
         colourOfPieces = "black"
     End Sub
-    'When WKnight1 is clicked it goes through the checking system of where it can move
-    Private Sub WKnight1_Click(sender As Object, e As EventArgs) Handles WKnight1.Click
-        CheckMode = False
-        Dim knights As New Knight(WKnight1.Left, WKnight1.Top, ChessPiece.Chesscolour.white, WKnight1)
-        clearbuttons()
-        knights.SetColour()
-        knights.CheckMoves()
-        chess_piece = WKnight1
-        colourOfPieces = "white"
-    End Sub
-    'When WKnight2 is clicked it goes through the checking system of where it can move
-    Private Sub WKnight2_Click(sender As Object, e As EventArgs) Handles Wknight2.Click
-        CheckMode = False
-        Dim knights As New Knight(Wknight2.Left, Wknight2.Top, ChessPiece.Chesscolour.white, Wknight2)
-        clearbuttons()
-        knights.SetColour()
-        knights.CheckMoves()
-        chess_piece = Wknight2
-        colourOfPieces = "white"
-    End Sub
-    'When BKnight1 is clicked it goes through the checking system of where it can move
-    Private Sub BKnight1_Click(sender As Object, e As EventArgs) Handles BKnight1.Click
-        CheckMode = False
-        Dim knights As New Knight(BKnight1.Left, BKnight1.Top, ChessPiece.Chesscolour.black, BKnight1)
-        clearbuttons()
-        knights.SetColour()
-        knights.CheckMoves()
-        chess_piece = BKnight1
-        colourOfPieces = "black"
-    End Sub
-    'When BKnight2 is clicked it goes through the checking system of where it can move
-    Private Sub BKnight2_Click(sender As Object, e As EventArgs) Handles BKnight2.Click
-        CheckMode = False
-        Dim knights As New Knight(BKnight2.Left, BKnight2.Top, ChessPiece.Chesscolour.black, BKnight2)
-        clearbuttons()
-        knights.SetColour()
-        knights.CheckMoves()
-        chess_piece = BKnight2
-        colourOfPieces = "black"
-    End Sub
+
     'When WKing is clicked it goes through the checking system of where it can move
     Private Sub Wking_Click(sender As Object, e As EventArgs) Handles WKing.Click
         CheckMode = False
@@ -447,133 +320,92 @@ Public Class ChessBoard
         chess_piece = BKing
         colourOfPieces = "black"
     End Sub
-    'When Wpawn1 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn1_Click(sender As Object, e As EventArgs) Handles WPawn1.Click
-        FirstCheckNumber = 0
-        Promotion(0, WPawn1)
-        CheckMode = False        
-        chess_piece = WPawn1
-        colourOfPieces = "white"
-    End Sub
-    'When Wpawn2 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn2_Click(sender As Object, e As EventArgs) Handles WPawn2.Click
+    Private Sub pieces_click(sender As Object, e As EventArgs) Handles BPawn1.Click, BPawn2.Click, BPawn3.Click, BPawn4.Click, BPawn5.Click, BPawn6.Click, BPawn7.Click, BPawn8.Click, WPawn1.Click, WPawn2.Click, WPawn3.Click, WPawn4.Click, WPawn5.Click, WPawn6.Click, WPawn7.Click, WPawn8.Click, BBishop1.Click, BBishop2.Click, WBishop1.Click, WBishop2.Click, BRook1.Click, BRook2.Click, WRook1.Click, WRook2.Click, BKnight1.Click, BKnight2.Click, WKnight1.Click, Wknight2.Click
         CheckMode = False
-        FirstCheckNumber = 1
-        Promotion(1, WPawn2)
-        chess_piece = WPawn2
-        colourOfPieces = "white"
+        Dim piece = DirectCast(sender, Button)
+        Piece_Selector(piece)
+        chess_piece = piece
+        If piece Is BPawn1 Or piece Is BPawn2 Or piece Is BPawn3 Or piece Is BPawn4 Or piece Is BPawn5 Or piece Is BPawn6 Or piece Is BPawn7 Or piece Is BPawn8 Or piece Is BRook1 Or piece Is BRook2 Or piece Is BBishop1 Or piece Is BBishop2 Or piece Is BKnight1 Or piece Is BKnight2 Then
+            colourOfPieces = "black"
+        Else
+            colourOfPieces = "white"
+        End If
     End Sub
-    'When Wpawn3 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn3_Click(sender As Object, e As EventArgs) Handles WPawn3.Click
-        FirstCheckNumber = 2
-        Promotion(2, WPawn3)
-        CheckMode = False
-        chess_piece = WPawn3
-        colourOfPieces = "white"
+    Private Sub Piece_Selector(piece)
+        If piece Is BPawn1 Or piece Is BPawn2 Or piece Is BPawn3 Or piece Is BPawn4 Or piece Is BPawn5 Or piece Is BPawn6 Or piece Is BPawn7 Or piece Is BPawn8 Or piece Is WPawn1 Or piece Is WPawn2 Or piece Is WPawn3 Or piece Is WPawn4 Or piece Is WPawn5 Or piece Is WPawn6 Or piece Is WPawn7 Or piece Is WPawn8 Then
+            Pawn_CheckFirstNumber_Selector(piece)
+            Promotion(FirstCheckNumber, piece)
+        ElseIf piece Is BRook1 Or piece Is BRook2 Then
+            Dim rooks As New Rook(piece.Left, piece.Top, ChessPiece.Chesscolour.black, piece)
+            clearbuttons()
+            rooks.SetColour()
+            rooks.SetLoopBoundaries()
+            rooks.CheckMoves()
+        ElseIf piece Is WRook1 Or piece Is WRook2 Then
+            Dim rooks As New Rook(piece.Left, piece.Top, ChessPiece.Chesscolour.white, piece)
+            clearbuttons()
+            rooks.SetColour()
+            rooks.SetLoopBoundaries()
+            rooks.CheckMoves()
+        ElseIf piece Is BBishop1 Or piece Is BBishop2 Then
+            Dim Bishops As New Bishop(piece.Left, piece.Top, ChessPiece.Chesscolour.black, piece)
+            clearbuttons()
+            Bishops.SetColour()
+            Bishops.SetLoopBoundaries()
+            Bishops.CheckMoves()
+        ElseIf piece Is WBishop1 Or piece Is WBishop2 Then
+            Dim Bishops As New Bishop(piece.Left, piece.Top, ChessPiece.Chesscolour.white, piece)
+            clearbuttons()
+            Bishops.SetColour()
+            Bishops.SetLoopBoundaries()
+            Bishops.CheckMoves()
+        ElseIf piece Is BKnight1 Or piece Is BKnight2 Then
+            Dim knights As New Knight(piece.Left, piece.Top, ChessPiece.Chesscolour.black, piece)
+            clearbuttons()
+            knights.SetColour()
+            knights.CheckMoves()
+        ElseIf piece Is WKnight1 Or piece Is Wknight2 Then
+            Dim knights As New Knight(piece.Left, piece.Top, ChessPiece.Chesscolour.white, piece)
+            clearbuttons()
+            knights.SetColour()
+            knights.CheckMoves()
+        End If
     End Sub
-    'When Wpawn4 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn4_Click(sender As Object, e As EventArgs) Handles WPawn4.Click
-        CheckMode = False
-        FirstCheckNumber = 3
-        Promotion(3, WPawn4)
-        chess_piece = WPawn4
-        colourOfPieces = "white"
-    End Sub
-    'When Wpawn5 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn5_Click(sender As Object, e As EventArgs) Handles WPawn5.Click
-        CheckMode = False
-        FirstCheckNumber = 4
-        Promotion(4, WPawn5)
-        chess_piece = WPawn5
-        colourOfPieces = "white"
-    End Sub
-    'When Wpawn6 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn6_Click(sender As Object, e As EventArgs) Handles WPawn6.Click
-        CheckMode = False
-        FirstCheckNumber = 5
-        Promotion(5, WPawn6)
-        chess_piece = WPawn6
-        colourOfPieces = "white"
-    End Sub
-    'When Wpawn7 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn7_Click(sender As Object, e As EventArgs) Handles WPawn7.Click
-        CheckMode = False
-        FirstCheckNumber = 6
-        Promotion(6, WPawn7)
-        chess_piece = WPawn7
-        colourOfPieces = "white"
-    End Sub
-    'When Wpawn8 is clicked it goes through the checking system of where it can move
-    Private Sub Wpawn8_Click(sender As Object, e As EventArgs) Handles WPawn8.Click
-        CheckMode = False
-        FirstCheckNumber = 7
-        Promotion(7, WPawn8)
-        chess_piece = WPawn8
-        colourOfPieces = "white"
-    End Sub
-    'When Bpawn1 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn1_Click(sender As Object, e As EventArgs) Handles BPawn1.Click
-        CheckMode = False
-        FirstCheckNumber = 8
-        Promotion(8, BPawn1)
-        chess_piece = BPawn1
-        colourOfPieces = "black"
-    End Sub
-    'When Bpawn2 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn2_Click(sender As Object, e As EventArgs) Handles BPawn2.Click
-        CheckMode = False
-        FirstCheckNumber = 9
-        Promotion(9, BPawn2)
-        chess_piece = BPawn2
-        colourOfPieces = "black"
-    End Sub
-    'When Bpawn3 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn3_Click(sender As Object, e As EventArgs) Handles BPawn3.Click
-        CheckMode = False
-        FirstCheckNumber = 10
-        Promotion(11, BPawn3)
-        chess_piece = BPawn3
-        colourOfPieces = "black"
-    End Sub
-    'When Bpawn4 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn4_Click(sender As Object, e As EventArgs) Handles BPawn4.Click
-        CheckMode = False
-        FirstCheckNumber = 11
-        Promotion(11, BPawn4)
-        chess_piece = BPawn4
-        colourOfPieces = "black"
-    End Sub
-    'When Bpawn5 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn5_Click(sender As Object, e As EventArgs) Handles BPawn5.Click
-        CheckMode = False
-        FirstCheckNumber = 12
-        Promotion(12, BPawn5)
-        chess_piece = BPawn5
-        colourOfPieces = "black"
-    End Sub
-    'When Bpawn6 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn6_Click(sender As Object, e As EventArgs) Handles BPawn6.Click
-        CheckMode = False
-        FirstCheckNumber = 13
-        Promotion(13, BPawn6)
-        chess_piece = BPawn6
-        colourOfPieces = "black"
-    End Sub
-    'When Bpawn7 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn7_Click(sender As Object, e As EventArgs) Handles BPawn7.Click
-        CheckMode = False
-        FirstCheckNumber = 14
-        Promotion(14, BPawn7)
-        chess_piece = BPawn7
-        colourOfPieces = "black"
-    End Sub
-    'When Bpawn8 is clicked it goes through the checking system of where it can move
-    Private Sub Bpawn8_Click(sender As Object, e As EventArgs) Handles BPawn8.Click
-        CheckMode = False
-        FirstCheckNumber = 15
-        Promotion(15, BPawn8)
-        chess_piece = BPawn8
-        colourOfPieces = "black"
+    Public Sub Pawn_CheckFirstNumber_Selector(piece)
+        Select Case piece.name
+            Case WPawn1.Name
+                FirstCheckNumber = 0
+            Case WPawn2.Name
+                FirstCheckNumber = 1
+            Case WPawn3.Name
+                FirstCheckNumber = 2
+            Case WPawn4.Name
+                FirstCheckNumber = 3
+            Case WPawn5.Name
+                FirstCheckNumber = 4
+            Case WPawn6.Name
+                FirstCheckNumber = 5
+            Case WPawn7.Name
+                FirstCheckNumber = 6
+            Case WPawn8.Name
+                FirstCheckNumber = 7
+            Case BPawn1.Name
+                FirstCheckNumber = 8
+            Case BPawn2.Name
+                FirstCheckNumber = 9
+            Case BPawn3.Name
+                FirstCheckNumber = 10
+            Case BPawn4.Name
+                FirstCheckNumber = 11
+            Case BPawn5.Name
+                FirstCheckNumber = 12
+            Case BPawn6.Name
+                FirstCheckNumber = 13
+            Case BPawn7.Name
+                FirstCheckNumber = 14
+            Case BPawn8.Name
+                FirstCheckNumber = 15
+        End Select
     End Sub
     'This is the action for all of buttons the user can use to move a piece, it gets the coordinates then clears the buttons and then sets a new loction for the required piece
     Public Sub buttons_click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click, Button3.Click, Button4.Click, Button5.Click, Button6.Click, Button7.Click, Button8.Click, Button9.Click, Button10.Click, Button11.Click, Button12.Click, Button13.Click, Button14.Click, Button15.Click, Button16.Click, Button17.Click, Button18.Click, Button19.Click, Button20.Click, Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click, Button27.Click, Button28.Click, Button29.Click, Button30.Click, Button31.Click, Button32.Click, Button33.Click, Button34.Click, Button35.Click, Button36.Click, Button37.Click, Button38.Click, Button39.Click, Button40.Click, Button41.Click, Button42.Click, Button43.Click, Button44.Click, Button45.Click, Button46.Click, Button47.Click, Button48.Click, Button49.Click, Button50.Click, Button51.Click, Button52.Click, Button53.Click, Button54.Click, Button55.Click, Button56.Click, Button57.Click, Button58.Click, Button59.Click, Button60.Click, Button61.Click, Button62.Click, Button63.Click, Button64.Click, Button65.Click, Button66.Click, Button67.Click, Button68.Click, Button69.Click, Button70.Click, Button71.Click, Button72.Click
