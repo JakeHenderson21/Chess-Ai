@@ -29,6 +29,7 @@
     ' it can move twice, it also checks if the pawn can move to its left or right if there is a piece it can take.
     Public Overrides Sub CheckMoves()
         OldScoremove = 2
+        Dim h As New ChessBoard
         ChessBoard.buttonmoves(0).Location = New Point(piece.Left, piece.Top + (operatorcheck * 77))
         ChessBoard.buttonmoves(1).Location = New Point(piece.Left, piece.Top + (operatorcheck * 154))
         For Each pieces In everyPiece
