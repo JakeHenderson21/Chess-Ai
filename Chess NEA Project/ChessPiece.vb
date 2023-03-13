@@ -8,52 +8,70 @@
     Public UpMoveButtonsCheck, RightMoveButtonsCheck, DownMoveButtonsCheck, LeftMoveButtonsCheck, UpRightMoveButtonsCheck, DownRightMoveButtonsCheck, DownLeftMoveButtonsCheck, UpLeftMoveButtonsCheck As New List(Of Button)
     Public change, sameColourChange, OppositeColourChange, movebuttonchecker As Boolean
     Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
-    Public checkbuttons(6), upMovebutton(6), rightMoveButton(6), downMoveButton(6), leftMoveButton(6), upRightMoveButton(6), downRightMoveButton(6), downLeftMoveButton(6), upLeftMoveButton(6), wpieces(15), bpieces(15), piece, pieces1(15), pieces2(15) As Button
+    Public checkbuttons(6), upMovebutton(6), rightMoveButton(6), downMoveButton(6), leftMoveButton(6), upRightMoveButton(6), downRightMoveButton(6), downLeftMoveButton(6), upLeftMoveButton(6), wpieces(15), bpieces(15), piece, buttonMoves(71), pieces1(15), pieces2(15) As Button
     Public Sub New(ByVal xCoord As Integer, ByVal yCoord As Integer, ByVal Chess_colour As Chesscolour, ByVal Chess_piece As Button)
-        Dim counter As Integer
         X = xCoord
         Y = yCoord
         colour = Chess_colour
         piece = Chess_piece
         ButtonX_Causing_Check = ChessBoard.ButtonX_Causing_Check
         ButtonY_Causing_Check = ChessBoard.ButtonY_Causing_Check
-        For X As ButtonMoveIndex = ButtonMoveIndex.upMovebuttonLow To ButtonMoveIndex.upMovebuttonHigh
-            upMovebutton(X) = ChessBoard.buttonmoves(X)
-        Next
-        For X As ButtonMoveIndex = ButtonMoveIndex.rightMovebuttonLow To ButtonMoveIndex.rightMovebuttonHigh
-            rightMoveButton(counter) = ChessBoard.buttonmoves(X)
-            counter += 1
-        Next
-        counter = 0
-        For X As ButtonMoveIndex = ButtonMoveIndex.downMovebuttonLow To ButtonMoveIndex.downMovebuttonHigh
-            downMoveButton(counter) = ChessBoard.buttonmoves(X)
-            counter += 1
-        Next
-        counter = 0
-        For X As ButtonMoveIndex = ButtonMoveIndex.leftMovebuttonLow To ButtonMoveIndex.leftMovebuttonHigh
-            leftMoveButton(counter) = ChessBoard.buttonmoves(X)
-            counter += 1
-        Next
-        counter = 0
-        For X As ButtonMoveIndex = ButtonMoveIndex.upRightMovebuttonLow To ButtonMoveIndex.upRightMovebuttonHigh
-            upRightMoveButton(counter) = ChessBoard.buttonmoves(X)
-            counter += 1
-        Next
-        counter = 0
-        For X As ButtonMoveIndex = ButtonMoveIndex.downRightMovebuttonLow To ButtonMoveIndex.downRightMovebuttonHigh
-            downRightMoveButton(counter) = ChessBoard.buttonmoves(X)
-            counter += 1
-        Next
-        counter = 0
-        For X As ButtonMoveIndex = ButtonMoveIndex.downLeftMovebuttonLow To ButtonMoveIndex.downLeftMovebuttonHigh
-            downLeftMoveButton(counter) = ChessBoard.buttonmoves(X)
-            counter += 1
-        Next
-        counter = 0
-        For X As ButtonMoveIndex = ButtonMoveIndex.upLeftMovebuttonlow To ButtonMoveIndex.upLeftMovebuttonHigh
-            upLeftMoveButton(counter) = ChessBoard.buttonmoves(X)
-            counter += 1
-        Next
+        upMovebutton(0) = ChessBoard.Button1
+        upMovebutton(1) = ChessBoard.Button2
+        upMovebutton(2) = ChessBoard.Button3
+        upMovebutton(3) = ChessBoard.Button4
+        upMovebutton(4) = ChessBoard.Button5
+        upMovebutton(5) = ChessBoard.Button6
+        upMovebutton(6) = ChessBoard.Button7
+        rightMoveButton(0) = ChessBoard.Button8
+        rightMoveButton(1) = ChessBoard.Button9
+        rightMoveButton(2) = ChessBoard.Button10
+        rightMoveButton(3) = ChessBoard.Button11
+        rightMoveButton(4) = ChessBoard.Button12
+        rightMoveButton(5) = ChessBoard.Button13
+        rightMoveButton(6) = ChessBoard.Button14
+        downMoveButton(0) = ChessBoard.Button15
+        downMoveButton(1) = ChessBoard.Button16
+        downMoveButton(2) = ChessBoard.Button17
+        downMoveButton(3) = ChessBoard.Button18
+        downMoveButton(4) = ChessBoard.Button19
+        downMoveButton(5) = ChessBoard.Button20
+        downMoveButton(6) = ChessBoard.Button21
+        leftMoveButton(0) = ChessBoard.Button22
+        leftMoveButton(1) = ChessBoard.Button23
+        leftMoveButton(2) = ChessBoard.Button24
+        leftMoveButton(3) = ChessBoard.Button25
+        leftMoveButton(4) = ChessBoard.Button26
+        leftMoveButton(5) = ChessBoard.Button27
+        leftMoveButton(6) = ChessBoard.Button28
+        upRightMoveButton(0) = ChessBoard.Button29
+        upRightMoveButton(1) = ChessBoard.Button30
+        upRightMoveButton(2) = ChessBoard.Button31
+        upRightMoveButton(3) = ChessBoard.Button32
+        upRightMoveButton(4) = ChessBoard.Button33
+        upRightMoveButton(5) = ChessBoard.Button34
+        upRightMoveButton(6) = ChessBoard.Button35
+        downRightMoveButton(0) = ChessBoard.Button36
+        downRightMoveButton(1) = ChessBoard.Button37
+        downRightMoveButton(2) = ChessBoard.Button38
+        downRightMoveButton(3) = ChessBoard.Button39
+        downRightMoveButton(4) = ChessBoard.Button40
+        downRightMoveButton(5) = ChessBoard.Button41
+        downRightMoveButton(6) = ChessBoard.Button42
+        downLeftMoveButton(0) = ChessBoard.Button43
+        downLeftMoveButton(1) = ChessBoard.Button44
+        downLeftMoveButton(2) = ChessBoard.Button45
+        downLeftMoveButton(3) = ChessBoard.Button46
+        downLeftMoveButton(4) = ChessBoard.Button47
+        downLeftMoveButton(5) = ChessBoard.Button48
+        downLeftMoveButton(6) = ChessBoard.Button49
+        upLeftMoveButton(0) = ChessBoard.Button50
+        upLeftMoveButton(1) = ChessBoard.Button51
+        upLeftMoveButton(2) = ChessBoard.Button52
+        upLeftMoveButton(3) = ChessBoard.Button53
+        upLeftMoveButton(4) = ChessBoard.Button54
+        upLeftMoveButton(5) = ChessBoard.Button55
+        upLeftMoveButton(6) = ChessBoard.Button56
         wpieces(0) = ChessBoard.WPawn1
         wpieces(1) = ChessBoard.WPawn2
         wpieces(2) = ChessBoard.WPawn3
@@ -86,7 +104,78 @@
         bpieces(13) = ChessBoard.BKnight2
         bpieces(14) = ChessBoard.BQueen
         bpieces(15) = ChessBoard.BKing
-
+        buttonMoves(0) = ChessBoard.Button1
+        buttonMoves(1) = ChessBoard.Button2
+        buttonMoves(2) = ChessBoard.Button3
+        buttonMoves(3) = ChessBoard.Button4
+        buttonMoves(4) = ChessBoard.Button5
+        buttonMoves(5) = ChessBoard.Button6
+        buttonMoves(6) = ChessBoard.Button7
+        buttonMoves(7) = ChessBoard.Button8
+        buttonMoves(8) = ChessBoard.Button9
+        buttonMoves(9) = ChessBoard.Button10
+        buttonMoves(10) = ChessBoard.Button11
+        buttonMoves(11) = ChessBoard.Button12
+        buttonMoves(12) = ChessBoard.Button13
+        buttonMoves(13) = ChessBoard.Button14
+        buttonMoves(14) = ChessBoard.Button15
+        buttonMoves(15) = ChessBoard.Button16
+        buttonMoves(16) = ChessBoard.Button17
+        buttonMoves(17) = ChessBoard.Button18
+        buttonMoves(18) = ChessBoard.Button19
+        buttonMoves(19) = ChessBoard.Button20
+        buttonMoves(20) = ChessBoard.Button21
+        buttonMoves(21) = ChessBoard.Button22
+        buttonMoves(22) = ChessBoard.Button23
+        buttonMoves(23) = ChessBoard.Button24
+        buttonMoves(24) = ChessBoard.Button25
+        buttonMoves(25) = ChessBoard.Button26
+        buttonMoves(26) = ChessBoard.Button27
+        buttonMoves(27) = ChessBoard.Button28
+        buttonMoves(28) = ChessBoard.Button29
+        buttonMoves(29) = ChessBoard.Button30
+        buttonMoves(30) = ChessBoard.Button31
+        buttonMoves(31) = ChessBoard.Button32
+        buttonMoves(32) = ChessBoard.Button33
+        buttonMoves(33) = ChessBoard.Button34
+        buttonMoves(34) = ChessBoard.Button35
+        buttonMoves(35) = ChessBoard.Button36
+        buttonMoves(36) = ChessBoard.Button37
+        buttonMoves(37) = ChessBoard.Button38
+        buttonMoves(38) = ChessBoard.Button39
+        buttonMoves(39) = ChessBoard.Button40
+        buttonMoves(40) = ChessBoard.Button41
+        buttonMoves(41) = ChessBoard.Button42
+        buttonMoves(42) = ChessBoard.Button43
+        buttonMoves(43) = ChessBoard.Button44
+        buttonMoves(44) = ChessBoard.Button45
+        buttonMoves(45) = ChessBoard.Button46
+        buttonMoves(46) = ChessBoard.Button47
+        buttonMoves(47) = ChessBoard.Button48
+        buttonMoves(48) = ChessBoard.Button49
+        buttonMoves(49) = ChessBoard.Button50
+        buttonMoves(50) = ChessBoard.Button51
+        buttonMoves(51) = ChessBoard.Button52
+        buttonMoves(52) = ChessBoard.Button53
+        buttonMoves(53) = ChessBoard.Button54
+        buttonMoves(54) = ChessBoard.Button55
+        buttonMoves(55) = ChessBoard.Button56
+        buttonMoves(56) = ChessBoard.Button57
+        buttonMoves(57) = ChessBoard.Button58
+        buttonMoves(58) = ChessBoard.Button59
+        buttonMoves(59) = ChessBoard.Button60
+        buttonMoves(60) = ChessBoard.Button61
+        buttonMoves(61) = ChessBoard.Button62
+        buttonMoves(62) = ChessBoard.Button63
+        buttonMoves(63) = ChessBoard.Button64
+        buttonMoves(64) = ChessBoard.Button65
+        buttonMoves(65) = ChessBoard.Button66
+        buttonMoves(66) = ChessBoard.Button67
+        buttonMoves(67) = ChessBoard.Button68
+        buttonMoves(68) = ChessBoard.Button69
+        buttonMoves(69) = ChessBoard.Button70
+        buttonMoves(70) = ChessBoard.Button71
+        buttonMoves(71) = ChessBoard.Button72
     End Sub
     Public Function getColour()
         Return colour
@@ -367,8 +456,7 @@
     End Function
     'This is where it goes checking each section in the loop, the loop id being the temppositionscore where each number represents a certain section
     Public Overridable Sub rearrangechecks(ByRef temppostionscore As Integer)
-        Dim board As New ChessBoard
-        If piece.Name Is board.WRook1.Name Or piece.Name Is board.WRook2.Name Or piece.Name Is board.WQueen.Name Or piece.Name Is board.BRook1.Name Or piece.Name Is board.BRook2.Name Or piece Is board.BQueen.Name Or board.PawnRook = True Or board.PawnQueen = True Then
+        If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.BQueen Or ChessBoard.PawnRook = True Or ChessBoard.PawnQueen = True Then
             If temppostionscore = 0 Then
                 checkbuttons = upMovebutton
                 tx = 0
@@ -387,7 +475,7 @@
                 ty = 0
             End If
         End If
-        If piece.Name Is board.WBishop1.Name Or piece.Name Is board.WBishop2.Name Or piece.Name Is board.WQueen.Name Or piece.Name Is board.BBishop1.Name Or piece.Name Is board.BBishop2.Name Or piece.Name Is board.BQueen.Name Or board.PawnBishop = True Or board.PawnQueen = True Then
+        If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.BQueen Or ChessBoard.PawnBishop = True Or ChessBoard.PawnQueen = True Then
             If temppostionscore = 4 Then
                 checkbuttons = upRightMoveButton
                 tx = 77
@@ -456,7 +544,7 @@
             checkbuttons(5).Show()
             checkbuttons(6).Show()
         End If
-        For Each Button In ChessBoard.buttonmoves
+        For Each Button In buttonMoves
             If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                 Button.Hide()
             End If

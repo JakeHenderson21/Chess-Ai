@@ -29,9 +29,8 @@
     ' it can move twice, it also checks if the pawn can move to its left or right if there is a piece it can take.
     Public Overrides Sub CheckMoves()
         OldScoremove = 2
-        Dim h As New ChessBoard
-        ChessBoard.buttonmoves(0).Location = New Point(piece.Left, piece.Top + (operatorcheck * 77))
-        ChessBoard.buttonmoves(1).Location = New Point(piece.Left, piece.Top + (operatorcheck * 154))
+        ChessBoard.Button1.Location = New Point(piece.Left, piece.Top + (operatorcheck * 77))
+        ChessBoard.Button2.Location = New Point(piece.Left, piece.Top + (operatorcheck * 154))
         For Each pieces In everyPiece
             If firstMoveCheck = False Then
                 If piece.Left = pieces.Left And piece.Top + (operatorcheck * 77) = pieces.Top Then
@@ -55,49 +54,49 @@
             End If
         Next
         If colour = Chesscolour.white Then
-            ChessBoard.buttonmoves(2).Location = New Point(piece.Left + 77, piece.Top - 77)
-            ChessBoard.buttonmoves(3).Location = New Point(piece.Left - 77, piece.Top - 77)
-            For Each pieces In bpieces
+            ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top - 77)
+            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top - 77)         
+                For Each pieces In bpieces
                     If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
                     If ChessBoard.CheckMode = False Then
                         If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.buttonmoves(2)
+                            PieceButtonToCheck = ChessBoard.Button3
                             PieceMoveWhenChecked()
                         Else
-                            ChessBoard.buttonmoves(2).Show()
+                            ChessBoard.Button3.Show()
                         End If
                     End If
                 ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
                     If ChessBoard.CheckMode = False Then
                         If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.buttonmoves(3)
+                            PieceButtonToCheck = ChessBoard.Button4
                             PieceMoveWhenChecked()
                         Else
-                            ChessBoard.buttonmoves(3).Show()
+                            ChessBoard.Button4.Show()
                         End If
                     End If
                 End If
             Next
         Else
-            ChessBoard.buttonmoves(2).Location = New Point(piece.Left + 77, piece.Top + 77)
-            ChessBoard.buttonmoves(3).Location = New Point(piece.Left - 77, piece.Top + 77)
-            For Each pieces In wpieces
+            ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top + 77)
+            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top + 77)
+                For Each pieces In wpieces
                     If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
                         If ChessBoard.CheckMode = False Then
                         If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.buttonmoves(2)
+                            PieceButtonToCheck = ChessBoard.Button3
                             PieceMoveWhenChecked()
                         Else
-                            ChessBoard.buttonmoves(2).Show()
+                            ChessBoard.Button3.Show()
                         End If
                         End If
                     ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
                         If ChessBoard.CheckMode = False Then
                         If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.buttonmoves(3)
+                            PieceButtonToCheck = ChessBoard.Button4
                             PieceMoveWhenChecked()
                         Else
-                            ChessBoard.buttonmoves(3).Show()
+                            ChessBoard.Button4.Show()
                         End If
                         End If
                     End If
@@ -107,26 +106,26 @@
         ElseIf OldScoremove = 1 Then
             If ChessBoard.CheckMode = False Then
                 If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                    PieceButtonToCheck = ChessBoard.buttonmoves(0)
+                    PieceButtonToCheck = ChessBoard.Button1
                     BlockCheck()
                 Else
-                    ChessBoard.buttonmoves(0).Show()
+                    ChessBoard.Button1.Show()
                 End If
             End If
         ElseIf OldScoremove = 2 Then
             If ChessBoard.CheckMode = False Then
                 If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                    PieceButtonToCheck = ChessBoard.buttonmoves(0)
+                    PieceButtonToCheck = ChessBoard.Button1
                     BlockCheck()
-                    PieceButtonToCheck = ChessBoard.buttonmoves(1)
+                    PieceButtonToCheck = ChessBoard.Button2
                     BlockCheck()
                 Else
-                    ChessBoard.buttonmoves(0).Show()
-                    ChessBoard.buttonmoves(1).Show()
+                    ChessBoard.Button1.Show()
+                    ChessBoard.Button2.Show()
                 End If
             End If
         End If
-        For Each Button In ChessBoard.buttonmoves
+        For Each Button In buttonMoves
             If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                 Button.Hide()
             End If

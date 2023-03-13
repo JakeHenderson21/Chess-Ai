@@ -2,42 +2,41 @@
     Inherits ChessBoard
     Public chesscolour As ChessPiece.Chesscolour
     Public resultID As Integer
-    Public WBishop(1), BBishop(1), WKnight(1), BKnight(1), KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton(), buttontoUse, everyPiece(31) As Button
+    Public WBishop(1), BBishop(1), WKnight(1), BKnight(1), KingSelectedPieces, CheckingKing, check_Buttons(resultID), UpMoveButton(), RightMoveButton(), LeftMoveButton(), DownMoveButton(), UpRightMoveButton(), DownRightMoveButton(), UpLeftMoveButton(), DownLeftMoveButton() As Button
     Public PawnSelectedPieces, KnightSelectedPieces, RookSelectedPieces, QueensSelectedPieces, BishopSelectedPieces As New List(Of Button)
     Public checking As Boolean
     Public TempButtonX_Causing_Check, TempButtonY_Causing_Check As New List(Of Integer)
     'Initisles arrays for the buttons
-    Public Sub New(ByVal buttons)
-        If ChessBoard.colourOfPieces = "white" Then
-            ChessBoard.KingPiece = ChessBoard.WKing
-            FirstCheckNumber = 0
-            chesscolour = ChessPiece.Chesscolour.black
-        Else
-            ChessBoard.KingPiece = ChessBoard.BKing
-            FirstCheckNumber = 8
-            chesscolour = ChessPiece.Chesscolour.white
-        End If
-        PawnSelectedPieces = GetPawns()
-        RookSelectedPieces = GetRooks()
-        BishopSelectedPieces = GetBishops()
-        QueensSelectedPieces = GetQueen()
-        KnightSelectedPieces = GetKnights()
-        KingSelectedPieces = GetKing()
+    Public Sub New()
+        'Rework the arrays into lists, will need to to actually save the lists in the main chessboard class so they don't get deleted
     End Sub
-    Public Sub SetButtontoUse(input)
-        buttontoUse = input
-    End Sub
-    Public Sub SetAllPieces(input)
-        everyPiece = input
-    End Sub
-
     'Finds out which turn has ended and checks the respective king by going through each piece to see if the it is in check or checkmate or where the king can legally move
     Public Function Check_King()
         Dim check1, check2, check3, check4, check5, check6, check7, check8 As Boolean
         Dim result As Boolean
         ChessBoard.checkingForCheck = False
         ChessBoard.CheckMode = True
-
+        If ChessBoard.colourOfPieces = "white" Then
+            ChessBoard.KingPiece = ChessBoard.WKing
+            PawnSelectedPieces = ChessBoard.CheckBPawn
+            RookSelectedPieces = ChessBoard.CheckBRook
+            BishopSelectedPieces = ChessBoard.CheckBBishop
+            QueensSelectedPieces = ChessBoard.CheckBQueen
+            KnightSelectedPieces = ChessBoard.CheckBKnight
+            KingSelectedPieces = ChessBoard.BKing
+            FirstCheckNumber = 0
+            chesscolour = ChessPiece.Chesscolour.black
+        Else
+            ChessBoard.KingPiece = ChessBoard.BKing
+            PawnSelectedPieces = ChessBoard.CheckWPawn
+            RookSelectedPieces = ChessBoard.CheckWRook
+            BishopSelectedPieces = ChessBoard.CheckWBishop
+            QueensSelectedPieces = ChessBoard.CheckWQueen
+            KnightSelectedPieces = ChessBoard.CheckWKnight
+            KingSelectedPieces = ChessBoard.WKing
+            FirstCheckNumber = 8
+            chesscolour = ChessPiece.Chesscolour.white
+        End If
         check1 = CheckPawnsAgainstKing()
         check2 = CheckRooksAgainstKing()
         check3 = CheckBishopsAgainstKing()
@@ -64,8 +63,8 @@
     'This checks if their is a piece blocking the king infront of it when checking for check and checkmate
     Public Function CheckKingAgainstOtherPieces()
         Dim result As Integer
-        For Each piece In everyPiece
-            If piece.Left = buttontoUse.Left And piece.Top = buttontoUse.Top Then
+        For Each piece In ChessBoard.Allpieces
+            If piece.Left = ChessBoard.buttonsToUse.Left And piece.Top = ChessBoard.buttonsToUse.Top Then
                 result = True
             End If
         Next
@@ -74,7 +73,7 @@
     'This checks for if any of the move buttons for king are past the border
     Public Function CheckBorderAgainstKing()
         Dim result As Boolean
-        If buttontoUse.Left > 539 Or buttontoUse.Left < 0 Or buttontoUse.Top > 539 Or buttontoUse.Top < 0 Then
+        If ChessBoard.buttonsToUse.Left > 539 Or ChessBoard.buttonsToUse.Left < 0 Or ChessBoard.buttonsToUse.Top > 539 Or ChessBoard.buttonsToUse.Top < 0 Then
             result = True
         Else
             result = False
@@ -90,10 +89,10 @@
             Pawns.SetColour()
             Pawns.CheckMoves()
             chess_piece = piece
-            If (buttontoUse.Left = ChessBoard.buttonmoves(2).Left And buttontoUse.Top = ChessBoard.buttonmoves(2).Top) Or (buttontoUse.Left = ChessBoard.buttonmoves(3).Left And buttontoUse.Top = ChessBoard.buttonmoves(3).Top) Then
+            If (ChessBoard.buttonsToUse.Left = ChessBoard.Button3.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button3.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button4.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button4.Top) Then
                 result = True
             End If
-            If (ChessBoard.buttonmoves(2).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(2).Top = ChessBoard.KingPiece.Top) Or (ChessBoard.buttonmoves(3).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(3).Top = ChessBoard.KingPiece.Top) Then
+            If (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Then
                 ChessBoard.checkingForCheck = True
                 ChessBoard.Piece_Causing_Check = piece
                 Dim counter As Integer = 0
@@ -101,7 +100,7 @@
                 counter = 1
                 TempButtonY_Causing_Check.Add(CheckPawnsForCollisionWithKing(counter))
                 ChessBoard.Buttonxvalue(TempButtonX_Causing_Check)
-                ChessBoard.Buttonyvalue(TempButtonY_Causing_Check)
+                ChessBoard.Buttonyvalue(TempButtonY_Causing_Check)               
             End If
         Next
         Return result
@@ -109,16 +108,16 @@
     Private Function CheckPawnsForCollisionWithKing(counter)
         Dim ButtonCoordtouse As Integer
         If counter = 0 Then
-            If (ChessBoard.buttonmoves(2).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(2).Top = ChessBoard.KingPiece.Top) Then
-                ButtonCoordtouse = ChessBoard.buttonmoves(2).Left
-            ElseIf (ChessBoard.buttonmoves(3).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(3).Top = ChessBoard.KingPiece.Top) Then
-                ButtonCoordtouse = ChessBoard.buttonmoves(3).Left
+            If (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordtouse = ChessBoard.Button3.Left
+            ElseIf (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordtouse = ChessBoard.Button4.Left
             End If
         ElseIf counter = 1 Then
-            If (ChessBoard.buttonmoves(2).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(2).Top = ChessBoard.KingPiece.Top) Then
-                ButtonCoordtouse = ChessBoard.buttonmoves(2).Top
-            ElseIf (ChessBoard.buttonmoves(3).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(3).Top = ChessBoard.KingPiece.Top) Then
-                ButtonCoordtouse = ChessBoard.buttonmoves(3).Top
+            If (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordtouse = ChessBoard.Button3.Top
+            ElseIf (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordtouse = ChessBoard.Button4.Top
             End If
         End If
         Return ButtonCoordtouse
@@ -137,7 +136,7 @@
                 check_Buttons = MoveSelector(buttoncheck, Rooks)
                 If check_Buttons.Length - 1 <> 0 Then
                     For Each PieceMove In check_Buttons
-                        If PieceMove.Left = buttontoUse.Left And PieceMove.Top = buttontoUse.Top Then
+                        If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
                             result = True
                         End If
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
@@ -170,7 +169,7 @@
                 check_Buttons = MoveSelector(buttoncheck, Bishops)
                 If check_Buttons.Length - 1 <> 0 Then
                     For Each PieceMove In check_Buttons
-                        If PieceMove.Left = buttontoUse.Left And PieceMove.Top = buttontoUse.Top Then
+                        If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
                             result = True
                         End If
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
@@ -205,7 +204,7 @@
                 check_Buttons = MoveSelector(buttoncheck, Queens)
                 If check_Buttons.Length - 1 <> 0 Then
                     For Each PieceMove In check_Buttons
-                        If PieceMove.Left = buttontoUse.Left And PieceMove.Top = buttontoUse.Top Then
+                        If PieceMove.Left = ChessBoard.buttonsToUse.Left And PieceMove.Top = ChessBoard.buttonsToUse.Top Then
                             result = True
                         End If
                         If PieceMove.Left = ChessBoard.KingPiece.Left And PieceMove.Top = ChessBoard.KingPiece.Top Then
@@ -215,7 +214,7 @@
                             For Each member In check_Buttons
                                 TempButtonX_Causing_Check.Add(member.Left)
                                 TempButtonY_Causing_Check.Add(member.Top)
-                            Next
+                            Next                      
                             ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check
                             ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check
                         End If
@@ -227,66 +226,85 @@
     End Function
     'This checks the king against each move that a knight can possibly make
     Public Function CheckKnightsAgainstKing()
-        Dim result, foundCheck As Boolean
+        Dim result As Boolean = False
         For Each piece In KnightSelectedPieces
             Dim Knights As New Knight(piece.Left, piece.Top, chesscolour, piece)
             Knights.SetColour()
             Knights.CheckMoves()
             chess_piece = piece
-            For buttonID = 0 To 7
-                If (buttontoUse.Left = ChessBoard.buttonmoves(buttonID).Left And buttontoUse.Top = ChessBoard.buttonmoves(buttonID).Top) And foundCheck = False Then
-                    result = True
-                    foundCheck = True
-                End If
-                If (ChessBoard.buttonmoves(buttonID).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(buttonID).Top = ChessBoard.KingPiece.Top) Then
-                    ChessBoard.checkingForCheck = True
-                    ChessBoard.Piece_Causing_Check = piece
-                    Dim counter As Integer
-                    TempButtonX_Causing_Check.Add(piece.Left)
-                    TempButtonY_Causing_Check.Add(piece.Top)
-                    TempButtonX_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
-                    counter = 1
-                    TempButtonY_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
-                    ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check
-                    ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check
-                End If
-            Next
+            If (ChessBoard.buttonsToUse.Left = ChessBoard.Button1.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button1.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button2.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button2.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button3.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button3.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button4.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button4.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button5.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button5.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button6.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button6.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button7.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button7.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button8.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button8.Top) Then
+                result = True
+            End If
+            If (ChessBoard.Button1.Left = ChessBoard.KingPiece.Left And ChessBoard.Button1.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button2.Left = ChessBoard.KingPiece.Left And ChessBoard.Button2.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button5.Left = ChessBoard.KingPiece.Left And ChessBoard.Button5.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button6.Left = ChessBoard.KingPiece.Left And ChessBoard.Button6.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button7.Left = ChessBoard.KingPiece.Left And ChessBoard.Button7.Top = ChessBoard.KingPiece.Top) Or (ChessBoard.Button8.Left = ChessBoard.KingPiece.Left And ChessBoard.Button8.Top = ChessBoard.KingPiece.Top) Then
+                ChessBoard.checkingForCheck = True
+                ChessBoard.Piece_Causing_Check = piece
+                Dim counter As Integer
+                TempButtonX_Causing_Check.Add(piece.Left)
+                TempButtonY_Causing_Check.Add(piece.Top)
+                TempButtonX_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
+                counter = 1
+                TempButtonY_Causing_Check.Add(CheckKnightsForCollisionWithKing(counter))
+                ChessBoard.ButtonX_Causing_Check = TempButtonX_Causing_Check
+                ChessBoard.ButtonY_Causing_Check = TempButtonY_Causing_Check          
+            End If
         Next
         Return result
     End Function
     Private Function CheckKnightsForCollisionWithKing(counter)
         Dim ButtonCoordToUse As Integer = Nothing
-        For buttonID = 0 To 7
-            If (ChessBoard.buttonmoves(buttonID).Left = ChessBoard.KingPiece.Left And ChessBoard.buttonmoves(buttonID).Top = ChessBoard.KingPiece.Top) Then
-                If counter = 0 Then
-                    ButtonCoordToUse = ChessBoard.buttonmoves(buttonID).Left
-                    Exit For
-                ElseIf counter = 1 Then
-                    ButtonCoordToUse = ChessBoard.buttonmoves(buttonID).Top
-                    Exit For
-                End If
-
+        If counter = 0 Then
+            If (ChessBoard.Button1.Left = ChessBoard.KingPiece.Left And ChessBoard.Button1.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button1.Left
+            ElseIf (ChessBoard.Button2.Left = ChessBoard.KingPiece.Left And ChessBoard.Button2.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button2.Left
+            ElseIf (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button3.Left
+            ElseIf (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button4.Left
+            ElseIf (ChessBoard.Button5.Left = ChessBoard.KingPiece.Left And ChessBoard.Button5.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button5.Left
+            ElseIf (ChessBoard.Button6.Left = ChessBoard.KingPiece.Left And ChessBoard.Button6.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button6.Left
+            ElseIf (ChessBoard.Button7.Left = ChessBoard.KingPiece.Left And ChessBoard.Button7.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button7.Left
+            ElseIf (ChessBoard.Button8.Left = ChessBoard.KingPiece.Left And ChessBoard.Button8.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button8.Left
             End If
-        Next
+        ElseIf counter = 1 Then
+            If (ChessBoard.Button1.Left = ChessBoard.KingPiece.Left And ChessBoard.Button1.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button1.Top
+            ElseIf (ChessBoard.Button2.Left = ChessBoard.KingPiece.Left And ChessBoard.Button2.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button2.Top
+            ElseIf (ChessBoard.Button3.Left = ChessBoard.KingPiece.Left And ChessBoard.Button3.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button3.Top
+            ElseIf (ChessBoard.Button4.Left = ChessBoard.KingPiece.Left And ChessBoard.Button4.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button4.Top
+            ElseIf (ChessBoard.Button5.Left = ChessBoard.KingPiece.Left And ChessBoard.Button5.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button5.Top
+            ElseIf (ChessBoard.Button6.Left = ChessBoard.KingPiece.Left And ChessBoard.Button6.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button6.Top
+            ElseIf (ChessBoard.Button7.Left = ChessBoard.KingPiece.Left And ChessBoard.Button7.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button7.Top
+            ElseIf (ChessBoard.Button8.Left = ChessBoard.KingPiece.Left And ChessBoard.Button8.Top = ChessBoard.KingPiece.Top) Then
+                ButtonCoordToUse = ChessBoard.Button8.Top
+            End If
+        End If
         Return ButtonCoordToUse
     End Function
     'This checks the king against each move that the other king can possibly make
     Public Function CheckKingsAgainstKing()
-        ChessBoard.buttonmoves(0).Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top)
-        ChessBoard.buttonmoves(1).Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top + 77)
-        ChessBoard.buttonmoves(2).Location = New Point(KingSelectedPieces.Left, KingSelectedPieces.Top + 77)
-        ChessBoard.buttonmoves(3).Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top + 77)
-        ChessBoard.buttonmoves(4).Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top)
-        ChessBoard.buttonmoves(5).Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top - 77)
-        ChessBoard.buttonmoves(6).Location = New Point(KingSelectedPieces.Left, KingSelectedPieces.Top - 77)
-        ChessBoard.buttonmoves(7).Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top - 77)
-        Dim result As Boolean = False
-        For buttonID = 0 To 7
-            If (buttontoUse.Left = ChessBoard.buttonmoves(buttonID).Left And buttontoUse.Top = ChessBoard.buttonmoves(buttonID).Top) Then
-                result = True
-                Exit For
-            End If
-        Next
+        ChessBoard.Button1.Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top)
+        ChessBoard.Button2.Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top + 77)
+        ChessBoard.Button3.Location = New Point(KingSelectedPieces.Left, KingSelectedPieces.Top + 77)
+        ChessBoard.Button4.Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top + 77)
+        ChessBoard.Button5.Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top)
+        ChessBoard.Button6.Location = New Point(KingSelectedPieces.Left + 77, KingSelectedPieces.Top - 77)
+        ChessBoard.Button7.Location = New Point(KingSelectedPieces.Left, KingSelectedPieces.Top - 77)
+        ChessBoard.Button8.Location = New Point(KingSelectedPieces.Left - 77, KingSelectedPieces.Top - 77)
+        Dim result As Boolean = False       
+        If (ChessBoard.buttonsToUse.Left = ChessBoard.Button1.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button1.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button2.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button2.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button3.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button3.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button4.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button4.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button5.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button5.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button6.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button6.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button7.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button7.Top) Or (ChessBoard.buttonsToUse.Left = ChessBoard.Button8.Left And ChessBoard.buttonsToUse.Top = ChessBoard.Button8.Top) Then
+            result = True
+        End If
         Return result
     End Function
     'This is for the rook, bishop and queen and sets the lists that were find out in checkmove from chesspiece and puts them into an array to use for checking

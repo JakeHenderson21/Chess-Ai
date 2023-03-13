@@ -1,7 +1,7 @@
 ﻿Imports System.Threading
 Public Class ChessBoard
     Public Inputweights(383, 255), HiddenWeights(255, 255, 2), OutputWeights(255, 203), HiddenBias(255, 3), OutputBias(203) As Double
-    Public firstAITurn, endGameState, WKinginCheck, BKinginCheck, continueexecuting, PawnRook, PawnBishop, PawnKnight, PawnQueen, CheckingCheck(7), t1Finished, t2Finished As Boolean
+    Public firstAITurn, endGameState, WKinginCheck, BKinginCheck, continueexecuting, PawnRook, PawnBishop, PawnKnight, PawnQueen As Boolean
     Public colourOfPieces, Piece_name, PawnPromotion(15), UsersChoice As String
     Public xcoords, ycoords As Integer
     Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
@@ -9,17 +9,10 @@ Public Class ChessBoard
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
     Public CheckWPawn, CheckBPawn, CheckWRook, CheckBRook, CheckWBishop, CheckBBishop, CheckWKnight, CheckBKnight, CheckWQueen, CheckBQueen As New List(Of Button)
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece, Piece_Causing_Check As Button
-    Public Sub New()
-
-        ' This call is required by the designer.
-        InitializeComponent()
-
-        ' Add any initialization after the InitializeComponent() call.
-        For b = 0 To 71
-            buttonmoves(b) = New Button
-            AddHandler buttonmoves(b).Click, AddressOf buttons_click
-            Me.Controls.Add(buttonmoves(b))
-        Next
+    Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        Me.SetStyle(ControlStyles.UserPaint, True)
+        Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         PawnPromotion(0) = "WPawn"
         PawnPromotion(1) = "WPawn"
         PawnPromotion(2) = "WPawn"
@@ -77,7 +70,78 @@ Public Class ChessBoard
         Blackpieces(13) = BPawn6
         Blackpieces(14) = BPawn7
         Blackpieces(15) = BPawn8
-
+        buttonmoves(0) = Button1
+        buttonmoves(1) = Button2
+        buttonmoves(2) = Button3
+        buttonmoves(3) = Button4
+        buttonmoves(4) = Button5
+        buttonmoves(5) = Button6
+        buttonmoves(6) = Button7
+        buttonmoves(7) = Button8
+        buttonmoves(8) = Button9
+        buttonmoves(9) = Button10
+        buttonmoves(10) = Button11
+        buttonmoves(11) = Button12
+        buttonmoves(12) = Button13
+        buttonmoves(13) = Button14
+        buttonmoves(14) = Button15
+        buttonmoves(15) = Button16
+        buttonmoves(16) = Button17
+        buttonmoves(17) = Button18
+        buttonmoves(18) = Button19
+        buttonmoves(19) = Button20
+        buttonmoves(20) = Button21
+        buttonmoves(21) = Button22
+        buttonmoves(22) = Button23
+        buttonmoves(23) = Button24
+        buttonmoves(24) = Button25
+        buttonmoves(25) = Button26
+        buttonmoves(26) = Button27
+        buttonmoves(27) = Button28
+        buttonmoves(28) = Button29
+        buttonmoves(29) = Button30
+        buttonmoves(30) = Button31
+        buttonmoves(31) = Button32
+        buttonmoves(32) = Button33
+        buttonmoves(33) = Button34
+        buttonmoves(34) = Button35
+        buttonmoves(35) = Button36
+        buttonmoves(36) = Button37
+        buttonmoves(37) = Button38
+        buttonmoves(38) = Button39
+        buttonmoves(39) = Button40
+        buttonmoves(40) = Button41
+        buttonmoves(41) = Button42
+        buttonmoves(42) = Button43
+        buttonmoves(43) = Button44
+        buttonmoves(44) = Button45
+        buttonmoves(45) = Button46
+        buttonmoves(46) = Button47
+        buttonmoves(47) = Button48
+        buttonmoves(48) = Button49
+        buttonmoves(49) = Button50
+        buttonmoves(50) = Button51
+        buttonmoves(51) = Button52
+        buttonmoves(52) = Button53
+        buttonmoves(53) = Button54
+        buttonmoves(54) = Button55
+        buttonmoves(55) = Button56
+        buttonmoves(56) = Button57
+        buttonmoves(57) = Button58
+        buttonmoves(58) = Button59
+        buttonmoves(59) = Button60
+        buttonmoves(60) = Button61
+        buttonmoves(61) = Button62
+        buttonmoves(62) = Button63
+        buttonmoves(63) = Button64
+        buttonmoves(64) = Button65
+        buttonmoves(65) = Button66
+        buttonmoves(66) = Button67
+        buttonmoves(67) = Button68
+        buttonmoves(68) = Button69
+        buttonmoves(69) = Button70
+        buttonmoves(70) = Button71
+        buttonmoves(71) = Button72
         WhiteTime.Start()
         seconds = 0
         seconds1 = 0
@@ -94,8 +158,11 @@ Public Class ChessBoard
             Allpieces(i) = Whitepieces(i)
             Allpieces(i + 16) = Blackpieces(i)
         Next
-
-
+        clearbuttons()
+        blackpiecedisabler()
+        For i = 0 To 7
+            KingButtons(i) = buttonmoves(i + 64)
+        Next
         If MainMenu.AiMode = True Then
             For Each piece In Blackpieces
                 piece.Enabled = False
@@ -105,7 +172,6 @@ Public Class ChessBoard
             CheckWPawn.Add(Whitepieces(i + 8))
             CheckBPawn.Add(Blackpieces(i + 8))
         Next
-
         CheckWRook.Add(WRook1)
         CheckWRook.Add(WRook2)
         CheckBRook.Add(BRook1)
@@ -120,29 +186,6 @@ Public Class ChessBoard
         CheckBKnight.Add(BKnight2)
         CheckWQueen.Add(WQueen)
         CheckBQueen.Add(BQueen)
-
-        For i = 0 To 7
-            KingButtons(i) = buttonmoves(i + 64)
-        Next
-    End Sub
-    Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        For b = 0 To 71  
-            buttonmoves(b).BackgroundImage = System.Drawing.Image.FromFile("GreyCircle.png")
-            buttonmoves(b).BackgroundImageLayout = ImageLayout.Zoom
-            buttonmoves(b).FlatStyle = FlatStyle.Flat
-            buttonmoves(b).Size = New Size(78, 78)
-            buttonmoves(b).BackColor = Color.Transparent
-            buttonmoves(b).Enabled = True
-            buttonmoves(b).Visible = True
-            buttonmoves(b).BringToFront()
-        Next
-        Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
-        Me.SetStyle(ControlStyles.UserPaint, True)
-        Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
-        chess_Board.Hide()
-       
-        clearbuttons()
-        blackpiecedisabler()
     End Sub
     'Removes all buttons from the board
     Public Sub clearbuttons()
@@ -365,7 +408,7 @@ Public Class ChessBoard
         End Select
     End Sub
     'This is the action for all of buttons the user can use to move a piece, it gets the coordinates then clears the buttons and then sets a new loction for the required piece
-    Public Sub buttons_click(sender As Object, e As EventArgs)
+    Public Sub buttons_click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click, Button3.Click, Button4.Click, Button5.Click, Button6.Click, Button7.Click, Button8.Click, Button9.Click, Button10.Click, Button11.Click, Button12.Click, Button13.Click, Button14.Click, Button15.Click, Button16.Click, Button17.Click, Button18.Click, Button19.Click, Button20.Click, Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click, Button27.Click, Button28.Click, Button29.Click, Button30.Click, Button31.Click, Button32.Click, Button33.Click, Button34.Click, Button35.Click, Button36.Click, Button37.Click, Button38.Click, Button39.Click, Button40.Click, Button41.Click, Button42.Click, Button43.Click, Button44.Click, Button45.Click, Button46.Click, Button47.Click, Button48.Click, Button49.Click, Button50.Click, Button51.Click, Button52.Click, Button53.Click, Button54.Click, Button55.Click, Button56.Click, Button57.Click, Button58.Click, Button59.Click, Button60.Click, Button61.Click, Button62.Click, Button63.Click, Button64.Click, Button65.Click, Button66.Click, Button67.Click, Button68.Click, Button69.Click, Button70.Click, Button71.Click, Button72.Click
         Dim buttons = DirectCast(sender, Button)
         xcoords = buttons.Left
         ycoords = buttons.Top
@@ -374,8 +417,9 @@ Public Class ChessBoard
     End Sub
     'This runs at the end of each turn, it goes through each move the opposite side can make to check if the user is in check or checkmate
     Public Sub CheckforCheck()
-        Dim t1 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofCheck))
-        Dim t2 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofCheck))
+        Dim checkTheKing As New Check_Checkmate
+        Dim CheckingCheck(7) As Boolean
+
         If WhiteTime.Enabled = True Then
             KingPiece = WKing
             colourOfPieces = "white"
@@ -383,18 +427,18 @@ Public Class ChessBoard
             colourOfPieces = "black"
             KingPiece = BKing
         End If
-        buttonmoves(64).Location = New Point(KingPiece.Left - 77, KingPiece.Top)
-        buttonmoves(65).Location = New Point(KingPiece.Left - 77, KingPiece.Top + 77)
-        buttonmoves(66).Location = New Point(KingPiece.Left, KingPiece.Top + 77)
-        buttonmoves(67).Location = New Point(KingPiece.Left + 77, KingPiece.Top + 77)
-        buttonmoves(68).Location = New Point(KingPiece.Left + 77, KingPiece.Top)
-        buttonmoves(69).Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
-        buttonmoves(70).Location = New Point(KingPiece.Left, KingPiece.Top - 77)
-        buttonmoves(71).Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
-        t1Finished = False
-        t2Finished = False
-        t1.Start()
-        t2.Start()
+        Button65.Location = New Point(KingPiece.Left - 77, KingPiece.Top)
+        Button66.Location = New Point(KingPiece.Left - 77, KingPiece.Top + 77)
+        Button67.Location = New Point(KingPiece.Left, KingPiece.Top + 77)
+        Button68.Location = New Point(KingPiece.Left + 77, KingPiece.Top + 77)
+        Button69.Location = New Point(KingPiece.Left + 77, KingPiece.Top)
+        Button70.Location = New Point(KingPiece.Left + 77, KingPiece.Top - 77)
+        Button71.Location = New Point(KingPiece.Left, KingPiece.Top - 77)
+        Button72.Location = New Point(KingPiece.Left - 77, KingPiece.Top - 77)
+        For i = 0 To 7
+            buttonsToUse = KingButtons(i)
+            CheckingCheck(i) = checkTheKing.Check_King
+        Next
         If checkingForCheck = True And CheckingCheck(0) = True And CheckingCheck(1) = True And CheckingCheck(2) = True And CheckingCheck(3) = True And CheckingCheck(4) = True And CheckingCheck(5) = True And CheckingCheck(6) = True And CheckingCheck(7) = True Then
             If colourOfPieces = "white" Then
                 MsgBox("White Checkmate!")
@@ -418,82 +462,6 @@ Public Class ChessBoard
             WKinginCheck = False
             BKinginCheck = False
         End If
-        While t1Finished = False Or t2Finished = False
-        End While
-        t1.Abort()
-        t2.Abort()
-    End Sub
-    Public Function GetPawns()
-        Dim result As New List(Of Button)
-        If colourOfPieces = "white" Then
-            result = CheckBPawn
-        Else
-            result = CheckWPawn
-        End If
-        Return result
-    End Function
-    Public Function GetRooks()
-        Dim result As New List(Of Button)
-        If colourOfPieces = "white" Then
-            result = CheckBRook
-        Else
-            result = CheckWRook
-        End If
-        Return result
-    End Function
-    Public Function GetBishops()
-        Dim result As New List(Of Button)
-        If colourOfPieces = "white" Then
-            result = CheckBBishop
-        Else
-            result = CheckWBishop
-        End If
-        Return result
-    End Function
-    Public Function GetKnights()
-        Dim result As New List(Of Button)
-        If colourOfPieces = "white" Then
-            result = CheckBKnight
-        Else
-            result = CheckWKnight
-        End If
-        Return result
-    End Function
-    Public Function GetQueen()
-        Dim result As New List(Of Button)
-        If colourOfPieces = "white" Then
-            result = CheckBQueen
-        Else
-            result = CheckWQueen
-        End If
-        Return result
-    End Function
-    Public Function GetKing()
-        Dim result As Button
-        If colourOfPieces = "white" Then
-            result = BKing
-        Else
-            result = WKing
-        End If
-        Return result
-    End Function
-    Private Sub FirstHalfofCheck()
-        Dim checkTheKing As New Check_Checkmate(buttonsToUse)
-        checkTheKing.SetAllPieces(Allpieces)
-        For i = 0 To 3
-            checkTheKing.SetButtontoUse(KingButtons(i))
-            CheckingCheck(i) = checkTheKing.Check_King
-        Next
-        t1Finished = True
-    End Sub
-    Private Sub SecondHalfofCheck()
-        Dim checkTheKing As New Check_Checkmate(buttonsToUse)
-        checkTheKing.SetAllPieces(Allpieces)
-        For i = 4 To 7
-            checkTheKing.SetButtontoUse(KingButtons(i))
-            CheckingCheck(i) = checkTheKing.Check_King
-        Next
-        t2Finished = True
     End Sub
     Private Sub endgame()
         WhiteTime.Stop()
