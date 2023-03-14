@@ -4,11 +4,21 @@ Public Class ChessBoard
     Public firstAITurn, endGameState, WKinginCheck, BKinginCheck, continueexecuting, PawnRook, PawnBishop, PawnKnight, PawnQueen As Boolean
     Public colourOfPieces, Piece_name, PawnPromotion(15), UsersChoice As String
     Public xcoords, ycoords As Integer
+    Private Colour As ChessPiece.Chesscolour
     Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
     Public seconds, seconds1, minutes, minutes1, FirstCheckNumber, counter, WCountTaken, BCountTaken, WhiteSideValue, BlackSideValue As Integer
     Public FirstCheck(15), CheckMode, complete, checkingForCheck, firstRound, WkingInStationaryPositon, BkingInStationaryPosition, AiTurn, checkKing As Boolean
     Public CheckWPawn, CheckBPawn, CheckWRook, CheckBRook, CheckWBishop, CheckBBishop, CheckWKnight, CheckBKnight, CheckWQueen, CheckBQueen As New List(Of Button)
     Public Whitepieces(15), Blackpieces(15), chess_piece, buttonmoves(71), Allpieces(31), WPiecesTaken(15), BPiecesTaken(15), KingButtons(7), buttonsToUse, KingPiece, Piece_Causing_Check As Button
+    Public Sub New()
+        ' This call is required by the designer.
+        InitializeComponent()
+
+        ' Add any initialization after the InitializeComponent() call.
+        For i = 0 To 71
+            buttonmoves(i) = DirectCast(Controls.Find("button" & i + 1, True)(0), Button)
+        Next
+    End Sub
     Private Sub ChessBoard_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
         Me.SetStyle(ControlStyles.UserPaint, True)
@@ -70,78 +80,10 @@ Public Class ChessBoard
         Blackpieces(13) = BPawn6
         Blackpieces(14) = BPawn7
         Blackpieces(15) = BPawn8
-        buttonmoves(0) = Button1
-        buttonmoves(1) = Button2
-        buttonmoves(2) = Button3
-        buttonmoves(3) = Button4
-        buttonmoves(4) = Button5
-        buttonmoves(5) = Button6
-        buttonmoves(6) = Button7
-        buttonmoves(7) = Button8
-        buttonmoves(8) = Button9
-        buttonmoves(9) = Button10
-        buttonmoves(10) = Button11
-        buttonmoves(11) = Button12
-        buttonmoves(12) = Button13
-        buttonmoves(13) = Button14
-        buttonmoves(14) = Button15
-        buttonmoves(15) = Button16
-        buttonmoves(16) = Button17
-        buttonmoves(17) = Button18
-        buttonmoves(18) = Button19
-        buttonmoves(19) = Button20
-        buttonmoves(20) = Button21
-        buttonmoves(21) = Button22
-        buttonmoves(22) = Button23
-        buttonmoves(23) = Button24
-        buttonmoves(24) = Button25
-        buttonmoves(25) = Button26
-        buttonmoves(26) = Button27
-        buttonmoves(27) = Button28
-        buttonmoves(28) = Button29
-        buttonmoves(29) = Button30
-        buttonmoves(30) = Button31
-        buttonmoves(31) = Button32
-        buttonmoves(32) = Button33
-        buttonmoves(33) = Button34
-        buttonmoves(34) = Button35
-        buttonmoves(35) = Button36
-        buttonmoves(36) = Button37
-        buttonmoves(37) = Button38
-        buttonmoves(38) = Button39
-        buttonmoves(39) = Button40
-        buttonmoves(40) = Button41
-        buttonmoves(41) = Button42
-        buttonmoves(42) = Button43
-        buttonmoves(43) = Button44
-        buttonmoves(44) = Button45
-        buttonmoves(45) = Button46
-        buttonmoves(46) = Button47
-        buttonmoves(47) = Button48
-        buttonmoves(48) = Button49
-        buttonmoves(49) = Button50
-        buttonmoves(50) = Button51
-        buttonmoves(51) = Button52
-        buttonmoves(52) = Button53
-        buttonmoves(53) = Button54
-        buttonmoves(54) = Button55
-        buttonmoves(55) = Button56
-        buttonmoves(56) = Button57
-        buttonmoves(57) = Button58
-        buttonmoves(58) = Button59
-        buttonmoves(59) = Button60
-        buttonmoves(60) = Button61
-        buttonmoves(61) = Button62
-        buttonmoves(62) = Button63
-        buttonmoves(63) = Button64
-        buttonmoves(64) = Button65
-        buttonmoves(65) = Button66
-        buttonmoves(66) = Button67
-        buttonmoves(67) = Button68
-        buttonmoves(68) = Button69
-        buttonmoves(69) = Button70
-        buttonmoves(70) = Button71
-        buttonmoves(71) = Button72
+       
+        For Each b In buttonmoves
+            AddHandler b.Click, AddressOf buttons_click
+        Next
         WhiteTime.Start()
         seconds = 0
         seconds1 = 0
@@ -157,6 +99,9 @@ Public Class ChessBoard
         For i = 0 To 15
             Allpieces(i) = Whitepieces(i)
             Allpieces(i + 16) = Blackpieces(i)
+        Next
+        For Each piece In Allpieces
+            AddHandler piece.Click, AddressOf pieces_click
         Next
         clearbuttons()
         blackpiecedisabler()
@@ -276,99 +221,48 @@ Public Class ChessBoard
             count = count + 1
         Next
     End Sub
-    'When WQueen is clicked it goes through the checking system of where it can move
-    Private Sub WQueen_Click(sender As Object, e As EventArgs) Handles WQueen.Click
-        CheckMode = False
-        Dim queen As New Queen(WQueen.Left, WQueen.Top, ChessPiece.Chesscolour.white, WQueen)
-        clearbuttons()
-        queen.SetColour()
-        queen.SetLoopBoundaries()
-        queen.CheckMoves()
-        chess_piece = WQueen
-        colourOfPieces = "white"
-    End Sub
-    'When BQueen is clicked it goes through the checking system of where it can move
-    Private Sub BQueen_Click(sender As Object, e As EventArgs) Handles BQueen.Click
-        CheckMode = False
-        Dim queen As New Queen(BQueen.Left, BQueen.Top, ChessPiece.Chesscolour.black, BQueen)
-        ButtonX_Causing_Check = ButtonX_Causing_Check
-        clearbuttons()
-        queen.SetColour()
-        queen.SetLoopBoundaries()
-        queen.CheckMoves()
-        chess_piece = BQueen
-        colourOfPieces = "black"
-    End Sub
-
-    'When WKing is clicked it goes through the checking system of where it can move
-    Private Sub Wking_Click(sender As Object, e As EventArgs) Handles WKing.Click
-        CheckMode = False
-        Dim kings As New King(WKing.Left, WKing.Top, ChessPiece.Chesscolour.white, WKing)
-        clearbuttons()
-        kings.SetColour()
-        kings.CheckMoves()
-        chess_piece = WKing
-        colourOfPieces = "white"
-    End Sub
-    'When BKing is clicked it goes through the checking system of where it can move
-    Private Sub Bking_Click(sender As Object, e As EventArgs) Handles BKing.Click
-        CheckMode = False
-        Dim kings As New King(BKing.Left, BKing.Top, ChessPiece.Chesscolour.black, BKing)
-        clearbuttons()
-        kings.SetColour()
-        kings.CheckMoves()
-        chess_piece = BKing
-        colourOfPieces = "black"
-    End Sub
-    Private Sub pieces_click(sender As Object, e As EventArgs) Handles BPawn1.Click, BPawn2.Click, BPawn3.Click, BPawn4.Click, BPawn5.Click, BPawn6.Click, BPawn7.Click, BPawn8.Click, WPawn1.Click, WPawn2.Click, WPawn3.Click, WPawn4.Click, WPawn5.Click, WPawn6.Click, WPawn7.Click, WPawn8.Click, BBishop1.Click, BBishop2.Click, WBishop1.Click, WBishop2.Click, BRook1.Click, BRook2.Click, WRook1.Click, WRook2.Click, BKnight1.Click, BKnight2.Click, WKnight1.Click, Wknight2.Click
+    Private Sub pieces_click(sender As Object, e As EventArgs)
         CheckMode = False
         Dim piece = DirectCast(sender, Button)
-        Piece_Selector(piece)
-        chess_piece = piece
-        If piece Is BPawn1 Or piece Is BPawn2 Or piece Is BPawn3 Or piece Is BPawn4 Or piece Is BPawn5 Or piece Is BPawn6 Or piece Is BPawn7 Or piece Is BPawn8 Or piece Is BRook1 Or piece Is BRook2 Or piece Is BBishop1 Or piece Is BBishop2 Or piece Is BKnight1 Or piece Is BKnight2 Then
+        If Blackpieces.Contains(piece) Then
             colourOfPieces = "black"
+            Colour = ChessPiece.Chesscolour.black
         Else
             colourOfPieces = "white"
+            Colour = ChessPiece.Chesscolour.white
         End If
+        Piece_Selector(piece)
+        chess_piece = piece
+      
     End Sub
     Private Sub Piece_Selector(piece)
+        clearbuttons()
         If piece Is BPawn1 Or piece Is BPawn2 Or piece Is BPawn3 Or piece Is BPawn4 Or piece Is BPawn5 Or piece Is BPawn6 Or piece Is BPawn7 Or piece Is BPawn8 Or piece Is WPawn1 Or piece Is WPawn2 Or piece Is WPawn3 Or piece Is WPawn4 Or piece Is WPawn5 Or piece Is WPawn6 Or piece Is WPawn7 Or piece Is WPawn8 Then
             Pawn_CheckFirstNumber_Selector(piece)
             Promotion(FirstCheckNumber, piece)
-        ElseIf piece Is BRook1 Or piece Is BRook2 Then
-            Dim rooks As New Rook(piece.Left, piece.Top, ChessPiece.Chesscolour.black, piece)
-            clearbuttons()
+        ElseIf piece Is BRook1 Or piece Is BRook2 Or piece Is WRook1 Or piece Is WRook2 Then
+            Dim rooks As New Rook(piece.Left, piece.Top, Colour, piece)
             rooks.SetColour()
             rooks.SetLoopBoundaries()
             rooks.CheckMoves()
-        ElseIf piece Is WRook1 Or piece Is WRook2 Then
-            Dim rooks As New Rook(piece.Left, piece.Top, ChessPiece.Chesscolour.white, piece)
-            clearbuttons()
-            rooks.SetColour()
-            rooks.SetLoopBoundaries()
-            rooks.CheckMoves()
-        ElseIf piece Is BBishop1 Or piece Is BBishop2 Then
-            Dim Bishops As New Bishop(piece.Left, piece.Top, ChessPiece.Chesscolour.black, piece)
-            clearbuttons()
+        ElseIf piece Is BBishop1 Or piece Is BBishop2 Or piece Is WBishop1 Or piece Is WBishop2 Then
+            Dim Bishops As New Bishop(piece.Left, piece.Top, Colour, piece)
             Bishops.SetColour()
             Bishops.SetLoopBoundaries()
             Bishops.CheckMoves()
-        ElseIf piece Is WBishop1 Or piece Is WBishop2 Then
-            Dim Bishops As New Bishop(piece.Left, piece.Top, ChessPiece.Chesscolour.white, piece)
-            clearbuttons()
-            Bishops.SetColour()
-            Bishops.SetLoopBoundaries()
-            Bishops.CheckMoves()
-        ElseIf piece Is BKnight1 Or piece Is BKnight2 Then
-            Dim knights As New Knight(piece.Left, piece.Top, ChessPiece.Chesscolour.black, piece)
-            clearbuttons()
+        ElseIf piece Is BKnight1 Or piece Is BKnight2 Or piece Is WKnight1 Or piece Is Wknight2 Then
+            Dim knights As New Knight(piece.Left, piece.Top, Colour, piece)
             knights.SetColour()
             knights.CheckMoves()
-        ElseIf piece Is WKnight1 Or piece Is Wknight2 Then
-            Dim knights As New Knight(piece.Left, piece.Top, ChessPiece.Chesscolour.white, piece)
-            clearbuttons()
-            knights.SetColour()
-            knights.CheckMoves()
+        ElseIf piece Is BKing Or piece Is WKing Then
+            Dim kings As New King(piece.Left, piece.Top, Colour, piece)
+            kings.SetColour()
+            kings.CheckMoves()
+        ElseIf piece Is BQueen Or piece Is WQueen Then
+            Dim queen As New Queen(piece.Left, piece.Top, Colour, piece)
+            queen.SetColour()
+            queen.SetLoopBoundaries()
+            queen.CheckMoves()
         End If
     End Sub
     Public Sub Pawn_CheckFirstNumber_Selector(piece)
@@ -408,7 +302,7 @@ Public Class ChessBoard
         End Select
     End Sub
     'This is the action for all of buttons the user can use to move a piece, it gets the coordinates then clears the buttons and then sets a new loction for the required piece
-    Public Sub buttons_click(sender As Object, e As EventArgs) Handles Button1.Click, Button2.Click, Button3.Click, Button4.Click, Button5.Click, Button6.Click, Button7.Click, Button8.Click, Button9.Click, Button10.Click, Button11.Click, Button12.Click, Button13.Click, Button14.Click, Button15.Click, Button16.Click, Button17.Click, Button18.Click, Button19.Click, Button20.Click, Button21.Click, Button22.Click, Button23.Click, Button24.Click, Button25.Click, Button26.Click, Button27.Click, Button28.Click, Button29.Click, Button30.Click, Button31.Click, Button32.Click, Button33.Click, Button34.Click, Button35.Click, Button36.Click, Button37.Click, Button38.Click, Button39.Click, Button40.Click, Button41.Click, Button42.Click, Button43.Click, Button44.Click, Button45.Click, Button46.Click, Button47.Click, Button48.Click, Button49.Click, Button50.Click, Button51.Click, Button52.Click, Button53.Click, Button54.Click, Button55.Click, Button56.Click, Button57.Click, Button58.Click, Button59.Click, Button60.Click, Button61.Click, Button62.Click, Button63.Click, Button64.Click, Button65.Click, Button66.Click, Button67.Click, Button68.Click, Button69.Click, Button70.Click, Button71.Click, Button72.Click
+    Public Sub buttons_click(sender As Object, e As EventArgs)
         Dim buttons = DirectCast(sender, Button)
         xcoords = buttons.Left
         ycoords = buttons.Top

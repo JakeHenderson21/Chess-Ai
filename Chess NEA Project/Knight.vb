@@ -35,65 +35,20 @@
         Next
         If ChessBoard.CheckMode = False Then
             If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                If knightmoves(0) = True Then
-                    PieceButtonToCheck = ChessBoard.Button1
-                    PieceMoveWhenChecked()
-                End If
-                If knightmoves(1) = True Then
-                    PieceButtonToCheck = ChessBoard.Button2
-                    PieceMoveWhenChecked()
-                End If
-                If knightmoves(2) = True Then
-                    PieceButtonToCheck = ChessBoard.Button3
-                    PieceMoveWhenChecked()
-                End If
-                If knightmoves(3) = True Then
-                    PieceButtonToCheck = ChessBoard.Button4
-                    PieceMoveWhenChecked()
-                End If
-                If knightmoves(4) = True Then
-                    PieceButtonToCheck = ChessBoard.Button5
-                    PieceMoveWhenChecked()
-                End If
-                If knightmoves(5) = True Then
-                    PieceButtonToCheck = ChessBoard.Button6
-                    PieceMoveWhenChecked()
-                End If
-                If knightmoves(6) = True Then
-                    PieceButtonToCheck = ChessBoard.Button7
-                    PieceMoveWhenChecked()
-                End If
-                If knightmoves(7) = True Then
-                    PieceButtonToCheck = ChessBoard.Button8
-                    PieceMoveWhenChecked()
-                End If
+                For i = 0 To 7
+                    If knightmoves(i) = True Then
+                        PieceButtonToCheck = ChessBoard.buttonmoves(i)
+                        PieceMoveWhenChecked()
+                    End If
+                Next
             Else
-                If knightmoves(0) = True Then
-                    ChessBoard.Button1.Show()
-                End If
-                If knightmoves(1) = True Then
-                    ChessBoard.Button2.Show()
-                End If
-                If knightmoves(2) = True Then
-                    ChessBoard.Button3.Show()
-                End If
-                If knightmoves(3) = True Then
-                    ChessBoard.Button4.Show()
-                End If
-                If knightmoves(4) = True Then
-                    ChessBoard.Button5.Show()
-                End If
-                If knightmoves(5) = True Then
-                    ChessBoard.Button6.Show()
-                End If
-                If knightmoves(6) = True Then
-                    ChessBoard.Button7.Show()
-                End If
-                If knightmoves(7) = True Then
-                    ChessBoard.Button8.Show()
-                End If
+                For i = 0 To 7
+                    If knightmoves(i) = True Then
+                        ChessBoard.buttonmoves(i).Show()
+                    End If
+                Next
             End If
-            For Each Button In buttonMoves
+            For Each Button In ChessBoard.buttonmoves
                 If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                     Button.Hide()
                 End If

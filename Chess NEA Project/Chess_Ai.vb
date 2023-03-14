@@ -194,9 +194,6 @@ Public Class Chess_Ai
         sw.Start()
         Dim counter As Integer
         For l = 0 To 50
-            If l = 50 Then
-                l = l
-            End If
             Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
             Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
             'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
@@ -325,9 +322,6 @@ Public Class Chess_Ai
         sw.Start()
         Dim counter As Integer
         For q = 0 To 50
-            If q = 50 Then
-                q = q
-            End If
             Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
             Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
             'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
@@ -777,9 +771,6 @@ Public Class Chess_Ai
         For Each move In LegalMoveNames
             CheckXCoordsButton = LegalButtonXCoordinates(AICheckerCount) * 77
             CheckYCoordsButton = LegalButtonYCoordinates(AICheckerCount) * 77
-            FileOpen(1, "tester.txt", OpenMode.Append)
-            PrintLine(1, move.Name & " " & LegalButtonNames(AICheckerCount).Name & " " & CheckXCoordsButton & " " & CheckYCoordsButton)
-            FileClose(1)
             For Each piece In ChessBoard.Whitepieces
                 If move Is ChessBoard.BPawn4 Then
                     Value = Value
@@ -797,9 +788,6 @@ Public Class Chess_Ai
             BestScoreName = LegalMoveNames(randomnumber.Next(0, LegalMoveNames.Count))
             BestScoreButton = LegalButtonNames(LegalMoveNames.IndexOf(BestScoreName))
         End If
-        FileOpen(1, "testfile.txt", OpenMode.Append)
-        PrintLine(1, BestScoreName.Name & " " & BestScoreButton.Name)
-        FileClose(1)
     End Sub
     Public Sub CheckingScoreValue(value, move)
         If value > BestScoreMove Then

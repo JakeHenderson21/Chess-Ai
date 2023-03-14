@@ -8,7 +8,7 @@
     ' uses different buttons inorder to not mess up the algorithm, then it checks whether or not to display the buttons based on the results of the algorithm
     Public Overrides Sub CheckMoves()   
         Dim temppostionscore As Integer
-        Dim checktheking As New Check_Checkmate
+        Dim checktheking As New Check_Checkmate()
         Dim checkplaceholder(7) As Boolean
         ChessBoard.KingPiece = piece
         If ChessBoard.CheckMode = True Then
@@ -79,7 +79,7 @@
             If kingmoves(7) = True And checkplaceholder(7) = False Then
                 ChessBoard.Button72.Show()
             End If
-            For Each Button In buttonMoves
+            For Each Button In ChessBoard.buttonmoves
                 If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                     Button.Hide()
                 End If
