@@ -2,11 +2,11 @@
 Imports System.IO
 Public Class Chess_Ai
     Private LegalMoveNames, LegalButtonNames As New List(Of Button)
-    Private LegalMoveXCoordinates, LegalMoveYCoordinates, LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
+    Private LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
     Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade As Integer
     Private InputLayer(383), SigMoidInputLayer(383) As Integer
-    Private HiddenLayer(255, 3), SigMoidHiddenLayer(255, 3) As Double
-    Private Outputlayer(203), SigMoidOutputLayer(203), totalOutputLayer As Double
+    Private HiddenLayer(255, 3) As Double
+    Private Outputlayer(203), totalOutputLayer As Double
     Public InputToHiddenLayerWeights(383, 255) As Double
     Public HiddenLayerWeights(255, 255, 2) As Double
     Public HiddenToOutputLayerWeights(255, 203) As Double
@@ -14,7 +14,7 @@ Public Class Chess_Ai
     Public OutputBias(203) As Double
     Private FirstCheckNumber As Integer
     Private StartOfLoop, EndofLoop As Integer
-    Private CostFunctionTotal, CostFunctionAverage, CFInputtoHiddenlayerWeightChanges(383, 255), CFHiddenLayerWeightChanges(255, 255, 2), CFHiddenToOutputLayerWeightChanges(255, 203), CFHiddenBiasChanges(255, 3), CFOutputBiasChanges(203) As Double
+    Private CFInputtoHiddenlayerWeightChanges(383, 255), CFHiddenLayerWeightChanges(255, 255, 2), CFHiddenToOutputLayerWeightChanges(255, 203), CFHiddenBiasChanges(255, 3), CFOutputBiasChanges(203) As Double
     Private InputtoHiddenLayerCalculations(383, 255), HiddenLayerCalculations(255, 255, 2), HiddentoOutputLayerCalculations(203), HiddenBiasCalculations(255, 3), OutputCalculation(203) As Double
     Private BestValue As Integer
     Private AlreadyChecked, Initialised, found As Boolean
@@ -24,7 +24,7 @@ Public Class Chess_Ai
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
     Private T1Finished, T2Finished, T3Finished, T4Finished, T5Finished, T6Finished, T7Finished, T8Finished As Boolean
-    Const LearningRate As Double = 1
+    Const LearningRate As Double = 10000
     Private threadingInProgress As Boolean
     Private TECWRO(203) As Double      'Total Error Change With Respect to Output
     Private OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
@@ -125,10 +125,7 @@ Public Class Chess_Ai
     End Function
     Public Sub CostFunctionCalculation()
         Dim counter As Integer
-        Dim t1 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfOfCalculations))
-        Dim t2 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfOfCalculations))
-        Dim t7 As Thread = New Thread(New ThreadStart(AddressOf ThirdPartOfCalculations))
-        Dim t8 As Thread = New Thread(New ThreadStart(AddressOf FourthPartOfCalculations))
+
         Dim sw As New Stopwatch
         If threadingInProgress = False Then
             T1Finished = False
@@ -167,62 +164,37 @@ Public Class Chess_Ai
             Next
             counter = 0
         Next
-        If threadingInProgress = False Then
-            t1.Start()
-            t2.Start()
-            t7.Start()
-            t8.Start()
-        Else
-            threadingInProgress = True
-        End If
-        T1Finished = False
-        T2Finished = False
-        T7Finished = False
-        T8Finished = False
-        While T1Finished = False Or T2Finished = False Or T7Finished = False Or T8Finished = False
+        For i = 0 To 255
+
+        Next
+        For i = 0 To 255
+            For k = 0 To 203
+                CFHiddenToOutputLayerWeightChanges(i, k) = HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
+                CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, counter, 2) * HiddenLayer(i, 2)
+                CFHiddenLayerWeightChanges(i, counter, 1) += HiddenLayerCalculations(i, counter, 1) * HiddenLayer(i, 1)
+                CFHiddenLayerWeightChanges(i, counter, 0) += HiddenLayerCalculations(i, counter, 0) * HiddenLayer(i, 0)
+                CFOutputBiasChanges(k) += TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
+                CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
+                CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
+                CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
+                counter += 1
+            Next
+            counter = 0
+        Next
+        Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
+        Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
+        T3Finished = False
+        T4Finished = False
+        t3.Start()
+        t4.Start()
+        While T3Finished <> True And T4Finished <> True
         End While
-        t1.Abort()
-        t2.Abort()
-        t7.Abort()
-        t8.Abort()
+       
         sw.Stop()
         threadingInProgress = False
         'MsgBox(sw.ElapsedMilliseconds)
     End Sub
-    Private Sub FirstHalfOfCalculations()
-        Dim sw As New Stopwatch
-        sw.Start()
-        Dim counter As Integer
-        For l = 0 To 50
-            Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
-            Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
-            'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
-            For i = 0 To 255
-                For k = 0 To 203
-                    CFHiddenToOutputLayerWeightChanges(i, k) = HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
-                    CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, counter, 2) * HiddenLayer(i, 2)
-                    CFHiddenLayerWeightChanges(i, counter, 1) += HiddenLayerCalculations(i, counter, 1) * HiddenLayer(i, 1)
-                    CFHiddenLayerWeightChanges(i, counter, 0) += HiddenLayerCalculations(i, counter, 0) * HiddenLayer(i, 0)
-                    CFOutputBiasChanges(k) += TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
-                    CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
-                    CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
-                    CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
-                    counter += 1
-                Next
-                counter = 0
-            Next
-            'H^0 to input Weight and last hidden bias Changes 
-            T3Finished = False
-            T4Finished = False
-            t3.Start()
-            t4.Start()
-            While T3Finished <> True And T4Finished <> True
-            End While
-        Next
-        sw.Stop()
-        'MsgBox(sw.ElapsedMilliseconds)
-        T1Finished = True
-    End Sub
+
     Private Sub FirstHalfofChangesCalculations()
         Dim counter As Integer
         For j = 0 To 191
@@ -251,104 +223,7 @@ Public Class Chess_Ai
         Next
         T4Finished = True
     End Sub
-    Private Sub SecondHalfOfCalculations()
-        Dim counter As Integer
-        For p = 0 To 50
-            If p = 50 Then
-                p = p
-            End If
-            Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
-            Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
-            'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
-            For i = 0 To 255
-                For k = 0 To 203
-                    CFHiddenToOutputLayerWeightChanges(i, k) = HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
-                    CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, counter, 2) * HiddenLayer(i, 2)
-                    CFHiddenLayerWeightChanges(i, counter, 1) += HiddenLayerCalculations(i, counter, 1) * HiddenLayer(i, 1)
-                    CFHiddenLayerWeightChanges(i, counter, 0) += HiddenLayerCalculations(i, counter, 0) * HiddenLayer(i, 0)
-                    CFOutputBiasChanges(k) += TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
-                    CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
-                    CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
-                    CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
-                    counter += 1
-                Next
-                counter = 0
-            Next
-            'H^0 to input Weight and last hidden bias Changes                                 
-            T3Finished = False
-            T4Finished = False
-            t3.Start()
-            t4.Start()
-            While T3Finished <> True And T4Finished <> True
-            End While
-        Next
-        T2Finished = True
-    End Sub
-    Private Sub ThirdPartOfCalculations()
-        Dim counter As Integer
-        For r = 0 To 50
-            If r = 50 Then
-                r = r
-            End If
-            Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
-            Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
-            'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
-            For i = 0 To 255
-                For k = 0 To 203
-                    CFHiddenToOutputLayerWeightChanges(i, k) = HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
-                    CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, counter, 2) * HiddenLayer(i, 2)
-                    CFHiddenLayerWeightChanges(i, counter, 1) += HiddenLayerCalculations(i, counter, 1) * HiddenLayer(i, 1)
-                    CFHiddenLayerWeightChanges(i, counter, 0) += HiddenLayerCalculations(i, counter, 0) * HiddenLayer(i, 0)
-                    CFOutputBiasChanges(k) += TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
-                    CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
-                    CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
-                    CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
-                    counter += 1
-                Next
-                counter = 0
-            Next
-            'H^0 to input Weight and last hidden bias Changes 
-            T3Finished = False
-            T4Finished = False
-            t3.Start()
-            t4.Start()
-            While T3Finished <> True And T4Finished <> True
-            End While
-        Next
-        T7Finished = True
-    End Sub
-    Private Sub FourthPartOfCalculations()
-        Dim sw As New Stopwatch
-        sw.Start()
-        Dim counter As Integer
-        For q = 0 To 50
-            Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
-            Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
-            'Hidden to Output and H^3 to H^0 Weight and hidden/output bias Changes
-            For i = 0 To 255
-                For k = 0 To 203
-                    CFHiddenToOutputLayerWeightChanges(i, k) = HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
-                    CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, counter, 2) * HiddenLayer(i, 2)
-                    CFHiddenLayerWeightChanges(i, counter, 1) += HiddenLayerCalculations(i, counter, 1) * HiddenLayer(i, 1)
-                    CFHiddenLayerWeightChanges(i, counter, 0) += HiddenLayerCalculations(i, counter, 0) * HiddenLayer(i, 0)
-                    CFOutputBiasChanges(k) = TECWRO(k) * OCWRTN(k) * HiddenLayer(i, 3)
-                    CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
-                    CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
-                    CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
-                    counter += 1
-                Next
-                counter = 0
-            Next
-            'H^0 to input Weight and last hidden bias Changes 
-            T3Finished = False
-            T4Finished = False
-            t3.Start()
-            t4.Start()
-            While T3Finished <> True And T4Finished <> True
-            End While
-        Next
-        T8Finished = True
-    End Sub
+    
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
         If PieceOptions(i) Is BestScoreName Then
@@ -568,11 +443,10 @@ Public Class Chess_Ai
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
                 Next
                 HiddenLayer(i, 0) -= HiddenBias(i, 0)
-                If i = 1 Then
-                    i = i
+                If HiddenLayer(i, 0) < 0 Then
+                    HiddenLayer(i, 0) *= 0.01
                 End If
-                SigMoidHiddenLayer(i, 0) = SigMoidDerativeCalculation(HiddenLayer(i, 0))
-                HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
+                'HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
             Next
             For k = 1 To 3
                 For i = 0 To 255
@@ -580,8 +454,10 @@ Public Class Chess_Ai
                         HiddenLayer(i, k) += HiddenLayer(j, k - 1) * HiddenLayerWeights(j, i, k - 1)
                     Next
                     HiddenLayer(i, k) -= HiddenBias(i, k)
-                    SigMoidHiddenLayer(i, k) = SigMoidDerativeCalculation(HiddenLayer(i, k))
-                    HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
+                    If HiddenLayer(i, k) < 0 Then
+                        HiddenLayer(i, k) *= 0.01
+                    End If
+                    'HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
                 Next
             Next
             For i = 0 To 203
@@ -589,7 +465,10 @@ Public Class Chess_Ai
                     Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
                 Next
                 Outputlayer(i) -= OutputBias(i)
-                Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
+                If Outputlayer(i) < 0 Then
+                    Outputlayer(i) *= 0.01
+                End If
+                'Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
                 totalOutputLayer += Outputlayer(i)
             Next
             For i = 0 To 203
