@@ -3,7 +3,7 @@ Imports System.IO
 Public Class Chess_Ai
     Private LegalMoveNames, LegalButtonNames As New List(Of Button)
     Private LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
-    Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade As Integer
+    Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade, PreAiCount As Integer
     Private InputLayer(383), SigMoidInputLayer(383) As Integer
     Private HiddenLayer(255, 3) As Double
     Private Outputlayer(203), totalOutputLayer As Double
@@ -164,14 +164,18 @@ Public Class Chess_Ai
         Next
         For i = 0 To 255       
             For k = 0 To 203
-                CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
-                CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
-                CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
                 For l = 0 To 203
                     CFHiddenToOutputLayerWeightChanges(i, k) += HiddentoOutputLayerCalculations(l) * HiddenLayer(i, 3)
                     CFOutputBiasChanges(k) += HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
-
                 Next
+                CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
+                CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
+                CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
+            Next
+        Next
+        For i = 0 To 255
+            For j = 0 To 383
+                CFHiddenBiasChanges(i, 0) += HiddenBiasCalculations(i, 0) * OHLWRTSHLI0(i) * InputLayer(j)
             Next
         Next
         For i = 0 To 255
@@ -201,13 +205,10 @@ Public Class Chess_Ai
         Dim counter As Integer
         For j = 0 To 191
             For i = 0 To 255
-                For k = 0 To 203
-                    CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
-                    CFHiddenBiasChanges(i, 0) += HiddenBiasCalculations(i, 0) * OHLWRTSHLI0(i) * InputLayer(j)
-                    counter += 1
-                Next
-                counter = 0
+                CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
+                counter += 1
             Next
+            counter = 0
         Next
         T3Finished = True
     End Sub
@@ -215,13 +216,10 @@ Public Class Chess_Ai
         Dim counter As Integer
         For j = 192 To 383
             For i = 0 To 255
-                For k = 0 To 203
-                    CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
-                    CFHiddenBiasChanges(i, 0) += HiddenBiasCalculations(i, 1) * OHLWRTSHLI0(i) * InputLayer(j)
-                    counter += 1
-                Next
-                counter = 0
+                CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
+                counter += 1
             Next
+            counter = 0
         Next
         T4Finished = True
     End Sub
@@ -391,6 +389,7 @@ Public Class Chess_Ai
         FileClose(7)
     End Sub
     Public Sub NextMoveDecider()
+        Dim fgh As Integer
         found = False
         AlreadyChecked = False
         While found = False
@@ -418,43 +417,41 @@ Public Class Chess_Ai
             End If
             Dim PieceChecker As New List(Of Button)
             Dim AICount As Integer = 0
-            For xcoord = 0 To 7
-                For ycoord = 0 To 7
-                    For PieceType = 0 To 5
-                        PieceChecker = PieceTypeIdentifier(PieceType)
-                        PieceChecker.ToArray()
-                        For Each piece In PieceChecker
-                            If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord And PieceType = 6 Then
-                                InputLayer(AICount) = -1
-                            ElseIf piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
+            For PieceType = 0 To 5
+                PieceChecker = PieceTypeIdentifier(PieceType)
+                For Each piece In PieceChecker
+                    For xcoord = 0 To 7
+                        For ycoord = 0 To 7
+                            If piece.Left / 77 = xcoord And piece.Top / 77 = ycoord Then
                                 InputLayer(AICount) = 1
                             Else
-                                InputLayer(AICount) = 0
-                            End If
-                            If AICount >= 383 Then
-                            Else
+                                If InputLayer(AICount) = 1 Then
+                                Else
+                                    InputLayer(AICount) = 0
+                                End If
+                            End If             
                                 AICount += 1
-                            End If
-                        Next
-                        PieceChecker.Clear()
+                        Next                       
                     Next
+
+                    AICount -= 64
+
                 Next
+                AICount += 64
+                PieceChecker.Clear()
             Next
+            AICount = AICount
+            If fgh = 33 Then
+                fgh = fgh
+            End If
+            fgh = fgh
             For i = 0 To 255
 
                 For j = 0 To 383
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
                 Next
                 HiddenLayer(i, 0) -= HiddenBias(i, 0)
-                If HiddenLayer(i, 0) < 0 Then
-                    HiddenLayer(i, 0) *= 0.01
-                End If
-                ''''''''''''''''''''''''''''''''''''''''
-                If HiddenLayer(i, 0).ToString = "NaN" Then
-                    i = i
-                End If
-                ''''''''''''''''''''''''''''''''''''''''
-                'HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
+                HiddenLayer(i, 0) = SigmoidCalculation(HiddenLayer(i, 0))
             Next
             For k = 1 To 3
                 For i = 0 To 255
@@ -462,15 +459,7 @@ Public Class Chess_Ai
                         HiddenLayer(i, k) += HiddenLayer(j, k - 1) * HiddenLayerWeights(j, i, k - 1)
                     Next
                     HiddenLayer(i, k) -= HiddenBias(i, k)
-                    If HiddenLayer(i, k) < 0 Then
-                        HiddenLayer(i, k) *= 0.01
-                    End If
-                    ''''''''''''''''''''''''''''''''''''''''
-                    If HiddenLayer(i, k).ToString = "NaN" Then
-                        i = i
-                    End If
-                    ''''''''''''''''''''''''''''''''''''''''
-                    'HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
+                    HiddenLayer(i, k) = SigmoidCalculation(HiddenLayer(i, k))
                 Next
             Next
             For i = 0 To 203
@@ -478,25 +467,12 @@ Public Class Chess_Ai
                     Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
                 Next
                 Outputlayer(i) -= OutputBias(i)
-                If Outputlayer(i) < 0 Then
-                    Outputlayer(i) *= 0.01
-                End If
-                ''''''''''''''''''''''''''''''''''''''''
-                If Outputlayer(i).ToString = "NaN" Then
-                    i = i
-                End If
-                ''''''''''''''''''''''''''''''''''''''''
-                'Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
                 totalOutputLayer += Outputlayer(i)
             Next
             For i = 0 To 203
                 Outputlayer(i) = Outputlayer(i) / totalOutputLayer
-                ''''''''''''''''''''''''''''''''''''''''
-                If Outputlayer(i).ToString = "NaN" Then
-                    i = i
-                End If
-                ''''''''''''''''''''''''''''''''''''''''
             Next
+            fgh += 1
             BestValue = BestValue
             Dim TempOutput As List(Of Double)
             TempOutput = Outputlayer.ToList
@@ -641,10 +617,6 @@ Public Class Chess_Ai
             result.Add(ChessBoard.BQueen)
         ElseIf PieceType = 5 Then
             result.Add(ChessBoard.BKing)
-        ElseIf PieceType = 6 Then
-            For Each piece In ChessBoard.Whitepieces
-                result.Add(piece)
-            Next
         End If
         Return result
     End Function
