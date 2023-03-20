@@ -24,7 +24,7 @@ Public Class Chess_Ai
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
     Private T1Finished, T2Finished, T3Finished, T4Finished, T5Finished, T6Finished, T7Finished, T8Finished As Boolean
-    Const LearningRate As Double = 0.1
+    Const LearningRate As Double = 0.01
     Private threadingInProgress As Boolean
     Private TECWRO(203) As Double      'Total Error Change With Respect to Output
     Private OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
@@ -125,7 +125,6 @@ Public Class Chess_Ai
     End Function
     Public Sub CostFunctionCalculation()
         Dim counter As Integer
-
         Dim sw As New Stopwatch
         sw.Start()
         For i = 0 To 203
@@ -146,20 +145,20 @@ Public Class Chess_Ai
             OHLWRTSHLI0(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 0))
         Next
         For k = 0 To 203
-
+            HiddentoOutputLayerCalculations(k) = TECWRO(k) * OCWRTN(k)
         Next
         For i = 0 To 255
             For k = 0 To 203
-                HiddentoOutputLayerCalculations(k) = TECWRO(k) * OCWRTN(k)
                 HiddenLayerCalculations(i, counter, 2) = HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k)
                 HiddenLayerCalculations(i, counter, 1) = HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2)
                 HiddenLayerCalculations(i, counter, 0) = HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1)
                 HiddenBiasCalculations(i, 3) += HiddentoOutputLayerCalculations(k) * 0.01
-                HiddenBiasCalculations(i, 2) += HiddenBiasCalculations(i, 3) * OHLWRTSHL23(i)
-                HiddenBiasCalculations(i, 1) += HiddenBiasCalculations(i, 2) * OHLWRTSHL12(i)
-                HiddenBiasCalculations(i, 0) += HiddenBiasCalculations(i, 1) * OHLWRTSHL01(i)
+             
                 counter += 1
             Next
+            HiddenBiasCalculations(i, 2) += HiddenBiasCalculations(i, 3) * OHLWRTSHL23(i)
+            HiddenBiasCalculations(i, 1) += HiddenBiasCalculations(i, 2) * OHLWRTSHL12(i)
+            HiddenBiasCalculations(i, 0) += HiddenBiasCalculations(i, 1) * OHLWRTSHL01(i)
             counter = 0
         Next
         For i = 0 To 255       
@@ -441,7 +440,10 @@ Public Class Chess_Ai
                 PieceChecker.Clear()
             Next
             AICount = AICount
-            If fgh = 33 Then
+            If fgh = 2 Then
+                fgh = fgh
+            End If
+            If CFHiddenBiasChanges(0, 0) < -100 Then
                 fgh = fgh
             End If
             fgh = fgh
@@ -471,6 +473,7 @@ Public Class Chess_Ai
             Next
             For i = 0 To 203
                 Outputlayer(i) = Outputlayer(i) / totalOutputLayer
+                Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
             Next
             fgh += 1
             BestValue = BestValue
@@ -553,14 +556,14 @@ Public Class Chess_Ai
                 HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i)
             Next
         Next
-        For i = 0 To 3
-            For j = 0 To 255
-                HiddenBias(j, i) -= LearningRate * CFHiddenBiasChanges(j, i)
-            Next
-        Next
-        For i = 0 To 203
-            OutputBias(i) -= LearningRate * CFOutputBiasChanges(i)
-        Next
+        'For i = 0 To 3
+        '    For j = 0 To 255
+        '        HiddenBias(j, i) -= LearningRate * CFHiddenBiasChanges(j, i)
+        '    Next
+        'Next
+        'For i = 0 To 203
+        '    OutputBias(i) -= LearningRate * CFOutputBiasChanges(i)
+        'Next
     End Sub
     Private Sub AiPieceMover(AiPiece)
         AiPiece.SetColour()
@@ -591,7 +594,7 @@ Public Class Chess_Ai
     End Function
     Public Function SigmoidCalculation(input)
         Dim result As Double
-        result = 1 / (1 + Math.E ^ (-1 * input / 100))
+        result = 1 / (1 + Math.E ^ (-1 * input / 1000))
         Return result
     End Function
     Public Function PieceTypeIdentifier(PieceType)
