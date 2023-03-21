@@ -152,29 +152,15 @@ Public Class Chess_Ai
                 HiddenLayerCalculations(i, counter, 2) = HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k)
                 HiddenLayerCalculations(i, counter, 1) = HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2)
                 HiddenLayerCalculations(i, counter, 0) = HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1)
-                HiddenBiasCalculations(i, 3) += HiddentoOutputLayerCalculations(k) * 0.01
-             
                 counter += 1
             Next
-            HiddenBiasCalculations(i, 2) += HiddenBiasCalculations(i, 3) * OHLWRTSHL23(i)
-            HiddenBiasCalculations(i, 1) += HiddenBiasCalculations(i, 2) * OHLWRTSHL12(i)
-            HiddenBiasCalculations(i, 0) += HiddenBiasCalculations(i, 1) * OHLWRTSHL01(i)
             counter = 0
         Next
         For i = 0 To 255       
             For k = 0 To 203
                 For l = 0 To 203
                     CFHiddenToOutputLayerWeightChanges(i, k) += HiddentoOutputLayerCalculations(l) * HiddenLayer(i, 3)
-                    CFOutputBiasChanges(k) += HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
                 Next
-                CFHiddenBiasChanges(i, 3) += HiddenBiasCalculations(i, 3) * HiddenLayer(i, 2)
-                CFHiddenBiasChanges(i, 2) += HiddenBiasCalculations(i, 2) * HiddenLayer(i, 1)
-                CFHiddenBiasChanges(i, 1) += HiddenBiasCalculations(i, 1) * HiddenLayer(i, 0)
-            Next
-        Next
-        For i = 0 To 255
-            For j = 0 To 383
-                CFHiddenBiasChanges(i, 0) += HiddenBiasCalculations(i, 0) * OHLWRTSHLI0(i) * InputLayer(j)
             Next
         Next
         For i = 0 To 255
@@ -197,7 +183,7 @@ Public Class Chess_Ai
 
         sw.Stop()
         threadingInProgress = False
-        'MsgBox(sw.ElapsedMilliseconds)
+        MsgBox(sw.ElapsedMilliseconds)
     End Sub
 
     Private Sub FirstHalfofChangesCalculations()
@@ -222,7 +208,6 @@ Public Class Chess_Ai
         Next
         T4Finished = True
     End Sub
-    
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
         If PieceOptions(i) Is BestScoreName Then
@@ -255,8 +240,14 @@ Public Class Chess_Ai
     End Function
     Public Sub Initilise_HiddenBias()
         Dim randomNumber As New Random
+        Dim checkCount As Integer
         For k = 0 To 3
             For i = 0 To 255
+                If k = 0 Or k = 1 Then
+                    checkCount = 0
+                Else
+                    checkCount = k
+                End If
                 Randomize()
                 HiddenBias(i, k) = randomNumber.Next(50, 100) / 10
             Next
@@ -265,7 +256,7 @@ Public Class Chess_Ai
     Public Sub Inititlise_OutputBias()
         Dim randomNumber As New Random
         For i = 0 To 203
-            OutputBias(i) = randomNumber.Next(50, 100) / 10
+            OutputBias(i) = randomNumber.Next(200, 250) / 10
         Next
     End Sub
     Public Sub Inititlise_InputWeights()
@@ -273,7 +264,7 @@ Public Class Chess_Ai
         For i = 0 To 383
             For j = 0 To 255
                 Randomize()
-                InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble
+                InputToHiddenLayerWeights(i, j) = randomNumber.NextDouble / 2
             Next
         Next
     End Sub
@@ -283,7 +274,7 @@ Public Class Chess_Ai
             For i = 0 To 255
                 For j = 0 To 255
                     Randomize()
-                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble
+                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble / 2
                 Next
             Next
         Next
@@ -293,7 +284,7 @@ Public Class Chess_Ai
         For i = 0 To 255
             For j = 0 To 203
                 Randomize()
-                HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble
+                HiddenToOutputLayerWeights(i, j) = randomNumber.NextDouble / 2
             Next
         Next
     End Sub
@@ -440,7 +431,7 @@ Public Class Chess_Ai
                 PieceChecker.Clear()
             Next
             AICount = AICount
-            If fgh = 2 Then
+            If fgh = 120 Then
                 fgh = fgh
             End If
             If CFHiddenBiasChanges(0, 0) < -100 Then
@@ -448,7 +439,6 @@ Public Class Chess_Ai
             End If
             fgh = fgh
             For i = 0 To 255
-
                 For j = 0 To 383
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
                 Next
@@ -469,11 +459,10 @@ Public Class Chess_Ai
                     Outputlayer(i) += HiddenLayer(j, 3) * HiddenToOutputLayerWeights(j, i)
                 Next
                 Outputlayer(i) -= OutputBias(i)
-                totalOutputLayer += Outputlayer(i)
+                totalOutputLayer += (Math.E ^ Outputlayer(i))
             Next
             For i = 0 To 203
-                Outputlayer(i) = Outputlayer(i) / totalOutputLayer
-                Outputlayer(i) = SigmoidCalculation(Outputlayer(i))
+                Outputlayer(i) = (Math.E ^ Outputlayer(i)) / totalOutputLayer
             Next
             fgh += 1
             BestValue = BestValue
@@ -594,7 +583,7 @@ Public Class Chess_Ai
     End Function
     Public Function SigmoidCalculation(input)
         Dim result As Double
-        result = 1 / (1 + Math.E ^ (-1 * input / 1000))
+        result = 1 / (1 + Math.E ^ (-1 * input))
         Return result
     End Function
     Public Function PieceTypeIdentifier(PieceType)

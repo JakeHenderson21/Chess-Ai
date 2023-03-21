@@ -80,7 +80,6 @@ Public Class ChessBoard
         Blackpieces(13) = BPawn6
         Blackpieces(14) = BPawn7
         Blackpieces(15) = BPawn8
-       
         For Each b In buttonmoves
             AddHandler b.Click, AddressOf buttons_click
         Next
