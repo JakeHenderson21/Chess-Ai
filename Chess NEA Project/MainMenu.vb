@@ -38,8 +38,7 @@ Public Class MainMenu
         Else
             System.Threading.Thread.Sleep(1000)
             FileOpen(2, "NN1stHiddenWeights.csv", OpenMode.Output)
-            ai.StartofHiddenWeightsLoop = 0
-            ai.EndofHiddenWeightsLoop = 0
+            ai.hiddenLoopID = 0
             ai.Initilise_HiddenWeights()
             For i = 0 To 255
                 inputstring = ""
@@ -58,8 +57,7 @@ Public Class MainMenu
         Else
             System.Threading.Thread.Sleep(1000)
             FileOpen(3, "NN2ndHiddenWeights.csv", OpenMode.Output)
-            ai.StartofHiddenWeightsLoop = 1
-            ai.EndofHiddenWeightsLoop = 1
+            ai.hiddenLoopID = 1
             ai.Initilise_HiddenWeights()
             For i = 0 To 255
                 inputstring = ""
@@ -78,8 +76,7 @@ Public Class MainMenu
         Else
             System.Threading.Thread.Sleep(1000)
             FileOpen(4, "NN3rdHiddenWeights.csv", OpenMode.Output)
-            ai.StartofHiddenWeightsLoop = 2
-            ai.EndofHiddenWeightsLoop = 2
+            ai.hiddenLoopID = 2
             ai.Initilise_HiddenWeights()
             For i = 0 To 255
                 inputstring = ""

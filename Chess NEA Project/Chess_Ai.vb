@@ -20,7 +20,7 @@ Public Class Chess_Ai
     Private AlreadyChecked, Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private EndofInitialLoop, EndOfButtonLoop As Integer
-    Public NumberOfMoves, NumberOfPieces, StartingNumber, StartofHiddenWeightsLoop, EndofHiddenWeightsLoop As Integer
+    Public NumberOfMoves, NumberOfPieces, StartingNumber, hiddenLoopID As Integer
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
     Private T1Finished, T2Finished, T3Finished, T4Finished, T5Finished, T6Finished, T7Finished, T8Finished As Boolean
@@ -149,9 +149,9 @@ Public Class Chess_Ai
         Next
         For i = 0 To 255
             For k = 0 To 203
-                HiddenLayerCalculations(i, counter, 2) = HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k)
-                HiddenLayerCalculations(i, counter, 1) = HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2)
-                HiddenLayerCalculations(i, counter, 0) = HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1)
+                HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k)
+                HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2)
+                HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1)
                 counter += 1
             Next
             counter = 0
@@ -183,7 +183,7 @@ Public Class Chess_Ai
 
         sw.Stop()
         threadingInProgress = False
-        MsgBox(sw.ElapsedMilliseconds)
+        'MsgBox(sw.ElapsedMilliseconds)
     End Sub
 
     Private Sub FirstHalfofChangesCalculations()
@@ -270,14 +270,19 @@ Public Class Chess_Ai
     End Sub
     Public Sub Initilise_HiddenWeights()
         Dim randomNumber As New Random
-        For k = StartofHiddenWeightsLoop To EndofHiddenWeightsLoop
-            For i = 0 To 255
-                For j = 0 To 255
-                    Randomize()
-                    HiddenLayerWeights(i, j, k) = randomNumber.NextDouble / 2
-                Next
+        Dim countID As Integer
+        If hiddenLoopID = 0 Then
+            countID = 1
+        Else
+            countID = hiddenLoopID * 2
+        End If
+        For i = 0 To 255
+            For j = 0 To 255
+                Randomize()
+                HiddenLayerWeights(i, j, hiddenLoopID) = randomNumber.NextDouble / (2 * countID)
             Next
         Next
+
     End Sub
     Public Sub Initilise_OutputWeights()
         Dim randomNumber As New Random
@@ -528,31 +533,42 @@ Public Class Chess_Ai
         End While
     End Sub
     Public Sub AdjustingWeightsAndBias()
+        Dim randomnumber, randomnum As New Random
+        Dim multiplier As Integer
+        Dim alterdata As Boolean
+        Dim num As Integer = randomnumber.Next(1, 10)
+        If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
+            alterdata = True
+        Else
+            alterdata = False
+            multiplier = 1
+        End If
         For i = 0 To 255
             For j = 0 To 383
-                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i)
+                If alterdata = True Then
+                    multiplier = randomnum.Next(10, 20) / 100
+                End If
+                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i) / multiplier
             Next
         Next
         For i = 0 To 2
             For k = 0 To 255
                 For j = 0 To 255
-                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i)
+                    If alterdata = True Then
+                        multiplier = randomnum.Next(10, 20) / 100
+                    End If
+                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i) / multiplier
                 Next
             Next
         Next
         For i = 0 To 203
             For j = 0 To 255
-                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i)
+                If alterdata = True Then
+                    multiplier = randomnum.Next(10, 20) / 100
+                End If
+                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i) / multiplier
             Next
         Next
-        'For i = 0 To 3
-        '    For j = 0 To 255
-        '        HiddenBias(j, i) -= LearningRate * CFHiddenBiasChanges(j, i)
-        '    Next
-        'Next
-        'For i = 0 To 203
-        '    OutputBias(i) -= LearningRate * CFOutputBiasChanges(i)
-        'Next
     End Sub
     Private Sub AiPieceMover(AiPiece)
         AiPiece.SetColour()
