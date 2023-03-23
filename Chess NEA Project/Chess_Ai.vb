@@ -136,7 +136,15 @@ Public Class Chess_Ai
             OutputError(i) = ((1 / 2) * (Desired_Output - Outputlayer(i))) ^ 2
             TotalError += OutputError(i)
             TECWRO(i) = Total_Error_Change_With_Respect_to_Output(i)
-            OCWRTN(i) = Output_Change_With_Respect_to_Total_Net(Outputlayer(i))
+        Next
+        For j = 0 To 203
+            For i = 0 To 203
+                If i = j Then
+                    OCWRTN(i) += Outputlayer(i) * (1 - Outputlayer(i))
+                Else
+                    OCWRTN(i) += -Outputlayer(i) * Outputlayer(j)
+                End If
+            Next
         Next
         For i = 0 To 255
             OHLWRTSHL23(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 3))
@@ -265,11 +273,6 @@ Public Class Chess_Ai
             Next
         Next
     End Sub
-    Public Function SigMoidDerativeCalculation(input)
-        Dim result As Double
-        result = SigmoidCalculation(input) * (1 - SigmoidCalculation(input))
-        Return result
-    End Function
     Public Sub ReadNNData()
         'creates variables
         Dim currentLine As String
@@ -569,6 +572,11 @@ Public Class Chess_Ai
     Public Function SigmoidCalculation(input)
         Dim result As Double
         result = 1 / (1 + Math.E ^ (-1 * input))
+        Return result
+    End Function
+    Public Function SoftmaxCalculation(input)
+        Dim result As Double
+        result = (Math.E ^ input) / totalOutputLayer
         Return result
     End Function
     Public Function PieceTypeIdentifier(PieceType)
