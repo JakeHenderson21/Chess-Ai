@@ -24,7 +24,7 @@ Public Class Chess_Ai
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
     Private T1Finished, T2Finished, T3Finished, T4Finished, T5Finished, T6Finished, T7Finished, T8Finished As Boolean
-    Const LearningRate As Double = 0.01
+    Const LearningRate As Double = 0.1
     Private threadingInProgress As Boolean
     Private TECWRO(203) As Double      'Total Error Change With Respect to Output
     Private OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
@@ -149,64 +149,37 @@ Public Class Chess_Ai
         Next
         For i = 0 To 255
             For k = 0 To 203
-                HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k)
-                HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2)
-                HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1)
+                HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i)
+                HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i)
+                HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i)
                 counter += 1
             Next
             counter = 0
         Next
-        For i = 0 To 255       
-            For k = 0 To 203
-                For l = 0 To 203
-                    CFHiddenToOutputLayerWeightChanges(i, k) += HiddentoOutputLayerCalculations(l) * HiddenLayer(i, 3)
-                Next
+        For k = 0 To 203
+            For i = 0 To 255
+                CFHiddenToOutputLayerWeightChanges(i, k) += HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
             Next
         Next
         For i = 0 To 255
             For k = 0 To 255
-                CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, k, 2) * OHLWRTSHL23(i) * HiddenLayer(i, 2)
-                CFHiddenLayerWeightChanges(i, counter, 1) += HiddenLayerCalculations(i, k, 1) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * HiddenLayer(i, 1)
-                CFHiddenLayerWeightChanges(i, counter, 0) += HiddenLayerCalculations(i, k, 0) * OHLWRTSHL23(i) * OHLWRTSHL12(i) * OHLWRTSHL01(i) * HiddenLayer(i, 0)
+                CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, k, 2) * HiddenLayer(i, 2)
+                CFHiddenLayerWeightChanges(i, counter, 1) += HiddenLayerCalculations(i, k, 1) * HiddenLayer(i, 1)
+                CFHiddenLayerWeightChanges(i, counter, 0) += HiddenLayerCalculations(i, k, 0) * HiddenLayer(i, 0)
                 counter += 1
             Next
             counter = 0
         Next
-        Dim t3 As Thread = New Thread(New ThreadStart(AddressOf FirstHalfofChangesCalculations))
-        Dim t4 As Thread = New Thread(New ThreadStart(AddressOf SecondHalfofChangesCalculations))
-        T3Finished = False
-        T4Finished = False
-        t3.Start()
-        t4.Start()
-        While T3Finished <> True And T4Finished <> True
-        End While
-
+        For j = 0 To 383
+            For i = 0 To 255
+                CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
+                counter += 1
+            Next
+            counter = 0
+        Next
         sw.Stop()
         threadingInProgress = False
         'MsgBox(sw.ElapsedMilliseconds)
-    End Sub
-
-    Private Sub FirstHalfofChangesCalculations()
-        Dim counter As Integer
-        For j = 0 To 191
-            For i = 0 To 255
-                CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
-                counter += 1
-            Next
-            counter = 0
-        Next
-        T3Finished = True
-    End Sub
-    Private Sub SecondHalfofChangesCalculations()
-        Dim counter As Integer
-        For j = 192 To 383
-            For i = 0 To 255
-                CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
-                counter += 1
-            Next
-            counter = 0
-        Next
-        T4Finished = True
     End Sub
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
@@ -282,7 +255,6 @@ Public Class Chess_Ai
                 HiddenLayerWeights(i, j, hiddenLoopID) = randomNumber.NextDouble / (2 * countID)
             Next
         Next
-
     End Sub
     Public Sub Initilise_OutputWeights()
         Dim randomNumber As New Random
@@ -428,9 +400,7 @@ Public Class Chess_Ai
                                 AICount += 1
                         Next                       
                     Next
-
                     AICount -= 64
-
                 Next
                 AICount += 64
                 PieceChecker.Clear()
@@ -535,38 +505,37 @@ Public Class Chess_Ai
     Public Sub AdjustingWeightsAndBias()
         Dim randomnumber, randomnum As New Random
         Dim multiplier As Integer
-        Dim alterdata As Boolean
-        Dim num As Integer = randomnumber.Next(1, 10)
-        If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
-            alterdata = True
-        Else
-            alterdata = False
-            multiplier = 1
-        End If
+        Dim num As Integer = Nothing
         For i = 0 To 255
             For j = 0 To 383
-                If alterdata = True Then
-                    multiplier = randomnum.Next(10, 20) / 100
+                num = randomnumber.Next(1, 10)
+                If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
+                    multiplier = randomnum.Next(10, 20)
+                Else : multiplier = 1
                 End If
-                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i) / multiplier
+                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i) * multiplier
             Next
         Next
         For i = 0 To 2
             For k = 0 To 255
                 For j = 0 To 255
-                    If alterdata = True Then
-                        multiplier = randomnum.Next(10, 20) / 100
+                    num = randomnumber.Next(1, 10)
+                    If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
+                        multiplier = randomnum.Next(10, 20)
+                    Else : multiplier = 1
                     End If
-                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i) / multiplier
+                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i) * multiplier
                 Next
             Next
         Next
         For i = 0 To 203
             For j = 0 To 255
-                If alterdata = True Then
-                    multiplier = randomnum.Next(10, 20) / 100
+                num = randomnumber.Next(1, 10)
+                If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
+                    multiplier = randomnum.Next(10, 20)
+                Else : multiplier = 1
                 End If
-                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i) / multiplier
+                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i) * multiplier
             Next
         Next
     End Sub
