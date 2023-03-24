@@ -85,7 +85,6 @@
                 End If
             Next
         End If
-
         For Each p In kingmoves
             p = False
         Next

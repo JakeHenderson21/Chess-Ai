@@ -57,7 +57,6 @@ Public Class Chess_Ai
                 Next
             Next
         Next
-        EndOfButtonLoop = EndOfButtonLoop
     End Sub
     Private Sub NumberOfPieces_Moves(k)
         If k = 0 Then
@@ -125,8 +124,6 @@ Public Class Chess_Ai
     End Function
     Public Sub CostFunctionCalculation()
         Dim counter As Integer
-        Dim sw As New Stopwatch
-        sw.Start()
         For i = 0 To 203
             If PieceOptions(i) Is BestScoreName Then
                 Desired_Output = 1
@@ -155,20 +152,24 @@ Public Class Chess_Ai
         For k = 0 To 203
             HiddentoOutputLayerCalculations(k) = TECWRO(k) * OCWRTN(k)
         Next
-        For i = 0 To 255
-            For k = 0 To 203
-                HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i)
-                HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i)
-                HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i)
-                counter += 1
+        For k = 0 To 203
+            For i = 0 To 255
+                For counter = 0 To 255
+                    If i = 0 And counter = 1 Then
+                        i = i
+                    End If
+                    HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i)
+                    HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i)
+                    HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i)
+                Next
             Next
-            counter = 0
         Next
         For k = 0 To 203
             For i = 0 To 255
-                CFHiddenToOutputLayerWeightChanges(i, k) += HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
+                CFHiddenToOutputLayerWeightChanges(i, k) = HiddentoOutputLayerCalculations(k) * HiddenLayer(i, 3)
             Next
         Next
+        counter = 0
         For i = 0 To 255
             For k = 0 To 255
                 CFHiddenLayerWeightChanges(i, counter, 2) += HiddenLayerCalculations(i, k, 2) * HiddenLayer(i, 2)
@@ -185,9 +186,6 @@ Public Class Chess_Ai
             Next
             counter = 0
         Next
-        sw.Stop()
-        threadingInProgress = False
-        'MsgBox(sw.ElapsedMilliseconds)
     End Sub
     Public Function Total_Error_Change_With_Respect_to_Output(i)
         Dim result As Double
@@ -260,7 +258,7 @@ Public Class Chess_Ai
         For i = 0 To 255
             For j = 0 To 255
                 Randomize()
-                HiddenLayerWeights(i, j, hiddenLoopID) = randomNumber.NextDouble / (2 * countID)
+                HiddenLayerWeights(i, j, hiddenLoopID) = randomNumber.NextDouble / (4 * countID)
             Next
         Next
     End Sub
@@ -359,7 +357,6 @@ Public Class Chess_Ai
         FileClose(7)
     End Sub
     Public Sub NextMoveDecider()
-        Dim fgh As Integer
         found = False
         AlreadyChecked = False
         While found = False
@@ -409,13 +406,6 @@ Public Class Chess_Ai
                 PieceChecker.Clear()
             Next
             AICount = AICount
-            If fgh = 120 Then
-                fgh = fgh
-            End If
-            If CFHiddenBiasChanges(0, 0) < -100 Then
-                fgh = fgh
-            End If
-            fgh = fgh
             For i = 0 To 255
                 For j = 0 To 383
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
@@ -440,10 +430,11 @@ Public Class Chess_Ai
                 totalOutputLayer += (Math.E ^ Outputlayer(i))
             Next
             For i = 0 To 203
-                Outputlayer(i) = (Math.E ^ Outputlayer(i)) / totalOutputLayer
+                Outputlayer(i) = ((Math.E ^ Outputlayer(i)) / totalOutputLayer) * 10
+                If Outputlayer(i) < 0.01 Then
+                    Outputlayer(i) *= 100
+                End If
             Next
-            fgh += 1
-            BestValue = BestValue
             Dim TempOutput As List(Of Double)
             TempOutput = Outputlayer.ToList
             BestValue = TempOutput.IndexOf(Outputlayer.Max)
@@ -488,9 +479,6 @@ Public Class Chess_Ai
                 End If
             Next
             If ButtonOptions(BestValue).Visible = True And taken = False Then
-                If PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
-                    BestValue = BestValue
-                End If
                 PieceOptions(BestValue).Location = New Point(ButtonOptions(BestValue).Left, ButtonOptions(BestValue).Top)
                 ChessBoard.xcoords = PieceOptions(BestValue).Left
                 ChessBoard.ycoords = PieceOptions(BestValue).Top

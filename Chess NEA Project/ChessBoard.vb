@@ -13,7 +13,6 @@ Public Class ChessBoard
     Public Sub New()
         ' This call is required by the designer.
         InitializeComponent()
-
         ' Add any initialization after the InitializeComponent() call.
         For i = 0 To 71
             buttonmoves(i) = DirectCast(Controls.Find("button" & i + 1, True)(0), Button)
@@ -231,8 +230,7 @@ Public Class ChessBoard
             Colour = ChessPiece.Chesscolour.white
         End If
         Piece_Selector(piece)
-        chess_piece = piece
-      
+        chess_piece = piece   
     End Sub
     Private Sub Piece_Selector(piece)
         clearbuttons()

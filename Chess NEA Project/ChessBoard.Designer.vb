@@ -24,7 +24,6 @@ Partial Class ChessBoard
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ChessBoard))
-        Me.chess_Board = New System.Windows.Forms.PictureBox()
         Me.WhiteTime = New System.Windows.Forms.Timer(Me.components)
         Me.BlackTime = New System.Windows.Forms.Timer(Me.components)
         Me.Label1 = New System.Windows.Forms.Label()
@@ -137,20 +136,8 @@ Partial Class ChessBoard
         Me.Button71 = New System.Windows.Forms.Button()
         Me.Button72 = New System.Windows.Forms.Button()
         Me.Returnbtn = New System.Windows.Forms.Button()
-        CType(Me.chess_Board, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
-        '
-        'chess_Board
-        '
-        Me.chess_Board.BackColor = System.Drawing.Color.White
-        Me.chess_Board.BackgroundImage = CType(resources.GetObject("chess_Board.BackgroundImage"), System.Drawing.Image)
-        Me.chess_Board.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.chess_Board.Location = New System.Drawing.Point(-3, -16)
-        Me.chess_Board.Name = "chess_Board"
-        Me.chess_Board.Size = New System.Drawing.Size(624, 650)
-        Me.chess_Board.TabIndex = 0
-        Me.chess_Board.TabStop = False
         '
         'WhiteTime
         '
@@ -1965,16 +1952,13 @@ Partial Class ChessBoard
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.chess_Board)
         Me.Name = "ChessBoard"
         Me.Text = "Form1"
-        CType(Me.chess_Board, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents chess_Board As System.Windows.Forms.PictureBox
     Friend WithEvents WhiteTime As System.Windows.Forms.Timer
     Friend WithEvents BlackTime As System.Windows.Forms.Timer
     Friend WithEvents Label1 As System.Windows.Forms.Label

@@ -54,10 +54,8 @@
             upLeftMoveButton(counter) = ChessBoard.buttonmoves(X)
             counter += 1
         Next
-
         wpieces = ChessBoard.Whitepieces
         bpieces = ChessBoard.Blackpieces
-
     End Sub
     Public Function getColour()
         Return colour
@@ -382,7 +380,6 @@
         If scoremove = 0 And change = False Then
             scoremove = 7
         End If
-
         For i = 0 To scoremove - 1
             checkbuttons(i).Show()
         Next
