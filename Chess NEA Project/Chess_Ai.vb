@@ -375,16 +375,15 @@ Public Class Chess_Ai
                                 Else
                                     InputLayer(AICount) = 0
                                 End If
-                            End If             
-                                AICount += 1
-                        Next                       
+                            End If
+                            AICount += 1
+                        Next
                     Next
                     AICount -= 64
                 Next
                 AICount += 64
                 PieceChecker.Clear()
             Next
-            AICount = AICount
             For i = 0 To 255
                 For j = 0 To 383
                     HiddenLayer(i, 0) += InputLayer(j) * InputToHiddenLayerWeights(j, i)
@@ -417,7 +416,6 @@ Public Class Chess_Ai
             Dim TempOutput As List(Of Double)
             TempOutput = Outputlayer.ToList
             BestValue = TempOutput.IndexOf(Outputlayer.Max)
-            BestValue = 40
             If ChessBoard.CheckBPawn.Contains(PieceOptions(BestValue)) Then
                 Dim AiPiece As New Pawn(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue), ChessBoard.FirstCheck(FirstCheckIdentifier))
                 AiPieceMover(AiPiece)
