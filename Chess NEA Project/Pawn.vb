@@ -1,9 +1,8 @@
 ﻿Public Class Pawn
     Inherits ChessPiece
-    Public everyPiece(31) As Button
+    Public everyPiece(31), PieceButtonToCheck As Button
     Public firstMoveCheck As Boolean
     Public operatorcheck, newScoreMove, OldScoremove As Integer
-    Public PieceButtonToCheck As Button
     Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button, ByVal firstMove As Boolean)
         MyBase.New(X, Y, chess_colour, piece)
         firstMoveCheck = firstMove
@@ -53,61 +52,43 @@
                 End If
             End If
         Next
+        Dim piecesToCheck(15) As Button
         If colour = Chesscolour.white Then
             ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top - 77)
-            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top - 77)         
-                For Each pieces In bpieces
-                    If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
-                    If ChessBoard.CheckMode = False Then
-                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.Button3
-                            PieceMoveWhenChecked()
-                        Else
-                            ChessBoard.Button3.Show()
-                        End If
-                    End If
-                ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top - 77 And colour = Chesscolour.white Then
-                    If ChessBoard.CheckMode = False Then
-                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.Button4
-                            PieceMoveWhenChecked()
-                        Else
-                            ChessBoard.Button4.Show()
-                        End If
-                    End If
-                End If
-            Next
+            ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top - 77)
+            piecesToCheck = bpieces
         Else
             ChessBoard.Button3.Location = New Point(piece.Left + 77, piece.Top + 77)
             ChessBoard.Button4.Location = New Point(piece.Left - 77, piece.Top + 77)
-                For Each pieces In wpieces
-                    If pieces.Left = piece.Left + 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
-                        If ChessBoard.CheckMode = False Then
-                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.Button3
-                            PieceMoveWhenChecked()
-                        Else
-                            ChessBoard.Button3.Show()
-                        End If
-                        End If
-                    ElseIf pieces.Left = piece.Left - 77 And pieces.Top = piece.Top + 77 And colour = Chesscolour.black Then
-                        If ChessBoard.CheckMode = False Then
-                        If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
-                            PieceButtonToCheck = ChessBoard.Button4
-                            PieceMoveWhenChecked()
-                        Else
-                            ChessBoard.Button4.Show()
-                        End If
-                        End If
+            piecesToCheck = wpieces
+        End If
+        For Each pieces In piecesToCheck
+            If pieces.Left = ChessBoard.Button3.Left And pieces.Top = ChessBoard.Button3.Top Then
+                If ChessBoard.CheckMode = False Then
+                    If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                        PieceButtonToCheck = ChessBoard.Button3
+                        PieceMoveWhenChecked()
+                    Else
+                        ChessBoard.Button3.Show()
                     End If
-                Next
+                End If
+            ElseIf pieces.Left = ChessBoard.Button4.Left And pieces.Top = ChessBoard.Button4.Top Then
+                If ChessBoard.CheckMode = False Then
+                    If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
+                        PieceButtonToCheck = ChessBoard.Button4
+                        PieceMoveWhenChecked()
+                    Else
+                        ChessBoard.Button4.Show()
+                    End If
+                End If
             End If
+        Next
         If OldScoremove = 0 Then
         ElseIf OldScoremove = 1 Then
             If ChessBoard.CheckMode = False Then
                 If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
                     PieceButtonToCheck = ChessBoard.Button1
-                    BlockCheck()
+                    PieceMoveWhenChecked()
                 Else
                     ChessBoard.Button1.Show()
                 End If
@@ -116,9 +97,9 @@
             If ChessBoard.CheckMode = False Then
                 If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
                     PieceButtonToCheck = ChessBoard.Button1
-                    BlockCheck()
+                    PieceMoveWhenChecked()
                     PieceButtonToCheck = ChessBoard.Button2
-                    BlockCheck()
+                    PieceMoveWhenChecked()
                 Else
                     ChessBoard.Button1.Show()
                     ChessBoard.Button2.Show()
@@ -137,12 +118,8 @@
             OldScoremove = newScoreMove
         End If
     End Sub
+    'If a piece can protect the king with a certain move, this move will be displayed for the user to play
     Protected Overrides Sub PieceMoveWhenChecked()
-        If ChessBoard.ButtonX_Causing_Check(0) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(0) = PieceButtonToCheck.Top Then
-            PieceButtonToCheck.Show()
-        End If
-    End Sub
-    Protected Sub BlockCheck()
         Dim totalbuttonchecks As Integer
         If ButtonX_Causing_Check.Count > 8 Then
             totalbuttonchecks = 8
@@ -154,5 +131,8 @@
                 PieceButtonToCheck.Show()
             End If
         Next
+        If ChessBoard.ButtonX_Causing_Check(0) = PieceButtonToCheck.Left And ChessBoard.ButtonY_Causing_Check(0) = PieceButtonToCheck.Top Then
+            PieceButtonToCheck.Show()
+        End If
     End Sub
 End Class

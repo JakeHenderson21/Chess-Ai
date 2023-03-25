@@ -1,10 +1,13 @@
 ﻿Public Class PromotionChoice
     Private Sub PromotionChoice_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.SetStyle(ControlStyles.AllPaintingInWmPaint, True)
+        Me.SetStyle(ControlStyles.UserPaint, True)
+        Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, True)
         If ChessBoard.colourOfPieces = "white" Then
             Button1.BackgroundImage = System.Drawing.Image.FromFile("WhiteRook.png")
             Button2.BackgroundImage = System.Drawing.Image.FromFile("WhiteBishop.png")
             Button3.BackgroundImage = System.Drawing.Image.FromFile("WhiteKnight.png")
-            Button4.BackgroundImage = System.Drawing.Image.FromFile("WhiteQueen.png")    
+            Button4.BackgroundImage = System.Drawing.Image.FromFile("WhiteQueen.png")
         Else
             Button1.BackgroundImage = System.Drawing.Image.FromFile("BlackRook.png")
             Button2.BackgroundImage = System.Drawing.Image.FromFile("BlackBishop.png")

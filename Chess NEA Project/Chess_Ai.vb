@@ -438,7 +438,7 @@ Public Class Chess_Ai
                 AiPiece.SetLoopBoundaries()
                 AiPieceMover(AiPiece)
             ElseIf PieceOptions(BestValue) Is ChessBoard.BKing Then
-                Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
+                Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue), ChessBoard.KingButtons)
                 AiPieceMover(AiPiece)
             End If
             Dim taken As Boolean = False
@@ -577,8 +577,6 @@ Public Class Chess_Ai
             CheckingScoreValue(Value, move)
             AICheckerCount += 1
         Next
-        ChessBoard.BlackSideValue += Value
-        ChessBoard.WhiteSideValue -= Value
         If BestScoreMove = 0 Then
             BestScoreName = LegalMoveNames(randomnumber.Next(0, LegalMoveNames.Count))
             BestScoreButton = LegalButtonNames(LegalMoveNames.IndexOf(BestScoreName))
@@ -685,7 +683,7 @@ Public Class Chess_Ai
         Dim chesscolour As ChessPiece.Chesscolour = ChessPiece.Chesscolour.black
         Dim piece As Button
         piece = ChessBoard.BKing
-        Dim Kings As New King(piece.Left, piece.Top, chesscolour, piece)
+        Dim Kings As New King(piece.Left, piece.Top, chesscolour, piece, ChessBoard.KingButtons)
         Kings.SetColour()
         Kings.CheckMoves()
         ChessBoard.chess_piece = piece

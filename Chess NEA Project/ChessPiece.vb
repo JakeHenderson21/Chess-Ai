@@ -6,7 +6,7 @@
     Public X, Y, tx, ty, count, scoremove, upmovecount, rightmovecount, downmovecount, leftmovecount, buttonID, buttonsPastBorder, uprightmovecount, downrightmovecount, downleftmovecount, upleftmovecount, endofloop, startofloop As Integer
     Public colour As Chesscolour
     Public UpMoveButtonsCheck, RightMoveButtonsCheck, DownMoveButtonsCheck, LeftMoveButtonsCheck, UpRightMoveButtonsCheck, DownRightMoveButtonsCheck, DownLeftMoveButtonsCheck, UpLeftMoveButtonsCheck As New List(Of Button)
-    Public change, sameColourChange, OppositeColourChange, movebuttonchecker As Boolean
+    Public change, movebuttonchecker As Boolean
     Public ButtonX_Causing_Check, ButtonY_Causing_Check As List(Of Integer)
     Public checkbuttons(6), upMovebutton(6), rightMoveButton(6), downMoveButton(6), leftMoveButton(6), upRightMoveButton(6), downRightMoveButton(6), downLeftMoveButton(6), upLeftMoveButton(6), wpieces(15), bpieces(15), piece, pieces1(15), pieces2(15) As Button
     Public Sub New(ByVal xCoord As Integer, ByVal yCoord As Integer, ByVal Chess_colour As Chesscolour, ByVal Chess_piece As Button)
@@ -173,7 +173,7 @@
                     scoremove = 0
                 End If
                 buttonsPastBorder = 0
-                If piece Is ChessBoard.WRook1 Or piece Is ChessBoard.WRook2 Or piece Is ChessBoard.BRook1 Or piece Is ChessBoard.BRook2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count < 4 Or ChessBoard.PawnRook = True Or ChessBoard.PawnQueen = True Then
+                If ChessBoard.CheckWRook.Contains(piece) Or ChessBoard.CheckBRook.Contains(piece) Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count < 4 Or ChessBoard.PawnRook = True Or ChessBoard.PawnQueen = True Then
                     If count = 0 Then
                         If scoremove = 0 And change = True Then
                             upmovecount = scoremove
@@ -236,7 +236,7 @@
                         LeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If
                 End If
-                If piece Is ChessBoard.WBishop1 Or piece Is ChessBoard.WBishop2 Or piece Is ChessBoard.BBishop1 Or piece Is ChessBoard.BBishop2 Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count >= 4 Or ChessBoard.PawnBishop = True Or ChessBoard.PawnQueen = True Then
+                If ChessBoard.CheckWBishop.Contains(piece) Or ChessBoard.CheckBBishop.Contains(piece) Or piece Is ChessBoard.WQueen Or piece Is ChessBoard.BQueen And count >= 4 Or ChessBoard.PawnBishop = True Or ChessBoard.PawnQueen = True Then
                     If count = 4 Then
                         If scoremove = 0 And change = True Then
                             uprightmovecount = scoremove
@@ -295,7 +295,6 @@
                             Else
                                 upleftmovecount = scoremove
                             End If
-
                         End If
                         UpLeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If
@@ -407,7 +406,7 @@
                         checkbuttons(j).Show()
                     End If
                 Next
-            End If        
+            End If
         Next
     End Sub
 End Class
