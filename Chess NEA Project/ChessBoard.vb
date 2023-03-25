@@ -80,11 +80,11 @@ Public Class ChessBoard
         End If
         WhiteTextBox.Text = minutes & ":" & "00"
         BlackTextBox.Text = minutes1 & ":" & "00"
-        setupBoard()
         For i = 0 To 15
             Allpieces(i) = Whitepieces(i)
             Allpieces(i + 16) = Blackpieces(i)
         Next
+        setupBoard()
         For Each piece In Allpieces
             AddHandler piece.Click, AddressOf pieces_click
         Next
