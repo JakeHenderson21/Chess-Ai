@@ -150,18 +150,20 @@ Partial Class ChessBoard
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(630, 29)
+        Me.Label1.Location = New System.Drawing.Point(840, 36)
+        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(67, 13)
+        Me.Label1.Size = New System.Drawing.Size(88, 17)
         Me.Label1.TabIndex = 3
         Me.Label1.Text = "White's time:"
         '
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(726, 29)
+        Me.Label2.Location = New System.Drawing.Point(968, 36)
+        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(66, 13)
+        Me.Label2.Size = New System.Drawing.Size(86, 17)
         Me.Label2.TabIndex = 4
         Me.Label2.Text = "Black's time:"
         '
@@ -169,9 +171,10 @@ Partial Class ChessBoard
         '
         Me.PictureBox1.BackColor = System.Drawing.SystemColors.ScrollBar
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(634, 113)
+        Me.PictureBox1.Location = New System.Drawing.Point(845, 139)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(233, 525)
+        Me.PictureBox1.Size = New System.Drawing.Size(311, 646)
         Me.PictureBox1.TabIndex = 5
         Me.PictureBox1.TabStop = False
         '
@@ -184,9 +187,10 @@ Partial Class ChessBoard
         Me.WPawn5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WPawn5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn5.ForeColor = System.Drawing.Color.Transparent
-        Me.WPawn5.Location = New System.Drawing.Point(633, 171)
+        Me.WPawn5.Location = New System.Drawing.Point(844, 210)
+        Me.WPawn5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WPawn5.Name = "WPawn5"
-        Me.WPawn5.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn5.Size = New System.Drawing.Size(80, 74)
         Me.WPawn5.TabIndex = 6
         Me.WPawn5.UseVisualStyleBackColor = False
         '
@@ -199,9 +203,10 @@ Partial Class ChessBoard
         Me.BQueen.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BQueen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BQueen.ForeColor = System.Drawing.Color.Transparent
-        Me.BQueen.Location = New System.Drawing.Point(749, 520)
+        Me.BQueen.Location = New System.Drawing.Point(999, 640)
+        Me.BQueen.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BQueen.Name = "BQueen"
-        Me.BQueen.Size = New System.Drawing.Size(60, 60)
+        Me.BQueen.Size = New System.Drawing.Size(80, 74)
         Me.BQueen.TabIndex = 7
         Me.BQueen.UseVisualStyleBackColor = False
         '
@@ -214,9 +219,10 @@ Partial Class ChessBoard
         Me.WPawn2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WPawn2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn2.ForeColor = System.Drawing.SystemColors.ControlText
-        Me.WPawn2.Location = New System.Drawing.Point(691, 112)
+        Me.WPawn2.Location = New System.Drawing.Point(921, 138)
+        Me.WPawn2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WPawn2.Name = "WPawn2"
-        Me.WPawn2.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn2.Size = New System.Drawing.Size(80, 74)
         Me.WPawn2.TabIndex = 8
         Me.WPawn2.UseVisualStyleBackColor = True
         '
@@ -229,9 +235,10 @@ Partial Class ChessBoard
         Me.BPawn5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn5.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn5.Location = New System.Drawing.Point(633, 401)
+        Me.BPawn5.Location = New System.Drawing.Point(844, 494)
+        Me.BPawn5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn5.Name = "BPawn5"
-        Me.BPawn5.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn5.Size = New System.Drawing.Size(80, 74)
         Me.BPawn5.TabIndex = 9
         Me.BPawn5.UseVisualStyleBackColor = False
         '
@@ -244,9 +251,10 @@ Partial Class ChessBoard
         Me.BBishop2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BBishop2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BBishop2.ForeColor = System.Drawing.Color.Transparent
-        Me.BBishop2.Location = New System.Drawing.Point(807, 461)
+        Me.BBishop2.Location = New System.Drawing.Point(1076, 567)
+        Me.BBishop2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BBishop2.Name = "BBishop2"
-        Me.BBishop2.Size = New System.Drawing.Size(60, 60)
+        Me.BBishop2.Size = New System.Drawing.Size(80, 74)
         Me.BBishop2.TabIndex = 10
         Me.BBishop2.UseVisualStyleBackColor = False
         '
@@ -259,9 +267,10 @@ Partial Class ChessBoard
         Me.WPawn4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WPawn4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn4.ForeColor = System.Drawing.Color.Transparent
-        Me.WPawn4.Location = New System.Drawing.Point(807, 112)
+        Me.WPawn4.Location = New System.Drawing.Point(1076, 138)
+        Me.WPawn4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WPawn4.Name = "WPawn4"
-        Me.WPawn4.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn4.Size = New System.Drawing.Size(80, 74)
         Me.WPawn4.TabIndex = 11
         Me.WPawn4.UseVisualStyleBackColor = False
         '
@@ -275,10 +284,10 @@ Partial Class ChessBoard
         Me.WPawn1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Transparent
         Me.WPawn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn1.ForeColor = System.Drawing.Color.Transparent
-        Me.WPawn1.Location = New System.Drawing.Point(632, 112)
+        Me.WPawn1.Location = New System.Drawing.Point(843, 138)
         Me.WPawn1.Margin = New System.Windows.Forms.Padding(0)
         Me.WPawn1.Name = "WPawn1"
-        Me.WPawn1.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn1.Size = New System.Drawing.Size(80, 74)
         Me.WPawn1.TabIndex = 12
         Me.WPawn1.UseVisualStyleBackColor = True
         '
@@ -291,9 +300,10 @@ Partial Class ChessBoard
         Me.BKing.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BKing.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BKing.ForeColor = System.Drawing.Color.Transparent
-        Me.BKing.Location = New System.Drawing.Point(807, 520)
+        Me.BKing.Location = New System.Drawing.Point(1076, 640)
+        Me.BKing.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BKing.Name = "BKing"
-        Me.BKing.Size = New System.Drawing.Size(60, 60)
+        Me.BKing.Size = New System.Drawing.Size(80, 74)
         Me.BKing.TabIndex = 13
         Me.BKing.UseVisualStyleBackColor = False
         '
@@ -306,9 +316,10 @@ Partial Class ChessBoard
         Me.WPawn3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WPawn3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn3.ForeColor = System.Drawing.Color.Transparent
-        Me.WPawn3.Location = New System.Drawing.Point(749, 112)
+        Me.WPawn3.Location = New System.Drawing.Point(999, 138)
+        Me.WPawn3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WPawn3.Name = "WPawn3"
-        Me.WPawn3.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn3.Size = New System.Drawing.Size(80, 74)
         Me.WPawn3.TabIndex = 14
         Me.WPawn3.UseVisualStyleBackColor = False
         '
@@ -321,9 +332,10 @@ Partial Class ChessBoard
         Me.BKnight2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BKnight2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BKnight2.ForeColor = System.Drawing.Color.Transparent
-        Me.BKnight2.Location = New System.Drawing.Point(691, 520)
+        Me.BKnight2.Location = New System.Drawing.Point(921, 640)
+        Me.BKnight2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BKnight2.Name = "BKnight2"
-        Me.BKnight2.Size = New System.Drawing.Size(60, 60)
+        Me.BKnight2.Size = New System.Drawing.Size(80, 74)
         Me.BKnight2.TabIndex = 15
         Me.BKnight2.UseVisualStyleBackColor = False
         '
@@ -336,9 +348,10 @@ Partial Class ChessBoard
         Me.BBishop1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BBishop1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BBishop1.ForeColor = System.Drawing.Color.Transparent
-        Me.BBishop1.Location = New System.Drawing.Point(749, 461)
+        Me.BBishop1.Location = New System.Drawing.Point(999, 567)
+        Me.BBishop1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BBishop1.Name = "BBishop1"
-        Me.BBishop1.Size = New System.Drawing.Size(60, 60)
+        Me.BBishop1.Size = New System.Drawing.Size(80, 74)
         Me.BBishop1.TabIndex = 16
         Me.BBishop1.UseVisualStyleBackColor = False
         '
@@ -351,9 +364,10 @@ Partial Class ChessBoard
         Me.BKnight1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BKnight1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BKnight1.ForeColor = System.Drawing.Color.Transparent
-        Me.BKnight1.Location = New System.Drawing.Point(633, 520)
+        Me.BKnight1.Location = New System.Drawing.Point(844, 640)
+        Me.BKnight1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BKnight1.Name = "BKnight1"
-        Me.BKnight1.Size = New System.Drawing.Size(60, 60)
+        Me.BKnight1.Size = New System.Drawing.Size(80, 74)
         Me.BKnight1.TabIndex = 17
         Me.BKnight1.UseVisualStyleBackColor = False
         '
@@ -366,9 +380,10 @@ Partial Class ChessBoard
         Me.BPawn8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn8.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn8.Location = New System.Drawing.Point(807, 401)
+        Me.BPawn8.Location = New System.Drawing.Point(1076, 494)
+        Me.BPawn8.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn8.Name = "BPawn8"
-        Me.BPawn8.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn8.Size = New System.Drawing.Size(80, 74)
         Me.BPawn8.TabIndex = 18
         Me.BPawn8.UseVisualStyleBackColor = False
         '
@@ -381,9 +396,10 @@ Partial Class ChessBoard
         Me.WKing.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WKing.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WKing.ForeColor = System.Drawing.Color.Transparent
-        Me.WKing.Location = New System.Drawing.Point(807, 286)
+        Me.WKing.Location = New System.Drawing.Point(1076, 352)
+        Me.WKing.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WKing.Name = "WKing"
-        Me.WKing.Size = New System.Drawing.Size(60, 60)
+        Me.WKing.Size = New System.Drawing.Size(80, 74)
         Me.WKing.TabIndex = 19
         Me.WKing.UseVisualStyleBackColor = False
         '
@@ -396,9 +412,10 @@ Partial Class ChessBoard
         Me.BRook1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BRook1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BRook1.ForeColor = System.Drawing.Color.Transparent
-        Me.BRook1.Location = New System.Drawing.Point(634, 460)
+        Me.BRook1.Location = New System.Drawing.Point(845, 566)
+        Me.BRook1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BRook1.Name = "BRook1"
-        Me.BRook1.Size = New System.Drawing.Size(60, 60)
+        Me.BRook1.Size = New System.Drawing.Size(80, 74)
         Me.BRook1.TabIndex = 20
         Me.BRook1.UseVisualStyleBackColor = False
         '
@@ -411,9 +428,10 @@ Partial Class ChessBoard
         Me.BRook2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BRook2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BRook2.ForeColor = System.Drawing.Color.Transparent
-        Me.BRook2.Location = New System.Drawing.Point(691, 461)
+        Me.BRook2.Location = New System.Drawing.Point(921, 567)
+        Me.BRook2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BRook2.Name = "BRook2"
-        Me.BRook2.Size = New System.Drawing.Size(60, 60)
+        Me.BRook2.Size = New System.Drawing.Size(80, 74)
         Me.BRook2.TabIndex = 21
         Me.BRook2.UseVisualStyleBackColor = False
         '
@@ -426,9 +444,10 @@ Partial Class ChessBoard
         Me.BPawn7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn7.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn7.Location = New System.Drawing.Point(749, 401)
+        Me.BPawn7.Location = New System.Drawing.Point(999, 494)
+        Me.BPawn7.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn7.Name = "BPawn7"
-        Me.BPawn7.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn7.Size = New System.Drawing.Size(80, 74)
         Me.BPawn7.TabIndex = 22
         Me.BPawn7.UseVisualStyleBackColor = False
         '
@@ -441,9 +460,10 @@ Partial Class ChessBoard
         Me.BPawn6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn6.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn6.Location = New System.Drawing.Point(691, 401)
+        Me.BPawn6.Location = New System.Drawing.Point(921, 494)
+        Me.BPawn6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn6.Name = "BPawn6"
-        Me.BPawn6.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn6.Size = New System.Drawing.Size(80, 74)
         Me.BPawn6.TabIndex = 23
         Me.BPawn6.UseVisualStyleBackColor = False
         '
@@ -456,9 +476,10 @@ Partial Class ChessBoard
         Me.BPawn1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn1.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn1.Location = New System.Drawing.Point(633, 344)
+        Me.BPawn1.Location = New System.Drawing.Point(844, 423)
+        Me.BPawn1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn1.Name = "BPawn1"
-        Me.BPawn1.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn1.Size = New System.Drawing.Size(80, 74)
         Me.BPawn1.TabIndex = 24
         Me.BPawn1.UseVisualStyleBackColor = False
         '
@@ -471,9 +492,10 @@ Partial Class ChessBoard
         Me.BPawn2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn2.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn2.Location = New System.Drawing.Point(691, 344)
+        Me.BPawn2.Location = New System.Drawing.Point(921, 423)
+        Me.BPawn2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn2.Name = "BPawn2"
-        Me.BPawn2.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn2.Size = New System.Drawing.Size(80, 74)
         Me.BPawn2.TabIndex = 25
         Me.BPawn2.UseVisualStyleBackColor = False
         '
@@ -486,9 +508,10 @@ Partial Class ChessBoard
         Me.BPawn3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn3.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn3.Location = New System.Drawing.Point(749, 344)
+        Me.BPawn3.Location = New System.Drawing.Point(999, 423)
+        Me.BPawn3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn3.Name = "BPawn3"
-        Me.BPawn3.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn3.Size = New System.Drawing.Size(80, 74)
         Me.BPawn3.TabIndex = 26
         Me.BPawn3.UseVisualStyleBackColor = False
         '
@@ -501,9 +524,10 @@ Partial Class ChessBoard
         Me.WKnight1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WKnight1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WKnight1.ForeColor = System.Drawing.Color.Transparent
-        Me.WKnight1.Location = New System.Drawing.Point(633, 287)
+        Me.WKnight1.Location = New System.Drawing.Point(844, 353)
+        Me.WKnight1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WKnight1.Name = "WKnight1"
-        Me.WKnight1.Size = New System.Drawing.Size(60, 60)
+        Me.WKnight1.Size = New System.Drawing.Size(80, 74)
         Me.WKnight1.TabIndex = 27
         Me.WKnight1.UseVisualStyleBackColor = False
         '
@@ -516,9 +540,10 @@ Partial Class ChessBoard
         Me.Wknight2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Wknight2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Wknight2.ForeColor = System.Drawing.Color.Transparent
-        Me.Wknight2.Location = New System.Drawing.Point(691, 287)
+        Me.Wknight2.Location = New System.Drawing.Point(921, 353)
+        Me.Wknight2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Wknight2.Name = "Wknight2"
-        Me.Wknight2.Size = New System.Drawing.Size(60, 60)
+        Me.Wknight2.Size = New System.Drawing.Size(80, 74)
         Me.Wknight2.TabIndex = 28
         Me.Wknight2.UseVisualStyleBackColor = False
         '
@@ -531,9 +556,10 @@ Partial Class ChessBoard
         Me.WQueen.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WQueen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WQueen.ForeColor = System.Drawing.Color.Transparent
-        Me.WQueen.Location = New System.Drawing.Point(749, 287)
+        Me.WQueen.Location = New System.Drawing.Point(999, 353)
+        Me.WQueen.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WQueen.Name = "WQueen"
-        Me.WQueen.Size = New System.Drawing.Size(60, 60)
+        Me.WQueen.Size = New System.Drawing.Size(80, 74)
         Me.WQueen.TabIndex = 29
         Me.WQueen.UseVisualStyleBackColor = False
         '
@@ -546,9 +572,10 @@ Partial Class ChessBoard
         Me.BPawn4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.BPawn4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.BPawn4.ForeColor = System.Drawing.Color.Transparent
-        Me.BPawn4.Location = New System.Drawing.Point(807, 344)
+        Me.BPawn4.Location = New System.Drawing.Point(1076, 423)
+        Me.BPawn4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.BPawn4.Name = "BPawn4"
-        Me.BPawn4.Size = New System.Drawing.Size(60, 60)
+        Me.BPawn4.Size = New System.Drawing.Size(80, 74)
         Me.BPawn4.TabIndex = 30
         Me.BPawn4.UseVisualStyleBackColor = False
         '
@@ -561,9 +588,10 @@ Partial Class ChessBoard
         Me.WBishop1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WBishop1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WBishop1.ForeColor = System.Drawing.Color.Transparent
-        Me.WBishop1.Location = New System.Drawing.Point(749, 231)
+        Me.WBishop1.Location = New System.Drawing.Point(999, 284)
+        Me.WBishop1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WBishop1.Name = "WBishop1"
-        Me.WBishop1.Size = New System.Drawing.Size(60, 60)
+        Me.WBishop1.Size = New System.Drawing.Size(80, 74)
         Me.WBishop1.TabIndex = 31
         Me.WBishop1.UseVisualStyleBackColor = False
         '
@@ -576,9 +604,10 @@ Partial Class ChessBoard
         Me.WRook2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WRook2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WRook2.ForeColor = System.Drawing.Color.Transparent
-        Me.WRook2.Location = New System.Drawing.Point(691, 231)
+        Me.WRook2.Location = New System.Drawing.Point(921, 284)
+        Me.WRook2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WRook2.Name = "WRook2"
-        Me.WRook2.Size = New System.Drawing.Size(60, 60)
+        Me.WRook2.Size = New System.Drawing.Size(80, 74)
         Me.WRook2.TabIndex = 32
         Me.WRook2.UseVisualStyleBackColor = False
         '
@@ -591,9 +620,10 @@ Partial Class ChessBoard
         Me.WRook1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WRook1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WRook1.ForeColor = System.Drawing.Color.Transparent
-        Me.WRook1.Location = New System.Drawing.Point(633, 231)
+        Me.WRook1.Location = New System.Drawing.Point(844, 284)
+        Me.WRook1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WRook1.Name = "WRook1"
-        Me.WRook1.Size = New System.Drawing.Size(60, 60)
+        Me.WRook1.Size = New System.Drawing.Size(80, 74)
         Me.WRook1.TabIndex = 33
         Me.WRook1.UseVisualStyleBackColor = False
         '
@@ -606,9 +636,10 @@ Partial Class ChessBoard
         Me.WBishop2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WBishop2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WBishop2.ForeColor = System.Drawing.Color.Transparent
-        Me.WBishop2.Location = New System.Drawing.Point(807, 231)
+        Me.WBishop2.Location = New System.Drawing.Point(1076, 284)
+        Me.WBishop2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WBishop2.Name = "WBishop2"
-        Me.WBishop2.Size = New System.Drawing.Size(60, 60)
+        Me.WBishop2.Size = New System.Drawing.Size(80, 74)
         Me.WBishop2.TabIndex = 34
         Me.WBishop2.UseVisualStyleBackColor = False
         '
@@ -621,9 +652,10 @@ Partial Class ChessBoard
         Me.WPawn8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WPawn8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn8.ForeColor = System.Drawing.Color.Transparent
-        Me.WPawn8.Location = New System.Drawing.Point(807, 171)
+        Me.WPawn8.Location = New System.Drawing.Point(1076, 210)
+        Me.WPawn8.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WPawn8.Name = "WPawn8"
-        Me.WPawn8.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn8.Size = New System.Drawing.Size(80, 74)
         Me.WPawn8.TabIndex = 35
         Me.WPawn8.UseVisualStyleBackColor = False
         '
@@ -636,9 +668,10 @@ Partial Class ChessBoard
         Me.WPawn7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WPawn7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn7.ForeColor = System.Drawing.Color.Transparent
-        Me.WPawn7.Location = New System.Drawing.Point(749, 171)
+        Me.WPawn7.Location = New System.Drawing.Point(999, 210)
+        Me.WPawn7.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WPawn7.Name = "WPawn7"
-        Me.WPawn7.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn7.Size = New System.Drawing.Size(80, 74)
         Me.WPawn7.TabIndex = 36
         Me.WPawn7.UseVisualStyleBackColor = False
         '
@@ -651,9 +684,10 @@ Partial Class ChessBoard
         Me.WPawn6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WPawn6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WPawn6.ForeColor = System.Drawing.Color.Transparent
-        Me.WPawn6.Location = New System.Drawing.Point(691, 171)
+        Me.WPawn6.Location = New System.Drawing.Point(921, 210)
+        Me.WPawn6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.WPawn6.Name = "WPawn6"
-        Me.WPawn6.Size = New System.Drawing.Size(60, 60)
+        Me.WPawn6.Size = New System.Drawing.Size(80, 74)
         Me.WPawn6.TabIndex = 37
         Me.WPawn6.UseVisualStyleBackColor = False
         '
@@ -666,10 +700,10 @@ Partial Class ChessBoard
         Me.Button1.FlatAppearance.BorderSize = 0
         Me.Button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button1.Location = New System.Drawing.Point(790, 9)
+        Me.Button1.Location = New System.Drawing.Point(1053, 11)
         Me.Button1.Margin = New System.Windows.Forms.Padding(0)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(78, 78)
+        Me.Button1.Size = New System.Drawing.Size(104, 96)
         Me.Button1.TabIndex = 85
         Me.Button1.UseVisualStyleBackColor = False
         '
@@ -682,10 +716,10 @@ Partial Class ChessBoard
         Me.Button2.FlatAppearance.BorderSize = 0
         Me.Button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button2.Location = New System.Drawing.Point(789, 9)
+        Me.Button2.Location = New System.Drawing.Point(1052, 11)
         Me.Button2.Margin = New System.Windows.Forms.Padding(0)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(78, 78)
+        Me.Button2.Size = New System.Drawing.Size(104, 96)
         Me.Button2.TabIndex = 86
         Me.Button2.UseVisualStyleBackColor = False
         '
@@ -698,10 +732,10 @@ Partial Class ChessBoard
         Me.Button3.FlatAppearance.BorderSize = 0
         Me.Button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button3.Location = New System.Drawing.Point(790, 9)
+        Me.Button3.Location = New System.Drawing.Point(1053, 11)
         Me.Button3.Margin = New System.Windows.Forms.Padding(0)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(78, 78)
+        Me.Button3.Size = New System.Drawing.Size(104, 96)
         Me.Button3.TabIndex = 87
         Me.Button3.UseVisualStyleBackColor = False
         '
@@ -714,10 +748,10 @@ Partial Class ChessBoard
         Me.Button4.FlatAppearance.BorderSize = 0
         Me.Button4.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button4.Location = New System.Drawing.Point(790, 9)
+        Me.Button4.Location = New System.Drawing.Point(1053, 11)
         Me.Button4.Margin = New System.Windows.Forms.Padding(0)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(78, 78)
+        Me.Button4.Size = New System.Drawing.Size(104, 96)
         Me.Button4.TabIndex = 88
         Me.Button4.UseVisualStyleBackColor = False
         '
@@ -730,10 +764,10 @@ Partial Class ChessBoard
         Me.Button5.FlatAppearance.BorderSize = 0
         Me.Button5.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button5.Location = New System.Drawing.Point(789, 9)
+        Me.Button5.Location = New System.Drawing.Point(1052, 11)
         Me.Button5.Margin = New System.Windows.Forms.Padding(0)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(78, 78)
+        Me.Button5.Size = New System.Drawing.Size(104, 96)
         Me.Button5.TabIndex = 89
         Me.Button5.UseVisualStyleBackColor = False
         '
@@ -746,10 +780,10 @@ Partial Class ChessBoard
         Me.Button6.FlatAppearance.BorderSize = 0
         Me.Button6.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button6.Location = New System.Drawing.Point(795, 13)
+        Me.Button6.Location = New System.Drawing.Point(1060, 16)
         Me.Button6.Margin = New System.Windows.Forms.Padding(0)
         Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(78, 78)
+        Me.Button6.Size = New System.Drawing.Size(104, 96)
         Me.Button6.TabIndex = 90
         Me.Button6.UseVisualStyleBackColor = False
         '
@@ -762,10 +796,10 @@ Partial Class ChessBoard
         Me.Button7.FlatAppearance.BorderSize = 0
         Me.Button7.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button7.Location = New System.Drawing.Point(789, 9)
+        Me.Button7.Location = New System.Drawing.Point(1052, 11)
         Me.Button7.Margin = New System.Windows.Forms.Padding(0)
         Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(78, 78)
+        Me.Button7.Size = New System.Drawing.Size(104, 96)
         Me.Button7.TabIndex = 91
         Me.Button7.UseVisualStyleBackColor = False
         '
@@ -778,10 +812,10 @@ Partial Class ChessBoard
         Me.Button8.FlatAppearance.BorderSize = 0
         Me.Button8.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button8.Location = New System.Drawing.Point(790, 9)
+        Me.Button8.Location = New System.Drawing.Point(1053, 11)
         Me.Button8.Margin = New System.Windows.Forms.Padding(0)
         Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(78, 78)
+        Me.Button8.Size = New System.Drawing.Size(104, 96)
         Me.Button8.TabIndex = 92
         Me.Button8.UseVisualStyleBackColor = False
         '
@@ -794,10 +828,10 @@ Partial Class ChessBoard
         Me.Button9.FlatAppearance.BorderSize = 0
         Me.Button9.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button9.Location = New System.Drawing.Point(790, 9)
+        Me.Button9.Location = New System.Drawing.Point(1053, 11)
         Me.Button9.Margin = New System.Windows.Forms.Padding(0)
         Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(78, 78)
+        Me.Button9.Size = New System.Drawing.Size(104, 96)
         Me.Button9.TabIndex = 93
         Me.Button9.UseVisualStyleBackColor = False
         '
@@ -810,10 +844,10 @@ Partial Class ChessBoard
         Me.Button10.FlatAppearance.BorderSize = 0
         Me.Button10.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button10.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button10.Location = New System.Drawing.Point(790, 9)
+        Me.Button10.Location = New System.Drawing.Point(1053, 11)
         Me.Button10.Margin = New System.Windows.Forms.Padding(0)
         Me.Button10.Name = "Button10"
-        Me.Button10.Size = New System.Drawing.Size(78, 78)
+        Me.Button10.Size = New System.Drawing.Size(104, 96)
         Me.Button10.TabIndex = 102
         Me.Button10.UseVisualStyleBackColor = False
         '
@@ -826,10 +860,10 @@ Partial Class ChessBoard
         Me.Button11.FlatAppearance.BorderSize = 0
         Me.Button11.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button11.Location = New System.Drawing.Point(790, 9)
+        Me.Button11.Location = New System.Drawing.Point(1053, 11)
         Me.Button11.Margin = New System.Windows.Forms.Padding(0)
         Me.Button11.Name = "Button11"
-        Me.Button11.Size = New System.Drawing.Size(78, 78)
+        Me.Button11.Size = New System.Drawing.Size(104, 96)
         Me.Button11.TabIndex = 101
         Me.Button11.UseVisualStyleBackColor = False
         '
@@ -842,10 +876,10 @@ Partial Class ChessBoard
         Me.Button12.FlatAppearance.BorderSize = 0
         Me.Button12.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button12.Location = New System.Drawing.Point(789, 9)
+        Me.Button12.Location = New System.Drawing.Point(1052, 11)
         Me.Button12.Margin = New System.Windows.Forms.Padding(0)
         Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(78, 78)
+        Me.Button12.Size = New System.Drawing.Size(104, 96)
         Me.Button12.TabIndex = 100
         Me.Button12.UseVisualStyleBackColor = False
         '
@@ -858,10 +892,10 @@ Partial Class ChessBoard
         Me.Button13.FlatAppearance.BorderSize = 0
         Me.Button13.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button13.Location = New System.Drawing.Point(795, 13)
+        Me.Button13.Location = New System.Drawing.Point(1060, 16)
         Me.Button13.Margin = New System.Windows.Forms.Padding(0)
         Me.Button13.Name = "Button13"
-        Me.Button13.Size = New System.Drawing.Size(78, 78)
+        Me.Button13.Size = New System.Drawing.Size(104, 96)
         Me.Button13.TabIndex = 99
         Me.Button13.UseVisualStyleBackColor = False
         '
@@ -874,10 +908,10 @@ Partial Class ChessBoard
         Me.Button14.FlatAppearance.BorderSize = 0
         Me.Button14.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button14.Location = New System.Drawing.Point(789, 9)
+        Me.Button14.Location = New System.Drawing.Point(1052, 11)
         Me.Button14.Margin = New System.Windows.Forms.Padding(0)
         Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(78, 78)
+        Me.Button14.Size = New System.Drawing.Size(104, 96)
         Me.Button14.TabIndex = 98
         Me.Button14.UseVisualStyleBackColor = False
         '
@@ -890,10 +924,10 @@ Partial Class ChessBoard
         Me.Button15.FlatAppearance.BorderSize = 0
         Me.Button15.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button15.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button15.Location = New System.Drawing.Point(790, 9)
+        Me.Button15.Location = New System.Drawing.Point(1053, 11)
         Me.Button15.Margin = New System.Windows.Forms.Padding(0)
         Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(78, 78)
+        Me.Button15.Size = New System.Drawing.Size(104, 96)
         Me.Button15.TabIndex = 97
         Me.Button15.UseVisualStyleBackColor = False
         '
@@ -906,10 +940,10 @@ Partial Class ChessBoard
         Me.Button16.FlatAppearance.BorderSize = 0
         Me.Button16.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button16.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button16.Location = New System.Drawing.Point(790, 9)
+        Me.Button16.Location = New System.Drawing.Point(1053, 11)
         Me.Button16.Margin = New System.Windows.Forms.Padding(0)
         Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(78, 78)
+        Me.Button16.Size = New System.Drawing.Size(104, 96)
         Me.Button16.TabIndex = 96
         Me.Button16.UseVisualStyleBackColor = False
         '
@@ -922,10 +956,10 @@ Partial Class ChessBoard
         Me.Button17.FlatAppearance.BorderSize = 0
         Me.Button17.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button17.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button17.Location = New System.Drawing.Point(789, 9)
+        Me.Button17.Location = New System.Drawing.Point(1052, 11)
         Me.Button17.Margin = New System.Windows.Forms.Padding(0)
         Me.Button17.Name = "Button17"
-        Me.Button17.Size = New System.Drawing.Size(78, 78)
+        Me.Button17.Size = New System.Drawing.Size(104, 96)
         Me.Button17.TabIndex = 95
         Me.Button17.UseVisualStyleBackColor = False
         '
@@ -938,10 +972,10 @@ Partial Class ChessBoard
         Me.Button18.FlatAppearance.BorderSize = 0
         Me.Button18.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button18.Location = New System.Drawing.Point(790, 9)
+        Me.Button18.Location = New System.Drawing.Point(1053, 11)
         Me.Button18.Margin = New System.Windows.Forms.Padding(0)
         Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(78, 78)
+        Me.Button18.Size = New System.Drawing.Size(104, 96)
         Me.Button18.TabIndex = 94
         Me.Button18.UseVisualStyleBackColor = False
         '
@@ -954,10 +988,10 @@ Partial Class ChessBoard
         Me.Button19.FlatAppearance.BorderSize = 0
         Me.Button19.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button19.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button19.Location = New System.Drawing.Point(789, 9)
+        Me.Button19.Location = New System.Drawing.Point(1052, 11)
         Me.Button19.Margin = New System.Windows.Forms.Padding(0)
         Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(78, 78)
+        Me.Button19.Size = New System.Drawing.Size(104, 96)
         Me.Button19.TabIndex = 120
         Me.Button19.UseVisualStyleBackColor = False
         '
@@ -970,10 +1004,10 @@ Partial Class ChessBoard
         Me.Button20.FlatAppearance.BorderSize = 0
         Me.Button20.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button20.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button20.Location = New System.Drawing.Point(789, 9)
+        Me.Button20.Location = New System.Drawing.Point(1052, 11)
         Me.Button20.Margin = New System.Windows.Forms.Padding(0)
         Me.Button20.Name = "Button20"
-        Me.Button20.Size = New System.Drawing.Size(78, 78)
+        Me.Button20.Size = New System.Drawing.Size(104, 96)
         Me.Button20.TabIndex = 119
         Me.Button20.UseVisualStyleBackColor = False
         '
@@ -986,10 +1020,10 @@ Partial Class ChessBoard
         Me.Button21.FlatAppearance.BorderSize = 0
         Me.Button21.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button21.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button21.Location = New System.Drawing.Point(788, 9)
+        Me.Button21.Location = New System.Drawing.Point(1051, 11)
         Me.Button21.Margin = New System.Windows.Forms.Padding(0)
         Me.Button21.Name = "Button21"
-        Me.Button21.Size = New System.Drawing.Size(78, 78)
+        Me.Button21.Size = New System.Drawing.Size(104, 96)
         Me.Button21.TabIndex = 118
         Me.Button21.UseVisualStyleBackColor = False
         '
@@ -1002,10 +1036,10 @@ Partial Class ChessBoard
         Me.Button22.FlatAppearance.BorderSize = 0
         Me.Button22.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button22.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button22.Location = New System.Drawing.Point(794, 13)
+        Me.Button22.Location = New System.Drawing.Point(1059, 16)
         Me.Button22.Margin = New System.Windows.Forms.Padding(0)
         Me.Button22.Name = "Button22"
-        Me.Button22.Size = New System.Drawing.Size(78, 78)
+        Me.Button22.Size = New System.Drawing.Size(104, 96)
         Me.Button22.TabIndex = 117
         Me.Button22.UseVisualStyleBackColor = False
         '
@@ -1018,10 +1052,10 @@ Partial Class ChessBoard
         Me.Button23.FlatAppearance.BorderSize = 0
         Me.Button23.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button23.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button23.Location = New System.Drawing.Point(788, 9)
+        Me.Button23.Location = New System.Drawing.Point(1051, 11)
         Me.Button23.Margin = New System.Windows.Forms.Padding(0)
         Me.Button23.Name = "Button23"
-        Me.Button23.Size = New System.Drawing.Size(78, 78)
+        Me.Button23.Size = New System.Drawing.Size(104, 96)
         Me.Button23.TabIndex = 116
         Me.Button23.UseVisualStyleBackColor = False
         '
@@ -1034,10 +1068,10 @@ Partial Class ChessBoard
         Me.Button24.FlatAppearance.BorderSize = 0
         Me.Button24.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button24.Location = New System.Drawing.Point(789, 9)
+        Me.Button24.Location = New System.Drawing.Point(1052, 11)
         Me.Button24.Margin = New System.Windows.Forms.Padding(0)
         Me.Button24.Name = "Button24"
-        Me.Button24.Size = New System.Drawing.Size(78, 78)
+        Me.Button24.Size = New System.Drawing.Size(104, 96)
         Me.Button24.TabIndex = 115
         Me.Button24.UseVisualStyleBackColor = False
         '
@@ -1050,10 +1084,10 @@ Partial Class ChessBoard
         Me.Button25.FlatAppearance.BorderSize = 0
         Me.Button25.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button25.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button25.Location = New System.Drawing.Point(789, 9)
+        Me.Button25.Location = New System.Drawing.Point(1052, 11)
         Me.Button25.Margin = New System.Windows.Forms.Padding(0)
         Me.Button25.Name = "Button25"
-        Me.Button25.Size = New System.Drawing.Size(78, 78)
+        Me.Button25.Size = New System.Drawing.Size(104, 96)
         Me.Button25.TabIndex = 114
         Me.Button25.UseVisualStyleBackColor = False
         '
@@ -1066,10 +1100,10 @@ Partial Class ChessBoard
         Me.Button26.FlatAppearance.BorderSize = 0
         Me.Button26.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button26.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button26.Location = New System.Drawing.Point(788, 9)
+        Me.Button26.Location = New System.Drawing.Point(1051, 11)
         Me.Button26.Margin = New System.Windows.Forms.Padding(0)
         Me.Button26.Name = "Button26"
-        Me.Button26.Size = New System.Drawing.Size(78, 78)
+        Me.Button26.Size = New System.Drawing.Size(104, 96)
         Me.Button26.TabIndex = 113
         Me.Button26.UseVisualStyleBackColor = False
         '
@@ -1082,10 +1116,10 @@ Partial Class ChessBoard
         Me.Button27.FlatAppearance.BorderSize = 0
         Me.Button27.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button27.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button27.Location = New System.Drawing.Point(789, 9)
+        Me.Button27.Location = New System.Drawing.Point(1052, 11)
         Me.Button27.Margin = New System.Windows.Forms.Padding(0)
         Me.Button27.Name = "Button27"
-        Me.Button27.Size = New System.Drawing.Size(78, 78)
+        Me.Button27.Size = New System.Drawing.Size(104, 96)
         Me.Button27.TabIndex = 112
         Me.Button27.UseVisualStyleBackColor = False
         '
@@ -1098,10 +1132,10 @@ Partial Class ChessBoard
         Me.Button28.FlatAppearance.BorderSize = 0
         Me.Button28.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button28.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button28.Location = New System.Drawing.Point(789, 9)
+        Me.Button28.Location = New System.Drawing.Point(1052, 11)
         Me.Button28.Margin = New System.Windows.Forms.Padding(0)
         Me.Button28.Name = "Button28"
-        Me.Button28.Size = New System.Drawing.Size(78, 78)
+        Me.Button28.Size = New System.Drawing.Size(104, 96)
         Me.Button28.TabIndex = 111
         Me.Button28.UseVisualStyleBackColor = False
         '
@@ -1114,10 +1148,10 @@ Partial Class ChessBoard
         Me.Button29.FlatAppearance.BorderSize = 0
         Me.Button29.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button29.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button29.Location = New System.Drawing.Point(789, 9)
+        Me.Button29.Location = New System.Drawing.Point(1052, 11)
         Me.Button29.Margin = New System.Windows.Forms.Padding(0)
         Me.Button29.Name = "Button29"
-        Me.Button29.Size = New System.Drawing.Size(78, 78)
+        Me.Button29.Size = New System.Drawing.Size(104, 96)
         Me.Button29.TabIndex = 110
         Me.Button29.UseVisualStyleBackColor = False
         '
@@ -1130,10 +1164,10 @@ Partial Class ChessBoard
         Me.Button30.FlatAppearance.BorderSize = 0
         Me.Button30.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button30.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button30.Location = New System.Drawing.Point(788, 9)
+        Me.Button30.Location = New System.Drawing.Point(1051, 11)
         Me.Button30.Margin = New System.Windows.Forms.Padding(0)
         Me.Button30.Name = "Button30"
-        Me.Button30.Size = New System.Drawing.Size(78, 78)
+        Me.Button30.Size = New System.Drawing.Size(104, 96)
         Me.Button30.TabIndex = 109
         Me.Button30.UseVisualStyleBackColor = False
         '
@@ -1146,10 +1180,10 @@ Partial Class ChessBoard
         Me.Button31.FlatAppearance.BorderSize = 0
         Me.Button31.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button31.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button31.Location = New System.Drawing.Point(794, 13)
+        Me.Button31.Location = New System.Drawing.Point(1059, 16)
         Me.Button31.Margin = New System.Windows.Forms.Padding(0)
         Me.Button31.Name = "Button31"
-        Me.Button31.Size = New System.Drawing.Size(78, 78)
+        Me.Button31.Size = New System.Drawing.Size(104, 96)
         Me.Button31.TabIndex = 108
         Me.Button31.UseVisualStyleBackColor = False
         '
@@ -1162,10 +1196,10 @@ Partial Class ChessBoard
         Me.Button32.FlatAppearance.BorderSize = 0
         Me.Button32.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button32.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button32.Location = New System.Drawing.Point(788, 9)
+        Me.Button32.Location = New System.Drawing.Point(1051, 11)
         Me.Button32.Margin = New System.Windows.Forms.Padding(0)
         Me.Button32.Name = "Button32"
-        Me.Button32.Size = New System.Drawing.Size(78, 78)
+        Me.Button32.Size = New System.Drawing.Size(104, 96)
         Me.Button32.TabIndex = 107
         Me.Button32.UseVisualStyleBackColor = False
         '
@@ -1178,10 +1212,10 @@ Partial Class ChessBoard
         Me.Button33.FlatAppearance.BorderSize = 0
         Me.Button33.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button33.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button33.Location = New System.Drawing.Point(789, 9)
+        Me.Button33.Location = New System.Drawing.Point(1052, 11)
         Me.Button33.Margin = New System.Windows.Forms.Padding(0)
         Me.Button33.Name = "Button33"
-        Me.Button33.Size = New System.Drawing.Size(78, 78)
+        Me.Button33.Size = New System.Drawing.Size(104, 96)
         Me.Button33.TabIndex = 106
         Me.Button33.UseVisualStyleBackColor = False
         '
@@ -1194,10 +1228,10 @@ Partial Class ChessBoard
         Me.Button34.FlatAppearance.BorderSize = 0
         Me.Button34.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button34.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button34.Location = New System.Drawing.Point(789, 9)
+        Me.Button34.Location = New System.Drawing.Point(1052, 11)
         Me.Button34.Margin = New System.Windows.Forms.Padding(0)
         Me.Button34.Name = "Button34"
-        Me.Button34.Size = New System.Drawing.Size(78, 78)
+        Me.Button34.Size = New System.Drawing.Size(104, 96)
         Me.Button34.TabIndex = 105
         Me.Button34.UseVisualStyleBackColor = False
         '
@@ -1210,10 +1244,10 @@ Partial Class ChessBoard
         Me.Button35.FlatAppearance.BorderSize = 0
         Me.Button35.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button35.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button35.Location = New System.Drawing.Point(788, 9)
+        Me.Button35.Location = New System.Drawing.Point(1051, 11)
         Me.Button35.Margin = New System.Windows.Forms.Padding(0)
         Me.Button35.Name = "Button35"
-        Me.Button35.Size = New System.Drawing.Size(78, 78)
+        Me.Button35.Size = New System.Drawing.Size(104, 96)
         Me.Button35.TabIndex = 104
         Me.Button35.UseVisualStyleBackColor = False
         '
@@ -1226,10 +1260,10 @@ Partial Class ChessBoard
         Me.Button36.FlatAppearance.BorderSize = 0
         Me.Button36.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button36.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button36.Location = New System.Drawing.Point(789, 9)
+        Me.Button36.Location = New System.Drawing.Point(1052, 11)
         Me.Button36.Margin = New System.Windows.Forms.Padding(0)
         Me.Button36.Name = "Button36"
-        Me.Button36.Size = New System.Drawing.Size(78, 78)
+        Me.Button36.Size = New System.Drawing.Size(104, 96)
         Me.Button36.TabIndex = 103
         Me.Button36.UseVisualStyleBackColor = False
         '
@@ -1242,10 +1276,10 @@ Partial Class ChessBoard
         Me.Button37.FlatAppearance.BorderSize = 0
         Me.Button37.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button37.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button37.Location = New System.Drawing.Point(788, 9)
+        Me.Button37.Location = New System.Drawing.Point(1051, 11)
         Me.Button37.Margin = New System.Windows.Forms.Padding(0)
         Me.Button37.Name = "Button37"
-        Me.Button37.Size = New System.Drawing.Size(78, 78)
+        Me.Button37.Size = New System.Drawing.Size(104, 96)
         Me.Button37.TabIndex = 138
         Me.Button37.UseVisualStyleBackColor = False
         '
@@ -1258,10 +1292,10 @@ Partial Class ChessBoard
         Me.Button38.FlatAppearance.BorderSize = 0
         Me.Button38.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button38.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button38.Location = New System.Drawing.Point(788, 9)
+        Me.Button38.Location = New System.Drawing.Point(1051, 11)
         Me.Button38.Margin = New System.Windows.Forms.Padding(0)
         Me.Button38.Name = "Button38"
-        Me.Button38.Size = New System.Drawing.Size(78, 78)
+        Me.Button38.Size = New System.Drawing.Size(104, 96)
         Me.Button38.TabIndex = 137
         Me.Button38.UseVisualStyleBackColor = False
         '
@@ -1274,10 +1308,10 @@ Partial Class ChessBoard
         Me.Button39.FlatAppearance.BorderSize = 0
         Me.Button39.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button39.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button39.Location = New System.Drawing.Point(787, 9)
+        Me.Button39.Location = New System.Drawing.Point(1049, 11)
         Me.Button39.Margin = New System.Windows.Forms.Padding(0)
         Me.Button39.Name = "Button39"
-        Me.Button39.Size = New System.Drawing.Size(78, 78)
+        Me.Button39.Size = New System.Drawing.Size(104, 96)
         Me.Button39.TabIndex = 136
         Me.Button39.UseVisualStyleBackColor = False
         '
@@ -1290,10 +1324,10 @@ Partial Class ChessBoard
         Me.Button40.FlatAppearance.BorderSize = 0
         Me.Button40.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button40.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button40.Location = New System.Drawing.Point(793, 13)
+        Me.Button40.Location = New System.Drawing.Point(1057, 16)
         Me.Button40.Margin = New System.Windows.Forms.Padding(0)
         Me.Button40.Name = "Button40"
-        Me.Button40.Size = New System.Drawing.Size(78, 78)
+        Me.Button40.Size = New System.Drawing.Size(104, 96)
         Me.Button40.TabIndex = 135
         Me.Button40.UseVisualStyleBackColor = False
         '
@@ -1306,10 +1340,10 @@ Partial Class ChessBoard
         Me.Button41.FlatAppearance.BorderSize = 0
         Me.Button41.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button41.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button41.Location = New System.Drawing.Point(787, 9)
+        Me.Button41.Location = New System.Drawing.Point(1049, 11)
         Me.Button41.Margin = New System.Windows.Forms.Padding(0)
         Me.Button41.Name = "Button41"
-        Me.Button41.Size = New System.Drawing.Size(78, 78)
+        Me.Button41.Size = New System.Drawing.Size(104, 96)
         Me.Button41.TabIndex = 134
         Me.Button41.UseVisualStyleBackColor = False
         '
@@ -1322,10 +1356,10 @@ Partial Class ChessBoard
         Me.Button42.FlatAppearance.BorderSize = 0
         Me.Button42.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button42.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button42.Location = New System.Drawing.Point(788, 9)
+        Me.Button42.Location = New System.Drawing.Point(1051, 11)
         Me.Button42.Margin = New System.Windows.Forms.Padding(0)
         Me.Button42.Name = "Button42"
-        Me.Button42.Size = New System.Drawing.Size(78, 78)
+        Me.Button42.Size = New System.Drawing.Size(104, 96)
         Me.Button42.TabIndex = 133
         Me.Button42.UseVisualStyleBackColor = False
         '
@@ -1338,10 +1372,10 @@ Partial Class ChessBoard
         Me.Button43.FlatAppearance.BorderSize = 0
         Me.Button43.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button43.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button43.Location = New System.Drawing.Point(788, 9)
+        Me.Button43.Location = New System.Drawing.Point(1051, 11)
         Me.Button43.Margin = New System.Windows.Forms.Padding(0)
         Me.Button43.Name = "Button43"
-        Me.Button43.Size = New System.Drawing.Size(78, 78)
+        Me.Button43.Size = New System.Drawing.Size(104, 96)
         Me.Button43.TabIndex = 132
         Me.Button43.UseVisualStyleBackColor = False
         '
@@ -1354,10 +1388,10 @@ Partial Class ChessBoard
         Me.Button44.FlatAppearance.BorderSize = 0
         Me.Button44.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button44.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button44.Location = New System.Drawing.Point(787, 9)
+        Me.Button44.Location = New System.Drawing.Point(1049, 11)
         Me.Button44.Margin = New System.Windows.Forms.Padding(0)
         Me.Button44.Name = "Button44"
-        Me.Button44.Size = New System.Drawing.Size(78, 78)
+        Me.Button44.Size = New System.Drawing.Size(104, 96)
         Me.Button44.TabIndex = 131
         Me.Button44.UseVisualStyleBackColor = False
         '
@@ -1370,10 +1404,10 @@ Partial Class ChessBoard
         Me.Button45.FlatAppearance.BorderSize = 0
         Me.Button45.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button45.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button45.Location = New System.Drawing.Point(788, 9)
+        Me.Button45.Location = New System.Drawing.Point(1051, 11)
         Me.Button45.Margin = New System.Windows.Forms.Padding(0)
         Me.Button45.Name = "Button45"
-        Me.Button45.Size = New System.Drawing.Size(78, 78)
+        Me.Button45.Size = New System.Drawing.Size(104, 96)
         Me.Button45.TabIndex = 130
         Me.Button45.UseVisualStyleBackColor = False
         '
@@ -1386,10 +1420,10 @@ Partial Class ChessBoard
         Me.Button46.FlatAppearance.BorderSize = 0
         Me.Button46.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button46.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button46.Location = New System.Drawing.Point(788, 9)
+        Me.Button46.Location = New System.Drawing.Point(1051, 11)
         Me.Button46.Margin = New System.Windows.Forms.Padding(0)
         Me.Button46.Name = "Button46"
-        Me.Button46.Size = New System.Drawing.Size(78, 78)
+        Me.Button46.Size = New System.Drawing.Size(104, 96)
         Me.Button46.TabIndex = 129
         Me.Button46.UseVisualStyleBackColor = False
         '
@@ -1402,10 +1436,10 @@ Partial Class ChessBoard
         Me.Button47.FlatAppearance.BorderSize = 0
         Me.Button47.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button47.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button47.Location = New System.Drawing.Point(788, 9)
+        Me.Button47.Location = New System.Drawing.Point(1051, 11)
         Me.Button47.Margin = New System.Windows.Forms.Padding(0)
         Me.Button47.Name = "Button47"
-        Me.Button47.Size = New System.Drawing.Size(78, 78)
+        Me.Button47.Size = New System.Drawing.Size(104, 96)
         Me.Button47.TabIndex = 128
         Me.Button47.UseVisualStyleBackColor = False
         '
@@ -1418,10 +1452,10 @@ Partial Class ChessBoard
         Me.Button48.FlatAppearance.BorderSize = 0
         Me.Button48.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button48.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button48.Location = New System.Drawing.Point(787, 9)
+        Me.Button48.Location = New System.Drawing.Point(1049, 11)
         Me.Button48.Margin = New System.Windows.Forms.Padding(0)
         Me.Button48.Name = "Button48"
-        Me.Button48.Size = New System.Drawing.Size(78, 78)
+        Me.Button48.Size = New System.Drawing.Size(104, 96)
         Me.Button48.TabIndex = 127
         Me.Button48.UseVisualStyleBackColor = False
         '
@@ -1434,10 +1468,10 @@ Partial Class ChessBoard
         Me.Button49.FlatAppearance.BorderSize = 0
         Me.Button49.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button49.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button49.Location = New System.Drawing.Point(793, 13)
+        Me.Button49.Location = New System.Drawing.Point(1057, 16)
         Me.Button49.Margin = New System.Windows.Forms.Padding(0)
         Me.Button49.Name = "Button49"
-        Me.Button49.Size = New System.Drawing.Size(78, 78)
+        Me.Button49.Size = New System.Drawing.Size(104, 96)
         Me.Button49.TabIndex = 126
         Me.Button49.UseVisualStyleBackColor = False
         '
@@ -1450,10 +1484,10 @@ Partial Class ChessBoard
         Me.Button50.FlatAppearance.BorderSize = 0
         Me.Button50.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button50.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button50.Location = New System.Drawing.Point(787, 9)
+        Me.Button50.Location = New System.Drawing.Point(1049, 11)
         Me.Button50.Margin = New System.Windows.Forms.Padding(0)
         Me.Button50.Name = "Button50"
-        Me.Button50.Size = New System.Drawing.Size(78, 78)
+        Me.Button50.Size = New System.Drawing.Size(104, 96)
         Me.Button50.TabIndex = 125
         Me.Button50.UseVisualStyleBackColor = False
         '
@@ -1466,10 +1500,10 @@ Partial Class ChessBoard
         Me.Button51.FlatAppearance.BorderSize = 0
         Me.Button51.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button51.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button51.Location = New System.Drawing.Point(788, 9)
+        Me.Button51.Location = New System.Drawing.Point(1051, 11)
         Me.Button51.Margin = New System.Windows.Forms.Padding(0)
         Me.Button51.Name = "Button51"
-        Me.Button51.Size = New System.Drawing.Size(78, 78)
+        Me.Button51.Size = New System.Drawing.Size(104, 96)
         Me.Button51.TabIndex = 124
         Me.Button51.UseVisualStyleBackColor = False
         '
@@ -1482,10 +1516,10 @@ Partial Class ChessBoard
         Me.Button52.FlatAppearance.BorderSize = 0
         Me.Button52.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button52.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button52.Location = New System.Drawing.Point(788, 9)
+        Me.Button52.Location = New System.Drawing.Point(1051, 11)
         Me.Button52.Margin = New System.Windows.Forms.Padding(0)
         Me.Button52.Name = "Button52"
-        Me.Button52.Size = New System.Drawing.Size(78, 78)
+        Me.Button52.Size = New System.Drawing.Size(104, 96)
         Me.Button52.TabIndex = 123
         Me.Button52.UseVisualStyleBackColor = False
         '
@@ -1498,10 +1532,10 @@ Partial Class ChessBoard
         Me.Button53.FlatAppearance.BorderSize = 0
         Me.Button53.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button53.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button53.Location = New System.Drawing.Point(787, 9)
+        Me.Button53.Location = New System.Drawing.Point(1049, 11)
         Me.Button53.Margin = New System.Windows.Forms.Padding(0)
         Me.Button53.Name = "Button53"
-        Me.Button53.Size = New System.Drawing.Size(78, 78)
+        Me.Button53.Size = New System.Drawing.Size(104, 96)
         Me.Button53.TabIndex = 122
         Me.Button53.UseVisualStyleBackColor = False
         '
@@ -1514,10 +1548,10 @@ Partial Class ChessBoard
         Me.Button54.FlatAppearance.BorderSize = 0
         Me.Button54.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button54.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button54.Location = New System.Drawing.Point(788, 9)
+        Me.Button54.Location = New System.Drawing.Point(1051, 11)
         Me.Button54.Margin = New System.Windows.Forms.Padding(0)
         Me.Button54.Name = "Button54"
-        Me.Button54.Size = New System.Drawing.Size(78, 78)
+        Me.Button54.Size = New System.Drawing.Size(104, 96)
         Me.Button54.TabIndex = 121
         Me.Button54.UseVisualStyleBackColor = False
         '
@@ -1530,10 +1564,10 @@ Partial Class ChessBoard
         Me.Button55.FlatAppearance.BorderSize = 0
         Me.Button55.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button55.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button55.Location = New System.Drawing.Point(787, 9)
+        Me.Button55.Location = New System.Drawing.Point(1049, 11)
         Me.Button55.Margin = New System.Windows.Forms.Padding(0)
         Me.Button55.Name = "Button55"
-        Me.Button55.Size = New System.Drawing.Size(78, 78)
+        Me.Button55.Size = New System.Drawing.Size(104, 96)
         Me.Button55.TabIndex = 139
         Me.Button55.UseVisualStyleBackColor = False
         '
@@ -1546,10 +1580,10 @@ Partial Class ChessBoard
         Me.Button56.FlatAppearance.BorderSize = 0
         Me.Button56.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button56.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button56.Location = New System.Drawing.Point(787, 9)
+        Me.Button56.Location = New System.Drawing.Point(1049, 11)
         Me.Button56.Margin = New System.Windows.Forms.Padding(0)
         Me.Button56.Name = "Button56"
-        Me.Button56.Size = New System.Drawing.Size(78, 78)
+        Me.Button56.Size = New System.Drawing.Size(104, 96)
         Me.Button56.TabIndex = 140
         Me.Button56.UseVisualStyleBackColor = False
         '
@@ -1562,10 +1596,10 @@ Partial Class ChessBoard
         Me.Button57.FlatAppearance.BorderSize = 0
         Me.Button57.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button57.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button57.Location = New System.Drawing.Point(788, 9)
+        Me.Button57.Location = New System.Drawing.Point(1051, 11)
         Me.Button57.Margin = New System.Windows.Forms.Padding(0)
         Me.Button57.Name = "Button57"
-        Me.Button57.Size = New System.Drawing.Size(78, 78)
+        Me.Button57.Size = New System.Drawing.Size(104, 96)
         Me.Button57.TabIndex = 141
         Me.Button57.UseVisualStyleBackColor = False
         '
@@ -1578,10 +1612,10 @@ Partial Class ChessBoard
         Me.Button58.FlatAppearance.BorderSize = 0
         Me.Button58.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button58.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button58.Location = New System.Drawing.Point(787, 9)
+        Me.Button58.Location = New System.Drawing.Point(1049, 11)
         Me.Button58.Margin = New System.Windows.Forms.Padding(0)
         Me.Button58.Name = "Button58"
-        Me.Button58.Size = New System.Drawing.Size(78, 78)
+        Me.Button58.Size = New System.Drawing.Size(104, 96)
         Me.Button58.TabIndex = 142
         Me.Button58.UseVisualStyleBackColor = False
         '
@@ -1594,10 +1628,10 @@ Partial Class ChessBoard
         Me.Button59.FlatAppearance.BorderSize = 0
         Me.Button59.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button59.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button59.Location = New System.Drawing.Point(790, 9)
+        Me.Button59.Location = New System.Drawing.Point(1053, 11)
         Me.Button59.Margin = New System.Windows.Forms.Padding(0)
         Me.Button59.Name = "Button59"
-        Me.Button59.Size = New System.Drawing.Size(78, 78)
+        Me.Button59.Size = New System.Drawing.Size(104, 96)
         Me.Button59.TabIndex = 143
         Me.Button59.UseVisualStyleBackColor = False
         '
@@ -1610,10 +1644,10 @@ Partial Class ChessBoard
         Me.Button60.FlatAppearance.BorderSize = 0
         Me.Button60.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button60.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button60.Location = New System.Drawing.Point(793, 9)
+        Me.Button60.Location = New System.Drawing.Point(1057, 11)
         Me.Button60.Margin = New System.Windows.Forms.Padding(0)
         Me.Button60.Name = "Button60"
-        Me.Button60.Size = New System.Drawing.Size(78, 78)
+        Me.Button60.Size = New System.Drawing.Size(104, 96)
         Me.Button60.TabIndex = 144
         Me.Button60.UseVisualStyleBackColor = False
         '
@@ -1626,10 +1660,10 @@ Partial Class ChessBoard
         Me.Button61.FlatAppearance.BorderSize = 0
         Me.Button61.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button61.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button61.Location = New System.Drawing.Point(793, 9)
+        Me.Button61.Location = New System.Drawing.Point(1057, 11)
         Me.Button61.Margin = New System.Windows.Forms.Padding(0)
         Me.Button61.Name = "Button61"
-        Me.Button61.Size = New System.Drawing.Size(78, 78)
+        Me.Button61.Size = New System.Drawing.Size(104, 96)
         Me.Button61.TabIndex = 145
         Me.Button61.UseVisualStyleBackColor = False
         '
@@ -1642,10 +1676,10 @@ Partial Class ChessBoard
         Me.Button62.FlatAppearance.BorderSize = 0
         Me.Button62.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button62.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button62.Location = New System.Drawing.Point(794, 9)
+        Me.Button62.Location = New System.Drawing.Point(1059, 11)
         Me.Button62.Margin = New System.Windows.Forms.Padding(0)
         Me.Button62.Name = "Button62"
-        Me.Button62.Size = New System.Drawing.Size(78, 78)
+        Me.Button62.Size = New System.Drawing.Size(104, 96)
         Me.Button62.TabIndex = 146
         Me.Button62.UseVisualStyleBackColor = False
         '
@@ -1658,10 +1692,10 @@ Partial Class ChessBoard
         Me.Button63.FlatAppearance.BorderSize = 0
         Me.Button63.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button63.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button63.Location = New System.Drawing.Point(790, 9)
+        Me.Button63.Location = New System.Drawing.Point(1053, 11)
         Me.Button63.Margin = New System.Windows.Forms.Padding(0)
         Me.Button63.Name = "Button63"
-        Me.Button63.Size = New System.Drawing.Size(78, 78)
+        Me.Button63.Size = New System.Drawing.Size(104, 96)
         Me.Button63.TabIndex = 147
         Me.Button63.UseVisualStyleBackColor = False
         '
@@ -1674,10 +1708,10 @@ Partial Class ChessBoard
         Me.Button64.FlatAppearance.BorderSize = 0
         Me.Button64.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button64.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button64.Location = New System.Drawing.Point(308, 616)
+        Me.Button64.Location = New System.Drawing.Point(411, 758)
         Me.Button64.Margin = New System.Windows.Forms.Padding(0)
         Me.Button64.Name = "Button64"
-        Me.Button64.Size = New System.Drawing.Size(78, 78)
+        Me.Button64.Size = New System.Drawing.Size(104, 96)
         Me.Button64.TabIndex = 148
         Me.Button64.UseVisualStyleBackColor = False
         '
@@ -1685,18 +1719,20 @@ Partial Class ChessBoard
         '
         Me.WhiteTextBox.AutoSize = True
         Me.WhiteTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.WhiteTextBox.Location = New System.Drawing.Point(630, 43)
+        Me.WhiteTextBox.Location = New System.Drawing.Point(840, 53)
+        Me.WhiteTextBox.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.WhiteTextBox.Name = "WhiteTextBox"
-        Me.WhiteTextBox.Size = New System.Drawing.Size(0, 24)
+        Me.WhiteTextBox.Size = New System.Drawing.Size(0, 29)
         Me.WhiteTextBox.TabIndex = 149
         '
         'BlackTextBox
         '
         Me.BlackTextBox.AutoSize = True
         Me.BlackTextBox.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BlackTextBox.Location = New System.Drawing.Point(725, 43)
+        Me.BlackTextBox.Location = New System.Drawing.Point(967, 53)
+        Me.BlackTextBox.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.BlackTextBox.Name = "BlackTextBox"
-        Me.BlackTextBox.Size = New System.Drawing.Size(0, 24)
+        Me.BlackTextBox.Size = New System.Drawing.Size(0, 29)
         Me.BlackTextBox.TabIndex = 150
         '
         'Button65
@@ -1708,10 +1744,10 @@ Partial Class ChessBoard
         Me.Button65.FlatAppearance.BorderSize = 0
         Me.Button65.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button65.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button65.Location = New System.Drawing.Point(790, 9)
+        Me.Button65.Location = New System.Drawing.Point(1053, 11)
         Me.Button65.Margin = New System.Windows.Forms.Padding(0)
         Me.Button65.Name = "Button65"
-        Me.Button65.Size = New System.Drawing.Size(78, 78)
+        Me.Button65.Size = New System.Drawing.Size(104, 96)
         Me.Button65.TabIndex = 151
         Me.Button65.UseVisualStyleBackColor = False
         '
@@ -1724,10 +1760,10 @@ Partial Class ChessBoard
         Me.Button66.FlatAppearance.BorderSize = 0
         Me.Button66.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button66.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button66.Location = New System.Drawing.Point(787, 9)
+        Me.Button66.Location = New System.Drawing.Point(1049, 11)
         Me.Button66.Margin = New System.Windows.Forms.Padding(0)
         Me.Button66.Name = "Button66"
-        Me.Button66.Size = New System.Drawing.Size(78, 78)
+        Me.Button66.Size = New System.Drawing.Size(104, 96)
         Me.Button66.TabIndex = 152
         Me.Button66.UseVisualStyleBackColor = False
         '
@@ -1740,10 +1776,10 @@ Partial Class ChessBoard
         Me.Button67.FlatAppearance.BorderSize = 0
         Me.Button67.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button67.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button67.Location = New System.Drawing.Point(787, 9)
+        Me.Button67.Location = New System.Drawing.Point(1049, 11)
         Me.Button67.Margin = New System.Windows.Forms.Padding(0)
         Me.Button67.Name = "Button67"
-        Me.Button67.Size = New System.Drawing.Size(78, 78)
+        Me.Button67.Size = New System.Drawing.Size(104, 96)
         Me.Button67.TabIndex = 153
         Me.Button67.UseVisualStyleBackColor = False
         '
@@ -1756,10 +1792,10 @@ Partial Class ChessBoard
         Me.Button68.FlatAppearance.BorderSize = 0
         Me.Button68.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button68.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button68.Location = New System.Drawing.Point(787, 9)
+        Me.Button68.Location = New System.Drawing.Point(1049, 11)
         Me.Button68.Margin = New System.Windows.Forms.Padding(0)
         Me.Button68.Name = "Button68"
-        Me.Button68.Size = New System.Drawing.Size(78, 78)
+        Me.Button68.Size = New System.Drawing.Size(104, 96)
         Me.Button68.TabIndex = 154
         Me.Button68.UseVisualStyleBackColor = False
         '
@@ -1772,10 +1808,10 @@ Partial Class ChessBoard
         Me.Button69.FlatAppearance.BorderSize = 0
         Me.Button69.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button69.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button69.Location = New System.Drawing.Point(787, 9)
+        Me.Button69.Location = New System.Drawing.Point(1049, 11)
         Me.Button69.Margin = New System.Windows.Forms.Padding(0)
         Me.Button69.Name = "Button69"
-        Me.Button69.Size = New System.Drawing.Size(78, 78)
+        Me.Button69.Size = New System.Drawing.Size(104, 96)
         Me.Button69.TabIndex = 155
         Me.Button69.UseVisualStyleBackColor = False
         '
@@ -1788,10 +1824,10 @@ Partial Class ChessBoard
         Me.Button70.FlatAppearance.BorderSize = 0
         Me.Button70.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button70.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button70.Location = New System.Drawing.Point(787, 9)
+        Me.Button70.Location = New System.Drawing.Point(1049, 11)
         Me.Button70.Margin = New System.Windows.Forms.Padding(0)
         Me.Button70.Name = "Button70"
-        Me.Button70.Size = New System.Drawing.Size(78, 78)
+        Me.Button70.Size = New System.Drawing.Size(104, 96)
         Me.Button70.TabIndex = 156
         Me.Button70.UseVisualStyleBackColor = False
         '
@@ -1804,10 +1840,10 @@ Partial Class ChessBoard
         Me.Button71.FlatAppearance.BorderSize = 0
         Me.Button71.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button71.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button71.Location = New System.Drawing.Point(790, 9)
+        Me.Button71.Location = New System.Drawing.Point(1053, 11)
         Me.Button71.Margin = New System.Windows.Forms.Padding(0)
         Me.Button71.Name = "Button71"
-        Me.Button71.Size = New System.Drawing.Size(78, 78)
+        Me.Button71.Size = New System.Drawing.Size(104, 96)
         Me.Button71.TabIndex = 157
         Me.Button71.UseVisualStyleBackColor = False
         '
@@ -1820,28 +1856,29 @@ Partial Class ChessBoard
         Me.Button72.FlatAppearance.BorderSize = 0
         Me.Button72.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.Button72.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Button72.Location = New System.Drawing.Point(795, 9)
+        Me.Button72.Location = New System.Drawing.Point(1060, 11)
         Me.Button72.Margin = New System.Windows.Forms.Padding(0)
         Me.Button72.Name = "Button72"
-        Me.Button72.Size = New System.Drawing.Size(78, 78)
+        Me.Button72.Size = New System.Drawing.Size(104, 96)
         Me.Button72.TabIndex = 158
         Me.Button72.UseVisualStyleBackColor = False
         '
         'Returnbtn
         '
-        Me.Returnbtn.Location = New System.Drawing.Point(773, 83)
+        Me.Returnbtn.Location = New System.Drawing.Point(1031, 102)
+        Me.Returnbtn.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Returnbtn.Name = "Returnbtn"
-        Me.Returnbtn.Size = New System.Drawing.Size(92, 23)
+        Me.Returnbtn.Size = New System.Drawing.Size(123, 28)
         Me.Returnbtn.TabIndex = 159
         Me.Returnbtn.Text = "Return to menu"
         Me.Returnbtn.UseVisualStyleBackColor = True
         '
         'ChessBoard
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImage = CType(resources.GetObject("$this.BackgroundImage"), System.Drawing.Image)
-        Me.ClientSize = New System.Drawing.Size(867, 617)
+        Me.ClientSize = New System.Drawing.Size(1156, 759)
         Me.Controls.Add(Me.Returnbtn)
         Me.Controls.Add(Me.Button72)
         Me.Controls.Add(Me.Button71)
@@ -1952,6 +1989,7 @@ Partial Class ChessBoard
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.Name = "ChessBoard"
         Me.Text = "Form1"
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
