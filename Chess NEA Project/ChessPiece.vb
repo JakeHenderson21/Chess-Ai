@@ -100,9 +100,6 @@
             checkbuttons(6).Location = New Point(X + (7 * tx), Y + (7 * ty))
             For m = 0 To 6
                 For Each p In pieces2
-                    If p Is ChessBoard.WKnight1 Then
-                        p = p
-                    End If
                     If p.Left = xcoordinate And p.Top = ycoordinate Then
                         If l = 1 Then
                             If piecemove < scoremove Then
