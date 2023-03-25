@@ -1,16 +1,17 @@
 ﻿Public Class King
     Inherits ChessPiece
     Public kingmoves(7) As Boolean
-    Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button)
+    Private kingPiece, buttonToCheck, kingButtonMoves(7) As Button
+    Public Sub New(ByVal X As Integer, ByVal Y As Integer, ByVal chess_colour As Chesscolour, ByVal piece As Button, ByVal kingButtons() As Button)
         MyBase.New(X, Y, chess_colour, piece)
+        kingButtonMoves = kingButtons
     End Sub
     'overrides chesspiece's checkmoves for the king, it first goes to check_checkmate to check for possible moves, when coming back to check against the other it
     ' uses different buttons inorder to not mess up the algorithm, then it checks whether or not to display the buttons based on the results of the algorithm
-    Public Overrides Sub CheckMoves()   
+    Public Overrides Sub CheckMoves()
         Dim temppostionscore As Integer
-        Dim checktheking As New Check_Checkmate()
         Dim checkplaceholder(7) As Boolean
-        ChessBoard.KingPiece = piece
+        kingPiece = piece
         If ChessBoard.CheckMode = True Then
             ChessBoard.Button1.Location = New Point(X - 77, Y)
             ChessBoard.Button2.Location = New Point(X - 77, Y + 77)
@@ -51,9 +52,15 @@
         Next
         If ChessBoard.CheckMode = False Then
             For i = 0 To 7
-                ChessBoard.buttonsToUse = ChessBoard.KingButtons(i)
+                buttonToCheck = kingButtonMoves(i)
+                Dim checktheking As New Check_Checkmate(piece, buttonToCheck)
                 checkplaceholder(i) = checktheking.Check_King()
                 resetkingbuttonlocations()
+            Next
+            For i = 0 To 7
+                If kingmoves(i) = True And checkplaceholder(i) = False Then
+                    ChessBoard.KingButtons(i).Show()
+                End If
             Next
             If kingmoves(0) = True And checkplaceholder(0) = False Then
                 ChessBoard.Button65.Show()

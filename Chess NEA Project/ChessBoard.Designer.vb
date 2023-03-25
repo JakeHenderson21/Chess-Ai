@@ -381,7 +381,7 @@ Partial Class ChessBoard
         Me.WKing.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.WKing.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.WKing.ForeColor = System.Drawing.Color.Transparent
-        Me.WKing.Location = New System.Drawing.Point(807, 286)
+        Me.WKing.Location = New System.Drawing.Point(807, 287)
         Me.WKing.Name = "WKing"
         Me.WKing.Size = New System.Drawing.Size(60, 60)
         Me.WKing.TabIndex = 19

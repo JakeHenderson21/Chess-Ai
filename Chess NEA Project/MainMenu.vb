@@ -11,7 +11,7 @@ Public Class MainMenu
         AiMode = False
         ChessBoard.Show()
     End Sub
-    'Opens Player vs Ai
+    'Opens Player vs Ai and generates the weights and biases for the neural network if they haven't already been generated
     Private Sub Player_Vs_Ai_Click(sender As Object, e As EventArgs) Handles Player_Vs_Ai.Click
         ChessBoard.Show()
         ChessBoard.Hide()
@@ -40,17 +40,7 @@ Public Class MainMenu
             FileOpen(2, "NN1stHiddenWeights.csv", OpenMode.Output)
             ai.hiddenLoopID = 0
             ai.Initilise_HiddenWeights()
-            For i = 0 To 255
-                inputstring = ""
-                For j = 0 To 255
-                    If j <> 255 Then
-                        inputstring += ai.HiddenLayerWeights(i, j, 0).ToString & ","
-                    Else
-                        inputstring += ai.HiddenLayerWeights(i, j, 0).ToString
-                    End If
-                Next
-                PrintLine(2, inputstring)
-            Next
+            GenerateWeights(inputstring, ai)
             FileClose(2)
         End If
         If My.Computer.FileSystem.FileExists("NN2ndHiddenWeights.csv") Then
@@ -59,17 +49,7 @@ Public Class MainMenu
             FileOpen(3, "NN2ndHiddenWeights.csv", OpenMode.Output)
             ai.hiddenLoopID = 1
             ai.Initilise_HiddenWeights()
-            For i = 0 To 255
-                inputstring = ""
-                For j = 0 To 255
-                    If j <> 255 Then
-                        inputstring += ai.HiddenLayerWeights(i, j, 1).ToString & ","
-                    Else
-                        inputstring += ai.HiddenLayerWeights(i, j, 1).ToString
-                    End If
-                Next
-                PrintLine(3, inputstring)
-            Next
+            GenerateWeights(inputstring, ai)
             FileClose(3)
         End If
         If My.Computer.FileSystem.FileExists("NN3rdHiddenWeights.csv") Then
@@ -78,17 +58,7 @@ Public Class MainMenu
             FileOpen(4, "NN3rdHiddenWeights.csv", OpenMode.Output)
             ai.hiddenLoopID = 2
             ai.Initilise_HiddenWeights()
-            For i = 0 To 255
-                inputstring = ""
-                For j = 0 To 255
-                    If j <> 255 Then
-                        inputstring += ai.HiddenLayerWeights(i, j, 2).ToString & ","
-                    Else
-                        inputstring += ai.HiddenLayerWeights(i, j, 2).ToString
-                    End If
-                Next
-                PrintLine(4, inputstring)
-            Next
+            GenerateWeights(inputstring, ai)
             FileClose(4)
         End If
         If My.Computer.FileSystem.FileExists("NNOutputWeights.csv") Then
@@ -140,6 +110,20 @@ Public Class MainMenu
         Me.Hide()
         AiMode = True
         ChessBoard.Show()
+    End Sub
+    'Generates the weights then inputs them into an excel file for later use
+    Private Sub GenerateWeights(inputstring, ai)
+        For i = 0 To 255
+            inputstring = ""
+            For j = 0 To 255
+                If j <> 255 Then
+                    inputstring += ai.HiddenLayerWeights(i, j, ai.hiddenLoopID).ToString & ","
+                Else
+                    inputstring += ai.HiddenLayerWeights(i, j, ai.hiddenLoopID).ToString
+                End If
+            Next
+            PrintLine(ai.hiddenLoopID + 2, inputstring)
+        Next
     End Sub
     'Opens Settings
     Private Sub SettingsBtn_Click(sender As Object, e As EventArgs) Handles SettingsBtn.Click
