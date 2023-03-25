@@ -3,29 +3,17 @@ Imports System.IO
 Public Class Chess_Ai
     Private LegalMoveNames, LegalButtonNames As New List(Of Button)
     Private LegalButtonXCoordinates, LegalButtonYCoordinates As New List(Of Integer)
-    Private NumberlegalMoves, BestScoreMove, TotalBestMovesMade, PreAiCount As Integer
-    Private InputLayer(383), SigMoidInputLayer(383) As Integer
-    Private HiddenLayer(255, 3) As Double
-    Private Outputlayer(203), totalOutputLayer As Double
-    Public InputToHiddenLayerWeights(383, 255) As Double
-    Public HiddenLayerWeights(255, 255, 2) As Double
-    Public HiddenToOutputLayerWeights(255, 203) As Double
-    Public HiddenBias(255, 3) As Double
+    Private BestScoreMove, TotalBestMovesMade, InputLayer(383), FirstCheckNumber, StartOfLoop, EndofLoop, BestValue, EndofInitialLoop, EndOfButtonLoop As Integer
+    Public NumberOfMoves, NumberOfPieces, StartingNumber, hiddenLoopID As Integer
+    Public HiddenLayer(255, 3), Outputlayer(203), totalOutputLayer, InputToHiddenLayerWeights(383, 255), HiddenLayerWeights(255, 255, 2), HiddenToOutputLayerWeights(255, 203), HiddenBias(255, 3) As Double
     Public OutputBias(203) As Double
-    Private FirstCheckNumber As Integer
-    Private StartOfLoop, EndofLoop As Integer
     Private CFInputtoHiddenlayerWeightChanges(383, 255), CFHiddenLayerWeightChanges(255, 255, 2), CFHiddenToOutputLayerWeightChanges(255, 203), CFHiddenBiasChanges(255, 3), CFOutputBiasChanges(203) As Double
     Private InputtoHiddenLayerCalculations(383, 255), HiddenLayerCalculations(255, 255, 2), HiddentoOutputLayerCalculations(203), HiddenBiasCalculations(255, 3), OutputCalculation(203) As Double
-    Private BestValue As Integer
-    Private AlreadyChecked, Initialised, found As Boolean
+    Private Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
-    Private EndofInitialLoop, EndOfButtonLoop As Integer
-    Public NumberOfMoves, NumberOfPieces, StartingNumber, hiddenLoopID As Integer
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
-    Private T1Finished, T2Finished, T3Finished, T4Finished, T5Finished, T6Finished, T7Finished, T8Finished As Boolean
     Const LearningRate As Double = 0.1
-    Private threadingInProgress As Boolean
     Private TECWRO(203) As Double      'Total Error Change With Respect to Output
     Private OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
     Private OHLWRTSHL23(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^2 to H^3)
@@ -155,9 +143,6 @@ Public Class Chess_Ai
         For k = 0 To 203
             For i = 0 To 255
                 For counter = 0 To 255
-                    If i = 0 And counter = 1 Then
-                        i = i
-                    End If
                     HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i)
                     HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i)
                     HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i)
@@ -358,7 +343,8 @@ Public Class Chess_Ai
     End Sub
     Public Sub NextMoveDecider()
         found = False
-        AlreadyChecked = False
+        CheckingForBestMoves()
+        CheckIfBestMovePlayed()
         While found = False
             totalOutputLayer = 0
             If Initialised = False Then
@@ -374,13 +360,6 @@ Public Class Chess_Ai
                 End If
                 Initialised = True
             Else
-            End If
-            If AlreadyChecked = False Then
-                AlreadyChecked = True
-                CheckingForBestMoves()
-                CheckIfBestMovePlayed()
-            Else
-                AlreadyChecked = True
             End If
             Dim PieceChecker As New List(Of Button)
             Dim AICount As Integer = 0
@@ -438,34 +417,26 @@ Public Class Chess_Ai
             Dim TempOutput As List(Of Double)
             TempOutput = Outputlayer.ToList
             BestValue = TempOutput.IndexOf(Outputlayer.Max)
-            If PieceOptions(BestValue) Is ChessBoard.BPawn1 Or PieceOptions(BestValue) Is ChessBoard.BPawn2 Or PieceOptions(BestValue) Is ChessBoard.BPawn3 Or PieceOptions(BestValue) Is ChessBoard.BPawn4 Or PieceOptions(BestValue) Is ChessBoard.BPawn5 Or PieceOptions(BestValue) Is ChessBoard.BPawn6 Or PieceOptions(BestValue) Is ChessBoard.BPawn7 Or PieceOptions(BestValue) Is ChessBoard.BPawn8 Then
+            BestValue = 40
+            If ChessBoard.CheckBPawn.Contains(PieceOptions(BestValue)) Then
                 Dim AiPiece As New Pawn(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue), ChessBoard.FirstCheck(FirstCheckIdentifier))
                 AiPieceMover(AiPiece)
                 FirstCheckNumber = FirstCheckIdentifier()
-            ElseIf PieceOptions(BestValue) Is ChessBoard.BRook1 Or PieceOptions(BestValue) Is ChessBoard.BRook2 Then
+            ElseIf ChessBoard.CheckBRook.Contains(PieceOptions(BestValue)) Then
                 Dim AiPiece As New Rook(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
                 AiPiece.SetLoopBoundaries()
-                AiPiece.SetColour()
-                AiPiece.CheckMoves()
-                ChessBoard.chess_piece = PieceOptions(BestValue)
-                ChessBoard.colourOfPieces = "black"
-            ElseIf PieceOptions(BestValue) Is ChessBoard.BBishop1 Or PieceOptions(BestValue) Is ChessBoard.BBishop2 Then
+                AiPieceMover(AiPiece)
+            ElseIf ChessBoard.CheckBBishop.Contains(PieceOptions(BestValue)) Then
                 Dim AiPiece As New Bishop(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
                 AiPiece.SetLoopBoundaries()
-                AiPiece.SetColour()
-                AiPiece.CheckMoves()
-                ChessBoard.chess_piece = PieceOptions(BestValue)
-                ChessBoard.colourOfPieces = "black"
-            ElseIf PieceOptions(BestValue) Is ChessBoard.BKnight2 Or PieceOptions(BestValue) Is ChessBoard.BKnight2 Then
+                AiPieceMover(AiPiece)
+            ElseIf ChessBoard.CheckBKnight.Contains(PieceOptions(BestValue)) Then
                 Dim AiPiece As New Knight(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
                 AiPieceMover(AiPiece)
             ElseIf PieceOptions(BestValue) Is ChessBoard.BQueen Then
                 Dim AiPiece As New Queen(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
                 AiPiece.SetLoopBoundaries()
-                AiPiece.SetColour()
-                AiPiece.CheckMoves()
-                ChessBoard.chess_piece = PieceOptions(BestValue)
-                ChessBoard.colourOfPieces = "black"
+                AiPieceMover(AiPiece)
             ElseIf PieceOptions(BestValue) Is ChessBoard.BKing Then
                 Dim AiPiece As New King(PieceOptions(BestValue).Left, PieceOptions(BestValue).Top, ChessPiece.Chesscolour.black, PieceOptions(BestValue))
                 AiPieceMover(AiPiece)
@@ -499,34 +470,19 @@ Public Class Chess_Ai
         Dim num As Integer = Nothing
         For i = 0 To 255
             For j = 0 To 383
-                num = randomnumber.Next(1, 10)
-                If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
-                    multiplier = randomnum.Next(10, 20)
-                Else : multiplier = 1
-                End If
-                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i) * multiplier
+                InputToHiddenLayerWeights(j, i) -= LearningRate * CFInputtoHiddenlayerWeightChanges(j, i)
             Next
         Next
         For i = 0 To 2
             For k = 0 To 255
                 For j = 0 To 255
-                    num = randomnumber.Next(1, 10)
-                    If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
-                        multiplier = randomnum.Next(10, 20)
-                    Else : multiplier = 1
-                    End If
-                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i) * multiplier
+                    HiddenLayerWeights(j, k, i) -= LearningRate * CFHiddenLayerWeightChanges(j, k, i)
                 Next
             Next
         Next
         For i = 0 To 203
             For j = 0 To 255
-                num = randomnumber.Next(1, 10)
-                If num = 1 Or num = 5 Or num = 7 Or num = 4 Then
-                    multiplier = randomnum.Next(10, 20)
-                Else : multiplier = 1
-                End If
-                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i) * multiplier
+                HiddenToOutputLayerWeights(j, i) -= LearningRate * CFHiddenToOutputLayerWeightChanges(j, i)
             Next
         Next
     End Sub
@@ -560,11 +516,6 @@ Public Class Chess_Ai
     Public Function SigmoidCalculation(input)
         Dim result As Double
         result = 1 / (1 + Math.E ^ (-1 * input))
-        Return result
-    End Function
-    Public Function SoftmaxCalculation(input)
-        Dim result As Double
-        result = (Math.E ^ input) / totalOutputLayer
         Return result
     End Function
     Public Function PieceTypeIdentifier(PieceType)
@@ -658,12 +609,8 @@ Public Class Chess_Ai
     Public Sub CheckButtonsEnabled(Piece)
         For i = StartOfLoop To EndofLoop
             If ChessBoard.buttonmoves(i).Visible = True Then
-                If Piece Is ChessBoard.BPawn4 Then
-                    NumberlegalMoves = NumberlegalMoves
-                End If
                 LegalMoveNames.Add(Piece)
                 LegalButtonNames.Add(ChessBoard.buttonmoves(i))
-                NumberlegalMoves += 1
                 LegalButtonXCoordinates.Add(ChessBoard.buttonmoves(i).Left / 77)
                 LegalButtonYCoordinates.Add(ChessBoard.buttonmoves(i).Top / 77)
             End If

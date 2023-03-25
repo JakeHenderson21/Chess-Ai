@@ -6,10 +6,6 @@
     Public PawnSelectedPieces, KnightSelectedPieces, RookSelectedPieces, QueensSelectedPieces, BishopSelectedPieces As New List(Of Button)
     Public checking As Boolean
     Public TempButtonX_Causing_Check, TempButtonY_Causing_Check As New List(Of Integer)
-    'Initisles arrays for the buttons
-    Public Sub New()
-        'Rework the arrays into lists, will need to to actually save the lists in the main chessboard class so they don't get deleted
-    End Sub
     'Finds out which turn has ended and checks the respective king by going through each piece to see if the it is in check or checkmate or where the king can legally move
     Public Function Check_King()
         Dim check1, check2, check3, check4, check5, check6, check7, check8 As Boolean
