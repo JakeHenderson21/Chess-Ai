@@ -296,13 +296,14 @@
                     End If
                 End If
                 count += 1
-            change = False
+
             If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
                 rearrangechecks(temppostionscore - 1)
                 PieceMoveWhenChecked()
             Else
                 movebuttons(scoremove)
             End If
+            change = False
         Next
         count = 0
     End Sub

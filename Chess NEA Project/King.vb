@@ -11,7 +11,7 @@
     Public Overrides Sub CheckMoves()
         Dim temppostionscore As Integer
         Dim checkplaceholder(7) As Boolean
-        kingPiece = piece
+        ChessBoard.KingPiece = piece
         If ChessBoard.CheckMode = True Then
             ChessBoard.Button1.Location = New Point(X - 77, Y)
             ChessBoard.Button2.Location = New Point(X - 77, Y + 77)
@@ -59,33 +59,9 @@
             Next
             For i = 0 To 7
                 If kingmoves(i) = True And checkplaceholder(i) = False Then
-                    ChessBoard.KingButtons(i).Show()
+                    kingButtonMoves(i).Show()
                 End If
             Next
-            If kingmoves(0) = True And checkplaceholder(0) = False Then
-                ChessBoard.Button65.Show()
-            End If
-            If kingmoves(1) = True And checkplaceholder(1) = False Then
-                ChessBoard.Button66.Show()
-            End If
-            If kingmoves(2) = True And checkplaceholder(2) = False Then
-                ChessBoard.Button67.Show()
-            End If
-            If kingmoves(3) = True And checkplaceholder(3) = False Then
-                ChessBoard.Button68.Show()
-            End If
-            If kingmoves(4) = True And checkplaceholder(4) = False Then
-                ChessBoard.Button69.Show()
-            End If
-            If kingmoves(5) = True And checkplaceholder(5) = False Then
-                ChessBoard.Button70.Show()
-            End If
-            If kingmoves(6) = True And checkplaceholder(6) = False Then
-                ChessBoard.Button71.Show()
-            End If
-            If kingmoves(7) = True And checkplaceholder(7) = False Then
-                ChessBoard.Button72.Show()
-            End If
             For Each Button In ChessBoard.buttonmoves
                 If Button.Left > 539 Or Button.Left < 0 Or Button.Top > 539 Or Button.Top < 0 Then
                     Button.Hide()
@@ -122,13 +98,14 @@
     End Sub
     'resets the king button location incase they have moved
     Public Sub resetkingbuttonlocations()
-        ChessBoard.Button65.Location = New Point(X - 77, Y)
-        ChessBoard.Button66.Location = New Point(X - 77, Y + 77)
-        ChessBoard.Button67.Location = New Point(X, Y + 77)
-        ChessBoard.Button68.Location = New Point(X + 77, Y + 77)
-        ChessBoard.Button69.Location = New Point(X + 77, Y)
-        ChessBoard.Button70.Location = New Point(X + 77, Y - 77)
-        ChessBoard.Button71.Location = New Point(X, Y - 77)
-        ChessBoard.Button72.Location = New Point(X - 77, Y - 77)
+        ChessBoard.clearbuttons()
+        ChessBoard.Button65.Location = New Point(piece.Left - 77, piece.Top)
+        ChessBoard.Button66.Location = New Point(piece.Left - 77, piece.Top + 77)
+        ChessBoard.Button67.Location = New Point(piece.Left, piece.Top + 77)
+        ChessBoard.Button68.Location = New Point(piece.Left + 77, piece.Top + 77)
+        ChessBoard.Button69.Location = New Point(piece.Left + 77, piece.Top)
+        ChessBoard.Button70.Location = New Point(piece.Left + 77, piece.Top - 77)
+        ChessBoard.Button71.Location = New Point(piece.Left, piece.Top - 77)
+        ChessBoard.Button72.Location = New Point(piece.Left - 77, piece.Top - 77)
     End Sub
 End Class

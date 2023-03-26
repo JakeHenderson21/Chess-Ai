@@ -59,6 +59,7 @@
         PawnBishop = False
         PawnQueen = False
         PawnRook = False
+        clearbuttons()
         Return result
     End Function
     'This checks if their is a piece blocking the king infront of it when checking for check and checkmate

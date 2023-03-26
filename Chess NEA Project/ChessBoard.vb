@@ -74,7 +74,7 @@ Public Class ChessBoard
         If minutes = 0 And Settings.changed = True Then
             minutes = 1
             minutes1 = 1
-        Else minutes = 0 And Settings.changed = False
+        ElseIf minutes = 0 And Settings.changed = False Then
             minutes = 5
             minutes1 = 5
         End If
@@ -246,12 +246,12 @@ Public Class ChessBoard
     End Sub
     'This figures which ID shoudl be used with certain pawn to find out if it has already been moved or not
     Public Sub Pawn_CheckFirstNumber_Selector(piece)
-        For check = 0 To 7
+        For check = 0 To CheckWPawn.Count - 1
             If piece.name = CheckWPawn(check).Name Then
                 FirstCheckNumber = check
             End If
         Next
-        For check = 0 To 7
+        For check = 0 To CheckBPawn.Count - 1
             If piece.name = CheckBPawn(check).Name Then
                 FirstCheckNumber = check + 8
             End If
@@ -454,12 +454,12 @@ Public Class ChessBoard
         End If
     End Sub
     Public Sub PromotePawn(Piece)
-        For check = 0 To 7
+        For check = 0 To CheckWPawn.Count - 1
             If Piece.name = CheckWPawn(check).Name Then
                 PawnPromotion(check) = UsersChoice
             End If
         Next
-        For check = 0 To 7
+        For check = 0 To CheckBPawn.Count - 1
             If Piece.name = CheckBPawn(check).Name Then
                 PawnPromotion(check + 8) = UsersChoice
             End If
@@ -512,12 +512,12 @@ Public Class ChessBoard
     'This sets the pawns name, so if they pawn has been promoted, if it gets taken will display the name of the promotion
     Private Function SetPawnName(ByVal piece As Button)
         Dim name As String = ""
-        For check = 0 To 7
+        For check = 0 To CheckWPawn.Count - 1
             If piece.Name = CheckWPawn(check).Name Then
                 name = selectmovetype(check)
             End If
         Next
-        For check = 0 To 7
+        For check = 0 To CheckBPawn.Count - 1
             If piece.Name = CheckBPawn(check).Name Then
                 name = selectmovetype(check + 8)
             End If
@@ -672,6 +672,7 @@ Public Class ChessBoard
         PawnBishop = False
         PawnKnight = False
         PawnQueen = False
+        clearbuttons()
     End Sub
     'For player vs player it will disable all the white pieces so the player can click on them whilst it is black's turn and enable all black pieces
     'For Player vs Ai it will disable the whites pieces but rather enabling black pieces it will activate the Ai for it make its turn
@@ -710,6 +711,7 @@ Public Class ChessBoard
                 Next
             Next
         End If
+        clearbuttons()
     End Sub
     Private Sub Returnbtn_Click(sender As Object, e As EventArgs) Handles Returnbtn.Click
         endGameState = True

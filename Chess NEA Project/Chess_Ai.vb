@@ -8,18 +8,18 @@ Public Class Chess_Ai
     Public HiddenLayer(255, 3), Outputlayer(203), totalOutputLayer, InputToHiddenLayerWeights(383, 255), HiddenLayerWeights(255, 255, 2), HiddenToOutputLayerWeights(255, 203), HiddenBias(255, 3) As Double
     Public OutputBias(203) As Double
     Private CFInputtoHiddenlayerWeightChanges(383, 255), CFHiddenLayerWeightChanges(255, 255, 2), CFHiddenToOutputLayerWeightChanges(255, 203), CFHiddenBiasChanges(255, 3), CFOutputBiasChanges(203) As Double
-    Private InputtoHiddenLayerCalculations(383, 255), HiddenLayerCalculations(255, 255, 2), HiddentoOutputLayerCalculations(203), HiddenBiasCalculations(255, 3), OutputCalculation(203) As Double
+    Private InputtoHiddenLayerCalculations(383, 255), HiddenLayerCalculations(255, 255, 2), HiddentoOutputLayerCalculations(203) As Double
     Private Initialised, found As Boolean
     Private PieceOptions(203), ButtonOptions(203), BestScoreName, BestScoreButton As Button
     Private Desired_Output As Double
     Private TotalError, OutputError(203) As Double
     Const LearningRate As Double = 0.1
-    Private TECWRO(203) As Double      'Total Error Change With Respect to Output
-    Private OCWRTN(203) As Double      'Output Change With Respect to Total Net Input
-    Private OHLWRTSHL23(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^2 to H^3)
-    Private OHLWRTSHL12(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^1 to H^2)
-    Private OHLWRTSHL01(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^0 to H^1)
-    Private OHLWRTSHLI0(255) As Double 'Output of Input Layer With Respect to Sum of Hidden Layer (Input to H^0)
+    Private Total_Error_Change_Output(203) As Double      'Total Error Change With Respect to Output
+    Private Output_Change_Total_Input(203) As Double      'Output Change With Respect to Total Net Input
+    Private Output_2nd_Hidden_Layer_Sum_3rd_Hidden_Layer(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^2 to H^3)
+    Private Output_1st_Hidden_Layer_Sum_2nd_Hidden_Layer(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^1 to H^2)
+    Private Output_Last_Hidden_Layer_Sum_1st_Hidden_Layer(255) As Double 'Output of Hidden Layer With Respect to Sum of Hidden Layer (H^0 to H^1)
+    Private Output_Input_Layer_Sum_Las_Hidden_Layer(255) As Double 'Output of Input Layer With Respect to Sum of Hidden Layer (Input to H^0)
     Enum PieceValue
         Pawn = 5
         Rook = 15
@@ -120,32 +120,32 @@ Public Class Chess_Ai
             End If
             OutputError(i) = ((1 / 2) * (Desired_Output - Outputlayer(i))) ^ 2
             TotalError += OutputError(i)
-            TECWRO(i) = Total_Error_Change_With_Respect_to_Output(i)
+            Total_Error_Change_Output(i) = Total_Error_Change_With_Respect_to_Output(i)
         Next
         For j = 0 To 203
             For i = 0 To 203
                 If i = j Then
-                    OCWRTN(i) += Outputlayer(i) * (1 - Outputlayer(i))
+                    Output_Change_Total_Input(i) += Outputlayer(i) * (1 - Outputlayer(i))
                 Else
-                    OCWRTN(i) += -Outputlayer(i) * Outputlayer(j)
+                    Output_Change_Total_Input(i) += -Outputlayer(i) * Outputlayer(j)
                 End If
             Next
         Next
         For i = 0 To 255
-            OHLWRTSHL23(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 3))
-            OHLWRTSHL12(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 2))
-            OHLWRTSHL01(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 1))
-            OHLWRTSHLI0(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 0))
+            Output_2nd_Hidden_Layer_Sum_3rd_Hidden_Layer(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 3))
+            Output_1st_Hidden_Layer_Sum_2nd_Hidden_Layer(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 2))
+            Output_Last_Hidden_Layer_Sum_1st_Hidden_Layer(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 1))
+            Output_Input_Layer_Sum_Las_Hidden_Layer(i) = Output_Change_With_Respect_to_Total_Net(HiddenLayer(i, 0))
         Next
         For k = 0 To 203
-            HiddentoOutputLayerCalculations(k) = TECWRO(k) * OCWRTN(k)
+            HiddentoOutputLayerCalculations(k) = Total_Error_Change_Output(k) * Output_Change_Total_Input(k)
         Next
         For k = 0 To 203
             For i = 0 To 255
                 For counter = 0 To 255
-                    HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k) * OHLWRTSHL23(i)
-                    HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2) * OHLWRTSHL12(i)
-                    HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1) * OHLWRTSHL01(i)
+                    HiddenLayerCalculations(i, counter, 2) += HiddentoOutputLayerCalculations(k) * HiddenToOutputLayerWeights(i, k) * Output_2nd_Hidden_Layer_Sum_3rd_Hidden_Layer(i)
+                    HiddenLayerCalculations(i, counter, 1) += HiddenLayerCalculations(i, counter, 2) * HiddenLayerWeights(i, counter, 2) * Output_1st_Hidden_Layer_Sum_2nd_Hidden_Layer(i)
+                    HiddenLayerCalculations(i, counter, 0) += HiddenLayerCalculations(i, counter, 1) * HiddenLayerWeights(i, counter, 1) * Output_Last_Hidden_Layer_Sum_1st_Hidden_Layer(i)
                 Next
             Next
         Next
@@ -166,7 +166,7 @@ Public Class Chess_Ai
         Next
         For j = 0 To 383
             For i = 0 To 255
-                CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * OHLWRTSHLI0(i) * InputLayer(j)
+                CFInputtoHiddenlayerWeightChanges(j, i) += HiddenLayerCalculations(i, counter, 0) * HiddenLayerWeights(i, counter, 0) * Output_Input_Layer_Sum_Las_Hidden_Layer(i) * InputLayer(j)
                 counter += 1
             Next
             counter = 0
@@ -272,7 +272,7 @@ Public Class Chess_Ai
             Next
         End While
         FileClose(1)
-        '1stHiddenLayerWeights
+        '1stHiddenLayerWeights32
         FileOpen(2, "NN1stHiddenWeights.csv", OpenMode.Input)
         While Not EOF(2)
             For y = 0 To 255
