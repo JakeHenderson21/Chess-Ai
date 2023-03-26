@@ -431,7 +431,7 @@ Public Class ChessBoard
     Public Sub setNewLocation()
         chess_piece.Left = xcoords
         chess_piece.Top = ycoords
-        If chess_piece Is WPawn1 Or chess_piece Is WPawn2 Or chess_piece Is WPawn3 Or chess_piece Is WPawn4 Or chess_piece Is WPawn5 Or chess_piece Is WPawn6 Or chess_piece Is WPawn7 Or chess_piece Is WPawn8 Or chess_piece Is BPawn1 Or chess_piece Is BPawn2 Or chess_piece Is BPawn3 Or chess_piece Is BPawn4 Or chess_piece Is BPawn5 Or chess_piece Is BPawn6 Or chess_piece Is BPawn7 Or chess_piece Is BPawn8 Then
+        If CheckWPawn.Contains(chess_piece) Or CheckBPawn.Contains(chess_piece) Then
             If FirstCheck(FirstCheckNumber) = False Then
                 FirstCheck(FirstCheckNumber) = True
             End If

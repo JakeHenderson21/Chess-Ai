@@ -295,8 +295,7 @@
                         UpLeftMoveButtonsCheck = StoreButtons(scoremove)
                     End If
                 End If
-                count += 1
-
+            count += 1
             If ChessBoard.WKinginCheck = True Or ChessBoard.BKinginCheck = True Then
                 rearrangechecks(temppostionscore - 1)
                 PieceMoveWhenChecked()
@@ -397,6 +396,9 @@
                 Next
             Else
                 For j = 0 To scoremove - 1
+                    If scoremove - 1 = 0 Then
+                        Exit For
+                    End If
                     If checkbuttons(j).Left = ButtonX_Causing_Check(i) And checkbuttons(j).Top = ButtonY_Causing_Check(i) Then
                         checkbuttons(j).Show()
                     End If
